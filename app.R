@@ -2,7 +2,7 @@
 source("R/helper.R", local = TRUE)
 # -------------------------------------------------------------------
 
-datafest_titles[nrow(datafest_titles)+1,] = list("Best Insight", "Duke University", 2022, "Reordering minigames with personalized Recommendation System", '"Chill Chill"', "https://www2.stat.duke.edu/datafest/winning-projects/team-chili-chill-presentation.pdf")
+datafest_titles[nrow(datafest_titles)+1,] = list("Best Insight", "Duke University", 2022, "Reordering minigames with personalized Recommendation System", "Chill Chill", "https://www2.stat.duke.edu/datafest/winning-projects/team-chili-chill-presentation.pdf")
 datafest_titles <- datafest_titles %>%
   mutate(
     Presentation = paste0("<a href='", Presentation, "'>", as.character(icon("presentation-screen", verify_fa = FALSE)), "</a>"
@@ -120,17 +120,16 @@ body <- dashboardBody(
       tabItem(tabName = "winner",
               fluidRow(
                 box(
-                  pickerInput("year_choice",
-                              "Year",
-                              choices = c(unique(pull(datafest, "year")), "2022"),
-                              selected = unique(datafest$year),
-                              options = list(`actions-box` = TRUE),
-                              multiple = TRUE),
+                  checkboxGroupInput("year_choice",
+                                     "Year",
+                                     choices = c(unique(pull(datafest, "year")), "2022"),
+                                     selected = c(unique(datafest$year)),
+                  ),
                   
                   pickerInput("host_choice",
                               "Host University",
-                              choices = c(sort(unique(pull(datafest, "host")))),
-                              selected = c(sort(unique(datafest$host)))[19],
+                              choices = c(unique(pull(datafest, "host"))),
+                              selected = c(datafest$host),
                               options = list(`actions-box` = TRUE),
                               multiple = TRUE),
                   
@@ -428,17 +427,17 @@ server <- function(input, output, session) {
       is.null(input$award_choice),
       award <- c("Best Insight", "Best Visualization", "Best Use of External Data"),
       award <- input$award_choice)
-    print(award)
+
     ifelse(
       is.null(input$year_choice),
       year_title <- unique(datafest$year),
       year_title <- input$year_choice)
-    print(year_title)
+
     ifelse(
       is.null(input$host_choice),
       host_title <- unique(datafest$host),
       host_title <- input$host_choice)
-    print(host_title)
+
     
     filter(
       datafest_titles,
