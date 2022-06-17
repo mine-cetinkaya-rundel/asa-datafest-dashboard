@@ -236,7 +236,7 @@ server <- function(input, output, session) {
   
   output$map <- renderLeaflet({
     leaflet() %>%
-      addTiles() %>%
+      addProviderTiles("CartoDB.Voyager") %>% 
       fitBounds(left, bottom, right, top) %>% 
       #addControl(h1(input$year), position = "topright") %>% 
       addPolygons(
@@ -249,9 +249,9 @@ server <- function(input, output, session) {
         fillOpacity = 1,
         highlightOptions = highlightOptions(
           weight = 3,
-          color = "gray",
+          color = "lightgray",
           dashArray = "2",
-          fillOpacity = 0.7,
+          fillOpacity = 0.9,
           bringToFront = FALSE),
         label = labels,
         labelOptions = labelOptions(
@@ -263,7 +263,7 @@ server <- function(input, output, session) {
       addLegend(pal = pal, values = bins, opacity = 0.7, title = "Number of Participants",
                 position = "bottomright") %>% 
       addCircleMarkers(lng = recent$lon, lat = recent$lat,
-                       radius = log(recent$num_part),
+                       radius = log(recent$num_part)/2,
                        fillColor = marker_color,
                        color = marker_color,
                        weight = 3,
@@ -334,9 +334,9 @@ server <- function(input, output, session) {
         fillOpacity = 1,
         highlightOptions = highlightOptions(
           weight = 3,
-          color = "gray",
+          color = "lightgray",
           dashArray = "2",
-          fillOpacity = 0.7,
+          fillOpacity = 0.9,
           bringToFront = FALSE),
         label = labels,
         labelOptions = labelOptions(
@@ -348,15 +348,12 @@ server <- function(input, output, session) {
       addLegend(pal = pal, values = bins, opacity = 0.7, title = "Number of Participants",
                 position = "bottomright") %>%
       addCircleMarkers(lng = d()$lon, lat = d()$lat,
-                       radius = log(d()$num_part),
+                       radius = log(d()$num_part)/2,
                        fillColor = marker_color,
                        color = marker_color,
-                       weight = ,
-                       fillOpacity = 0.5,
-                       popup = popups)
-    
-    
-    
+                       weight = 3,
+                       fillOpacity = 1,
+                       popup = popups) 
   })
   
   ## Add Tile graphics

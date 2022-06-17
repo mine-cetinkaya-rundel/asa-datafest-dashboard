@@ -129,3 +129,10 @@ datasource <- data.frame(year, source_data)
 # country_hosts_df <- subset(datafest,
 #                            df =="Yes",
 #                            select= c("year","host","country","state","city","other_inst"))
+
+
+
+
+leaflet() %>%
+ 
+  addProviderTiles("CartoDB.Voyager", group = "2")
