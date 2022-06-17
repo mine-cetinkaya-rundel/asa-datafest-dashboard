@@ -14,9 +14,9 @@ library(scales)
 
 # load data ---------------------------------------------------------
 
-datafest <- read_csv(here::here("app/data/datafest.csv"))
-datafest_titles <- read_csv(here::here("app/data/titles.csv"))
-major_df <- read_csv(here::here("app/data/majors.csv"))
+datafest <- read.csv("data/datafest.csv")
+datafest_titles <- read.csv("data/titles.csv")
+major_df <- read.csv("data/majors.csv")
 
 # get data for universities page
 universities_df <- datafest %>%
@@ -39,17 +39,25 @@ part_color <- "#CC9966"
 states <- geojsonio::geojson_read("https://rstudio.github.io/leaflet/json/us-states.geojson", what = "sp")
 countries <- geojsonio::geojson_read("https://raw.githubusercontent.com/johan/world.geo.json/master/countries.geo.json", what = "sp")
 country <- countries[countries$name %in% datafest$country,]
+recent <- datafest %>% 
+  filter(year == max(year))
+write.csv(recent, "data/recent.csv")
+num_part <- datafest %>% 
+  filter(!is.na(num_part)) %>% 
+  group_by(year, state) %>% 
+  summarise(num = sum(num_part))
+max_part <- as.numeric(max(num_part$num))
 
 country$density = NA
 states <- rbind(states,country)
 
-participants <- datafest %>%
+participants <- recent %>%
   mutate(state = case_when(country == "Germany"~ "Germany",
                            country == "Canada"~ "Canada",
                            state == "Minnessota"~ "Minnesota",
                            TRUE ~ state)) %>%
   select(state, num_part) %>%
-  rename(name = state)
+  rename(name = state) 
 
 states$num_par=0
 for (i in 1:nrow(states)) {
@@ -62,7 +70,7 @@ for (i in 1:nrow(states)) {
   }
 }
 
-bins <- c(0, 10, 20, 40, 100, 150, 300, 400, 600, 1000, max(states$num_par))
+bins <- c(0, 10, 20, 40, 60, 80, 100, 200, 300, 400, max_part)
 pal <- colorBin("Blues", domain = states$num_par, bins = bins)
 
 labels <- sprintf(
@@ -112,9 +120,9 @@ host_count <- df_yes %>%
 
 ## calculate DataSource list for each year ----------------------
 year <- c("2011","2012","2013","2014","2015","2016","2017")
-          #"2018","2019","2020","2021","2022")
+#"2018","2019","2020","2021","2022")
 source_data <- c("LAPD","Kiva.com","eHarmony","GridPoint","Edmunds.com","Ticketmaster", "Expedia")
-                 #"Indeed","Candadian National Women's Rugby Team","Covid-19 (Virtual Data Challenge)","Rocky Mountain Posion and Drug Safety","Play2Prevent Lab")
+#"Indeed","Candadian National Women's Rugby Team","Covid-19 (Virtual Data Challenge)","Rocky Mountain Posion and Drug Safety","Play2Prevent Lab")
 datasource <- data.frame(year, source_data)
 
 # ## Subset dataframe to Year Country, State, City, Majors, Participating institutions

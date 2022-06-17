@@ -1,0 +1,13 @@
+name: asa-datafest-dashboard
+title: asa-datafest-dashboard
+username:
+account: allis
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 6502193
+bundleId: 6015004
+url: https://allis.shinyapps.io/asa-datafest-dashboard/
+when: 1655407015.19868
+lastSyncTime: 1655407015.1987
+asMultiple: FALSE
+asStatic: FALSE
