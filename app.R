@@ -5,7 +5,7 @@ source("R/helper.R", local = TRUE)
 datafest_titles[nrow(datafest_titles)+1,] = list("Best Insight", "Duke University", 2022, "Reordering minigames with personalized Recommendation System", "Chill Chill", "https://www2.stat.duke.edu/datafest/winning-projects/team-chili-chill-presentation.pdf")
 datafest_titles <- datafest_titles %>%
   mutate(
-    Presentation = paste0("<a href='", Presentation, "'>", as.character(icon("presentation-screen", verify_fa = FALSE)), "</a>"
+    Presentation = paste0("<a href='", Presentation, "'>", as.character(icon("file-powerpoint", lib = "font-awesome")), "</a>"
     )
   )
 
