@@ -16,7 +16,10 @@ library(scales)
 
 datafest <- read.csv("data/datafest.csv")
 datafest_titles <- read.csv("data/titles.csv")
-major_df <- read.csv("data/majors.csv")
+major_df <- updated_datafest %>%
+  select(host,year,major_dist)
+
+major_df <- na.omit(major_df)
 
 # get data for universities page
 universities_df <- datafest %>%
