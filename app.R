@@ -22,12 +22,6 @@ sidebar <- dashboardSidebar(width = 140,collapsed = FALSE,
                             sidebarMenuOutput("winner"))
 
 body <- dashboardBody(
-  h4("This app is designed to demonstrate the growth and spread of",
-     tags$a(href = "http://www.amstat.org/education/datafest/", "ASA DataFest"),
-     "over the years. Click on the points to find out more about each event.",
-     "If your institution does not appear on the list, email",
-     tags$a(href = "mailto:mine@stat.duke.edu", "mine@stat.duke.edu.")),
-  br(),
   
   fluidPage(
     title = NULL, width = 12,
@@ -49,9 +43,17 @@ body <- dashboardBody(
                                        animate = animationOptions(interval = 1500),
                                        sep = ""))),
               br(),
+              fluidRow(h4("This map represents the geographic distribution of DataFest participants over the years. Click on the points to find out more about each event.")),
               fluidRow(leafletOutput("map")),
               br(),
-              fluidRow(plotOutput("wordcloud", width = "100%", height = "400px"))
+              fluidRow(h4("This word cloud represents the different majors of participants at DataFest since its inception.")),
+              fluidRow(plotOutput("wordcloud", width = "100%", height = "400px")),
+              fluidRow(h4("This app is designed to compile and visualize metadata from ",
+                 tags$a(href = "http://www.amstat.org/education/datafest/", "ASA DataFest"),
+                 "over the years.",
+                 "If your institution does not appear on the list, email",
+                 tags$a(href = "mailto:mine@stat.duke.edu", "mine@stat.duke.edu."))),
+              br(),
       ),
       
       tabItem(tabName = "host",
@@ -173,7 +175,7 @@ server <- function(input, output, session) {
   output$start_year <- renderText({
     year_start = datafest %>%
       filter(host == input$college & df == "Yes") %>%
-      select(year)
+      dplyr::select(year)
     min_year = min(year_start[[1]])
     paste(input$college, "first participated in Datafest in the year ",min_year)
   })
@@ -181,7 +183,7 @@ server <- function(input, output, session) {
   output$country <- renderText({
     loc_country = datafest %>%
       filter(host == input$college) %>%
-      select(country)
+      dplyr::select(country)
     country = loc_country[[1]][1]
     paste("Country: ",country)
   })
@@ -189,7 +191,7 @@ server <- function(input, output, session) {
   output$state <- renderText({
     loc_state = datafest %>%
       filter(host == input$college) %>%
-      select(state)
+      dplyr::select(state)
     state = loc_state[[1]][1]
     paste("State:", state)
   })
@@ -197,7 +199,7 @@ server <- function(input, output, session) {
   output$city <- renderText({
     loc_city = datafest %>%
       filter(host == input$college) %>%
-      select(city)
+      dplyr::select(city)
     city = loc_city[[1]][1]
     paste("City:", city)
   })
@@ -205,12 +207,12 @@ server <- function(input, output, session) {
   output$percent <- renderText({
     part = datafest %>%
       filter(year == input$uni_year) %>%
-      select(num_part) %>%
+      dplyr::select(num_part) %>%
       drop_na()
     totpart = sum(part$num_part)
     host =  datafest %>%
       filter(host == input$college, year == input$uni_year) %>%
-      select(num_part) %>%
+      dplyr::select(num_part) %>%
       drop_na()
     uni = host$num_part
     percent = percent(uni/totpart, accuracy = 0.01)
@@ -220,7 +222,7 @@ server <- function(input, output, session) {
   output$other_inst <- renderText({
     inst = datafest %>%
       filter(host == input$college & df == "Yes" & year == input$uni_year) %>%
-      select(other_inst)
+      dplyr::select(other_inst)
     coll = inst[[1]][1]
     paste("Participating Institutions: ", coll)
   })
