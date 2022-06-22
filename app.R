@@ -429,11 +429,16 @@ server <- function(input, output, session) {
             axis.text.y = element_text(size = 12))
   }, bg="transparent")
   
-  output$prompt <- renderText({
-    text = past_comp %>% 
+  prompts <- eventReactive(input$search,{
+    text <- past_prompts %>% 
       filter(year == input$year_choice)
-    goal = text$goal[1]
-    paste(goal)
+    goal <- text$goal[1]
+    paste(goal)})
+  
+  print(prompts)
+  
+  output$prompt <- renderText({
+    prompts
   })
   
   #reactive past winners table
