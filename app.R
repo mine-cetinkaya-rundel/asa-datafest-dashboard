@@ -10,6 +10,7 @@ datafest_titles <- datafest_titles %>%
   )
 
 names(datafest_titles) <- tools::toTitleCase(names(datafest_titles))
+major_only <- major_df$Major_Breakdown
 
 
 #--------------------------------------------------------------------
@@ -75,7 +76,7 @@ body <- dashboardBody(
               fluidRow(box(
                 plotOutput("line", height = "400px"),width = 9),
                 box(solidHeader = TRUE,
-                    title = p("Details",
+                    title = p("Particulars",
                               style = "font-size:22px;
                                 margin-bottom: 0.2em;
                                 color: #005e97"),
@@ -473,14 +474,13 @@ server <- function(input, output, session) {
   
   ## Adding Word Cloud
   
-  
   output$wordcloud <- renderPlot({
     Major <- c("Stats", "Computer Science", "Pure Math", "Applied Math","Business")
     Freq <- c(23, 41, 32, 58,10,3,2)
     
     #dev.new(width = 10000, height = 10000, unit = "px")
     #DF <- as.data.frame(YourList)
-    wordcloud(words = major_df$major_dist, rot.per=0, fixed.asp = FALSE,scale = c(6,0.5))
+    wordcloud(words = major_only, freq = Freq, rot.per=0, fixed.asp = FALSE, colors=brewer.pal(8, "Spectral"),scale = c(6,0.5))
   })
   
   
