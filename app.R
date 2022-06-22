@@ -2,7 +2,7 @@
 source("R/helper.R", local = TRUE)
 # -------------------------------------------------------------------
 
-datafest_titles[nrow(datafest_titles)+1,] = list("Best Insight", "Duke University", 2022, "Reordering minigames with personalized Recommendation System", "Chill Chill", "https://www2.stat.duke.edu/datafest/winning-projects/team-chili-chill-presentation.pdf")
+datafest_titles[nrow(datafest_titles)+1,] = list("Best Insight", "Duke University", 2022, "Reordering Minigames with Personalized Recommendation System", "Chill Chill", "https://www2.stat.duke.edu/datafest/winning-projects/team-chili-chill-presentation.pdf")
 datafest_titles <- datafest_titles %>%
   mutate(
     Presentation = paste0("<a href='", Presentation, "'>", as.character(icon("file-powerpoint", lib = "font-awesome")), "</a>"
@@ -120,10 +120,10 @@ body <- dashboardBody(
       tabItem(tabName = "winner",
               fluidRow(
                 box(
-                  checkboxGroupInput("year_choice",
+                  selectInput("year_choice",
                                      "Year",
                                      choices = c(unique(pull(datafest, "year")), "2022"),
-                                     selected = c(unique(datafest$year)),
+                                     selected = "2022",
                   ),
                   
                   pickerInput("host_choice",
