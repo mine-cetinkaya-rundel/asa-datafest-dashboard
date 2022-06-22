@@ -15,15 +15,17 @@ library(scales)
 # load data ---------------------------------------------------------
 
 datafest <- read.csv("data/datafest.csv")
+
+updated_datafest <- read.csv("data/updated_datafest.csv")
 datafest_titles <- read.csv("data/titles.csv")
 major_df <- updated_datafest %>%
-  select(host,year,major_dist)
+  dplyr::select(host,year,major_dist)
 
 major_df <- na.omit(major_df)
 
 # get data for universities page
 universities_df <- datafest %>%
-  select(host, year, num_part)
+  dplyr::select(host, year, num_part)
 
 #Map
 
@@ -59,8 +61,8 @@ participants <- recent %>%
                            country == "Canada"~ "Canada",
                            state == "Minnessota"~ "Minnesota",
                            TRUE ~ state)) %>%
-  select(state, num_part) %>%
-  rename(name = state) 
+  dplyr::select(state, num_part) %>%
+  dplyr::rename(name = state) 
 
 states$num_par=0
 for (i in 1:nrow(states)) {
