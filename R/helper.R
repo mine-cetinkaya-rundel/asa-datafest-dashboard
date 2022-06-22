@@ -13,6 +13,8 @@ library(shinydashboard)
 # load data ---------------------------------------------------------
 
 datafest <- read.csv("data/datafest.csv")
+
+updated_datafest <- read.csv("data/updated_datafest.csv")
 datafest_titles <- read.csv("data/titles.csv")
 major_df <- updated_datafest %>%
   dplyr::select(host,year,major_dist)

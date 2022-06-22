@@ -304,8 +304,8 @@ server <- function(input, output, session) {
                                country == "Canada"~ "Canada",
                                state == "Minnessota"~ "Minnesota",
                                TRUE ~ state)) %>%
-      select(state, num_part) %>%
-      rename(name = state)
+      dplyr::select(state, num_part) %>%
+      dplyr::rename(name = state)
     
     # calculate total participants in each state
     states$num_par=0
