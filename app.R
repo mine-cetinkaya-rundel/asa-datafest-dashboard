@@ -142,7 +142,18 @@ body <- dashboardBody(
                   actionButton(inputId = "search", label = "Search"),
                   width = 3
                 ),
-                tableOutput("titles"), width = 9)
+                tableOutput("titles"),
+                
+                box(
+                  solidHeader = TRUE,
+                    title = p(paste0("Goal for The Year")),
+                    textOutput("prompt"),
+                    tags$head(tags$style("#state{color: #001833;
+                                 font-size: 18px;
+            font-family:'Trebuchet MS', sans-serif;font-style: bold;
+            }")),
+                    width = 9))
+              
       )
     )
   )
@@ -418,6 +429,14 @@ server <- function(input, output, session) {
             axis.text.y = element_text(size = 12))
   }, bg="transparent")
   
+  output$prompt <- renderText({
+    text = past_comp %>% 
+      filter(year == input$year_choice)
+    goal = text$goal[1]
+    paste(goal)
+  })
+  
+  #reactive past winners table
   titles_subset <- eventReactive(input$search, {
     
     ifelse(
@@ -443,34 +462,15 @@ server <- function(input, output, session) {
       Host %in% host_title)
   })
   
+  #output past winners table
+  
   output$titles <- renderTable(
     {titles_subset()}, sanitize.text.function = function(x) x,
     hover = TRUE,
     striped = TRUE,
-    digits = 0
+    digits = 0,
   )
-  
-  # titles_subset <- reactive({
-  #   if(is.null(input$year_choice)&is.null(input$host_choice)&is.null(input$award_choice))
-  #   {return(datafest_titles)}
-  #   else{
-  #     bindEvent(input$search)
-  #     req(input$year_choice)
-  #     req(input$host_choice)
-  #     req(input$award_choice)
-  #     filter(
-  #       datafest_titles,
-  #       Awards %in% input$award_choice,
-  #       year %in% 2017,
-  #       host %in% input$host_choice)
-  #   }})
-  #
-  # output$titles <- renderTable(
-  #   {titles_subset()}, sanitize.text.function = function(x) x,
-  #   hover = TRUE,
-  #   striped = TRUE,
-  #   digits = 0
-  # )
+
   
   ## Adding Word Cloud
   
