@@ -144,7 +144,6 @@ body <- dashboardBody(
                   actionButton(inputId = "search", label = "Search"),
                   width = 3
                 ),
-                tableOutput("titles"),
                 
                 box(
                   solidHeader = TRUE,
@@ -154,7 +153,14 @@ body <- dashboardBody(
                                  font-size: 18px;
             font-family:'Trebuchet MS', sans-serif;font-style: bold;
             }")),
-                  width = 9))
+                  width = 9
+                  ),
+                
+                box(
+                tableOutput("titles"),
+                width = 9),
+                
+   )
               
       )
     )
