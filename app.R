@@ -148,13 +148,13 @@ body <- dashboardBody(
                 
                 box(
                   solidHeader = TRUE,
-                    title = p(paste0("Goal for The Year")),
-                    textOutput("prompt"),
-                    tags$head(tags$style("#state{color: #001833;
+                  title = p(paste0("Goal for The Year")),
+                  textOutput("prompt"),
+                  tags$head(tags$style("#state{color: #001833;
                                  font-size: 18px;
             font-family:'Trebuchet MS', sans-serif;font-style: bold;
             }")),
-                    width = 9))
+                  width = 9))
               
       )
     )
