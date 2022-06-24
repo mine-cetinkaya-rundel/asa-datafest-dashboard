@@ -121,10 +121,10 @@ body <- dashboardBody(
       tabItem(tabName = "winner",
               fluidRow(
                 box(
-                  checkboxGroupInput("year_choice",
+                  selectInput("year_choice",
                                      "Year",
                                      choices = c(unique(pull(datafest, "year")), "2022"),
-                                     selected = c(unique(datafest$year)),
+                                     selected = c(unique(datafest$year), "2022"),
                   ),
                   
                   pickerInput("host_choice",
@@ -436,7 +436,21 @@ server <- function(input, output, session) {
             axis.text.y = element_text(size = 12))
   }, bg="transparent")
   
-  titles_subset <- eventReactive(input$search, {
+  
+    #print the competition goal for the selected year on winners tab
+    prompts <- eventReactive(input$search,{
+      text <- past_prompts %>% 
+        filter(year == input$year_choice)
+      word <- text$goal[1]
+      paste(word)})
+    
+    
+    output$prompt <- renderText({
+      prompts()
+    })
+    
+    #reactive past winners table
+    titles_subset <- eventReactive(input$search, {
     
     ifelse(
       is.null(input$award_choice),
