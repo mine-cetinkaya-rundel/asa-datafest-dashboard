@@ -12,7 +12,8 @@ library(shinydashboard)
 library(scales)
 library(tm)
 library(slam)
-
+library(httr)    
+set_config(use_proxy(url="10.3.100.207",port=8080))
 
 # load data ---------------------------------------------------------
 
