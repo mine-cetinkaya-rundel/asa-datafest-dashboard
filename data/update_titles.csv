@@ -1,274 +1,293 @@
-,Awards,host,year,BestInsight,BestVisualization,BestUseOfExternalData
-1,,Duke University,2011,NA,NA,NA
-2,,Vassar College,2011,NA,NA,NA
-3,,Purdue University,2011,NA,NA,NA
-4,,Emory University,2011,NA,NA,NA
-5,,Davidson College,2011,NA,NA,NA
-6,,Middlebury College,2011,NA,NA,NA
-7,,Wellesley College,2011,NA,NA,NA
-8,,Wesleyan University,2011,NA,NA,NA
-9,,Grand Valley State University,2011,NA,NA,NA
-10,,Penn State University,2011,NA,NA,NA
-11,,UCLA,2011,NA,NA,NA
-12,,University of Missouri,2011,NA,NA,NA
-13,,Cleveland State University,2011,NA,NA,NA
-14,,Ohio State University,2011,NA,NA,NA
-15,,Chapman University,2011,NA,NA,NA
-16,,UC Berkeley,2011,NA,NA,NA
-17,,Miami University (Ohio),2011,NA,NA,NA
-18,,University of Massachusets,2011,NA,NA,NA
-19,,University of New Mexico,2011,NA,NA,NA
-20,,Columbia University,2011,NA,NA,NA
-21,,University of Mannheim,2011,NA,NA,NA
-22,,University of Virginia,2011,NA,NA,NA
-23,,Virginia Tech,2011,NA,NA,NA
-24,,"Summit Consulting, DC",2011,NA,NA,NA
-25,,Case Western Reserve University,2011,NA,NA,NA
-26,,Macalaster College,2011,NA,NA,NA
-27,,Loyola University Chicago,2011,NA,NA,NA
-28,,Brown University,2011,NA,NA,NA
-29,,University of Toronto,2011,NA,NA,NA
-30,,Duke University,2012,NA,NA,NA
-31,,Vassar College,2012,NA,NA,NA
-32,,Purdue University,2012,NA,NA,NA
-33,,Emory University,2012,NA,NA,NA
-34,,Davidson College,2012,NA,NA,NA
-35,,Middlebury College,2012,NA,NA,NA
-36,,Wellesley College,2012,NA,NA,NA
-37,,Wesleyan University,2012,NA,NA,NA
-38,,Grand Valley State University,2012,NA,NA,NA
-39,,Penn State University,2012,NA,NA,NA
-40,,UCLA,2012,NA,NA,NA
-41,,University of Missouri,2012,NA,NA,NA
-42,,Cleveland State University,2012,NA,NA,NA
-43,,Ohio State University,2012,NA,NA,NA
-44,,Chapman University,2012,NA,NA,NA
-45,,UC Berkeley,2012,NA,NA,NA
-46,,Miami University (Ohio),2012,NA,NA,NA
-47,,University of Massachusets,2012,NA,NA,NA
-48,,University of New Mexico,2012,NA,NA,NA
-49,,Columbia University,2012,NA,NA,NA
-50,,University of Mannheim,2012,NA,NA,NA
-51,,University of Virginia,2012,NA,NA,NA
-52,,Virginia Tech,2012,NA,NA,NA
-53,,"Summit Consulting, DC",2012,NA,NA,NA
-54,,Case Western Reserve University,2012,NA,NA,NA
-55,,Macalaster College,2012,NA,NA,NA
-56,,Loyola University Chicago,2012,NA,NA,NA
-57,,Brown University,2012,NA,NA,NA
-58,,University of Toronto,2012,NA,NA,NA
-59,,Duke University,2013,NA,NA,NA
-60,,Vassar College,2013,NA,NA,NA
-61,,Purdue University,2013,NA,NA,NA
-62,,Emory University,2013,NA,NA,NA
-63,,Davidson College,2013,NA,NA,NA
-64,,Middlebury College,2013,NA,NA,NA
-65,,Wellesley College,2013,NA,NA,NA
-66,,Wesleyan University,2013,NA,NA,NA
-67,,Grand Valley State University,2013,NA,NA,NA
-68,,Penn State University,2013,NA,NA,NA
-69,,UCLA,2013,NA,NA,NA
-70,,University of Missouri,2013,NA,NA,NA
-71,,Cleveland State University,2013,NA,NA,NA
-72,,Ohio State University,2013,NA,NA,NA
-73,,Chapman University,2013,NA,NA,NA
-74,,UC Berkeley,2013,NA,NA,NA
-75,,Miami University (Ohio),2013,NA,NA,NA
-76,,University of Massachusets,2013,NA,NA,NA
-77,,University of New Mexico,2013,NA,NA,NA
-78,,Columbia University,2013,NA,NA,NA
-79,,University of Mannheim,2013,NA,NA,NA
-80,,University of Virginia,2013,NA,NA,NA
-81,,Virginia Tech,2013,NA,NA,NA
-82,,"Summit Consulting, DC",2013,NA,NA,NA
-83,,Case Western Reserve University,2013,NA,NA,NA
-84,,Macalaster College,2013,NA,NA,NA
-85,,Loyola University Chicago,2013,NA,NA,NA
-86,,Brown University,2013,NA,NA,NA
-87,,University of Toronto,2013,NA,NA,NA
-88,,Duke University,2014,NA,NA,NA
-89,,Vassar College,2014,NA,NA,NA
-90,,Purdue University,2014,NA,NA,NA
-91,,Emory University,2014,NA,NA,NA
-92,,Davidson College,2014,NA,NA,NA
-93,,Middlebury College,2014,NA,NA,NA
-94,,Wellesley College,2014,NA,NA,NA
-95,,Wesleyan University,2014,NA,NA,NA
-96,,Grand Valley State University,2014,NA,NA,NA
-97,,Penn State University,2014,NA,NA,NA
-98,,UCLA,2014,NA,NA,NA
-99,,University of Missouri,2014,NA,NA,NA
-100,,Cleveland State University,2014,NA,NA,NA
-101,,Ohio State University,2014,NA,NA,NA
-102,,Chapman University,2014,NA,NA,NA
-103,,UC Berkeley,2014,NA,NA,NA
-104,,Miami University (Ohio),2014,NA,NA,NA
-105,,University of Massachusets,2014,NA,NA,NA
-106,,University of New Mexico,2014,NA,NA,NA
-107,,Columbia University,2014,NA,NA,NA
-108,,University of Mannheim,2014,NA,NA,NA
-109,,University of Virginia,2014,NA,NA,NA
-110,,Virginia Tech,2014,NA,NA,NA
-111,,"Summit Consulting, DC",2014,NA,NA,NA
-112,,Case Western Reserve University,2014,NA,NA,NA
-113,,Macalaster College,2014,NA,NA,NA
-114,,Loyola University Chicago,2014,NA,NA,NA
-115,,Brown University,2014,NA,NA,NA
-116,,University of Toronto,2014,NA,NA,NA
-117,,Duke University,2015,NA,NA,NA
-118,,Vassar College,2015,NA,NA,NA
-119,,Purdue University,2015,NA,NA,NA
-120,,Emory University,2015,NA,NA,NA
-121,,Davidson College,2015,NA,NA,NA
-122,,Middlebury College,2015,NA,NA,NA
-123,,Wellesley College,2015,NA,NA,NA
-124,,Wesleyan University,2015,NA,NA,NA
-125,,Grand Valley State University,2015,NA,NA,NA
-126,,Penn State University,2015,NA,NA,NA
-127,,UCLA,2015,NA,NA,NA
-128,,University of Missouri,2015,NA,NA,NA
-129,,Cleveland State University,2015,NA,NA,NA
-130,,Ohio State University,2015,NA,NA,NA
-131,,Chapman University,2015,NA,NA,NA
-132,,UC Berkeley,2015,NA,NA,NA
-133,,Miami University (Ohio),2015,NA,NA,NA
-134,,University of Massachusets,2015,NA,NA,NA
-135,,University of New Mexico,2015,NA,NA,NA
-136,,Columbia University,2015,NA,NA,NA
-137,,University of Mannheim,2015,NA,NA,NA
-138,,University of Virginia,2015,NA,NA,NA
-139,,Virginia Tech,2015,NA,NA,NA
-140,,"Summit Consulting, DC",2015,NA,NA,NA
-141,,Case Western Reserve University,2015,NA,NA,NA
-142,,Macalaster College,2015,NA,NA,NA
-143,,Loyola University Chicago,2015,NA,NA,NA
-144,,Brown University,2015,NA,NA,NA
-145,,University of Toronto,2015,NA,NA,NA
-146,,Duke University,2016,NA,NA,NA
-147,,Vassar College,2016,NA,NA,NA
-148,,Purdue University,2016,NA,NA,NA
-149,,Emory University,2016,NA,NA,NA
-150,,Davidson College,2016,NA,NA,NA
-151,,Middlebury College,2016,NA,NA,NA
-152,,Wellesley College,2016,NA,NA,NA
-153,,Wesleyan University,2016,NA,NA,NA
-154,,Grand Valley State University,2016,NA,NA,NA
-155,,Penn State University,2016,NA,NA,NA
-156,,UCLA,2016,NA,NA,NA
-157,,University of Missouri,2016,NA,NA,NA
-158,,Cleveland State University,2016,NA,NA,NA
-159,,Ohio State University,2016,NA,NA,NA
-160,,Chapman University,2016,NA,NA,NA
-161,,UC Berkeley,2016,NA,NA,NA
-162,,Miami University (Ohio),2016,NA,NA,NA
-163,,University of Massachusets,2016,NA,NA,NA
-164,,University of New Mexico,2016,NA,NA,NA
-165,,Columbia University,2016,NA,NA,NA
-166,,University of Mannheim,2016,NA,NA,NA
-167,,University of Virginia,2016,NA,NA,NA
-168,,Virginia Tech,2016,NA,NA,NA
-169,,"Summit Consulting, DC",2016,NA,NA,NA
-170,,Case Western Reserve University,2016,NA,NA,NA
-171,,Macalaster College,2016,NA,NA,NA
-172,,Loyola University Chicago,2016,NA,NA,NA
-173,,Brown University,2016,NA,NA,NA
-174,,University of Toronto,2016,NA,NA,NA
-175,,Duke University,2017,NA,NA,NA
-176,,Vassar College,2017,NA,NA,NA
-177,,Purdue University,2017,NA,NA,NA
-178,,Emory University,2017,NA,NA,NA
-179,,Davidson College,2017,NA,NA,NA
-180,,Middlebury College,2017,NA,NA,NA
-181,,Wellesley College,2017,NA,NA,NA
-182,,Wesleyan University,2017,NA,NA,NA
-183,,Grand Valley State University,2017,NA,NA,NA
-184,,Penn State University,2017,NA,NA,NA
-185,,UCLA,2017,NA,NA,NA
-186,,University of Missouri,2017,NA,NA,NA
-187,,Cleveland State University,2017,NA,NA,NA
-188,,Ohio State University,2017,NA,NA,NA
-189,,Chapman University,2017,NA,NA,NA
-190,,UC Berkeley,2017,NA,NA,NA
-191,,Miami University (Ohio),2017,NA,NA,NA
-192,,University of Massachusets,2017,NA,NA,NA
-193,,University of New Mexico,2017,NA,NA,NA
-194,,Columbia University,2017,NA,NA,NA
-195,,University of Mannheim,2017,NA,NA,NA
-196,,University of Virginia,2017,NA,NA,NA
-197,,Virginia Tech,2017,NA,NA,NA
-198,,"Summit Consulting, DC",2017,NA,NA,NA
-199,,Case Western Reserve University,2017,NA,NA,NA
-200,,Macalaster College,2017,NA,NA,NA
-201,,Loyola University Chicago,2017,NA,NA,NA
-202,,Brown University,2017,NA,NA,NA
-203,,University of Toronto,2017,NA,NA,NA
-204,,Arizona State University,2017,NA,NA,NA
-205,,Australian National University,2017,NA,NA,NA
-206,,Columbia University,2017,NA,NA,NA
-207,,Ohio State University,2017,NA,NA,NA
-208,BestInsight,Smith College,2017,"The relationship between length of stay, hotel quality and chance of booking",,
-209,BestVisualization,Smith College,2017,CUSTOMERS WHO ALMOST BOUGHT TRAVEL PACKAGES,,
-210,BestUseOfExternalData,Smith College,2017,Understanding Expedia Usage Across the United States,,
-211,,Southern Methodist University,2017,NA,NA,NA
-212,BestInsight,University of New Mexico,2017,Vizards,,
-213,BestVisualization,University of New Mexico,2017,The Tchebby Tchasers,,
-214,BestUseOfExternalData,University of New Mexico,2017,The Most Squares Problem,,
-215,,University of Toronto,2017,NA,NA,NA
-216,BestInsight,Arizona State University,2018,Visualizing Job Growth in Industries Over Time: a “Shiny” and “Leaflet” Application in R,,
-217,BestVisualization,Arizona State University,2018,Team Morale by Hour of DataFest,,
-218,BestUseOfExternalData,Arizona State University,2018,Clicks for the job,,
-219,,Australian National University,2018,NA,NA,NA
-220,,Columbia University,2018,NA,NA,NA
-221,,Ohio State University,2018,NA,NA,NA
-222,BestInsight,Smith College,2018,"Indeed: Clicks, Applies, and Job Opportunity",Statistically Significant: Indeed,Competitiveness: A New Job Search Filter
-223,BestVisualization,Smith College,2018,"Indeed: Clicks, Applies, and Job Opportunity",Statistically Significant: Indeed,Competitiveness: A New Job Search Filter
-224,BestUseOfExternalData,Smith College,2018,"Indeed: Clicks, Applies, and Job Opportunity",Statistically Significant: Indeed,Competitiveness: A New Job Search Filter
-225,,Southern Methodist University,2018,NA,NA,NA
-226,,University of New Mexico,2018,NA,NA,NA
-227,,University of Toronto,2018,NA,NA,NA
-228,BestInsight,Arizona State University,2019,Optimizing Rugby Training U nder Fatigue,,
-229,BestVisualization,Arizona State University,2019,Data TheraPy,,
-230,BestUseOfExternalData,Arizona State University,2019,Results of Logistic Regression for Pain,,
-231,,Australian National University,2019,NA,NA,NA
-232,,Columbia University,2019,NA,NA,NA
-233,,Ohio State University,2019,NA,NA,NA
-234,,Smith College,2019,How to Prepare for a Season,How Can You Measure Fatigue? Trust Your Athletes!,[FUN]ctionality of Studying Temperature and Altitude in Assessing Athlete Fatigue and Performance
-235,BestInsight,Southern Methodist University,2019,R You Ready / #Save13 (Tie between two teams),,
-236,BestVisualization,Southern Methodist University,2019,Predicting Fatigue,,
-237,BestUseOfExternalData,Southern Methodist University,2019,Factors Affecting Fatigue in Canadian Women's 7's Rugby,,
-238,,University of New Mexico,2019,NA,NA,NA
-239,,University of Toronto,2019,NA,NA,NA
-240,,Arizona State University,2020,NA,NA,NA
-241,,Australian National University,2020,NA,NA,NA
-242,,Columbia University,2020,NA,NA,NA
-243,,Ohio State University,2020,NA,NA,NA
-244,,Smith College,2020,NA,NA,NA
-245,,Southern Methodist University,2020,NA,NA,NA
-246,,University of New Mexico,2020,NA,NA,NA
-247,,University of Toronto,2020,NA,NA,NA
-248,BestInsight,Arizona State University,2021,RISK FACTORS ASSOCIATED WITH DRUG MISUSE & FEATURE REDUCTION,,
-249,BestVisualization,Arizona State University,2021,Investigating Indicators of High Non-Medical Drug Use Among the United State's Indigenous Populations,,
-250,BestUseOfExternalData,Arizona State University,2021,Drug Misuse Exploration,,
-251,,Australian National University,2021,NA,NA,NA
-252,,Columbia University,2021,NA,NA,NA
-253,,Ohio State University,2021,NA,NA,NA
-254,,Smith College,2021,NA,NA,NA
-255,BestInsight,Southern Methodist University,2021,Modeling opioid use using Bayesian methods and understanding drug gateways through network analysis,,
-256,BestVisualization,Southern Methodist University,2021,Indicators of substance abuse in individuals diagnosed with mental health disorders,,
-257,BestUseOfExternalData,Southern Methodist University,2021,Female/Male Gender versus the Unprescribed Use of THC,,
-258,,University of New Mexico,2021,NA,NA,NA
-259,BestInsight,University of Toronto,2021,Statistical Analysis and Presentation on Drug Misuses,,
-260,BestVisualization,University of Toronto,2021,Can Money Buy Happiness?,,
-261,BestUseOfExternalData,University of Toronto,2021,An Analysis of Demographic Patterns and Frequent Combinations of Drug Misuse in Canada,,
-262,BestInsight,Arizona State University,2022,"WE’RE SKEWED, MINIGAME 2 IS SKEWED, WE’RE ALL SKEWED!",,
-263,BestVisualization,Arizona State University,2022,No Pi Charts,,
-264,BestUseOfExternalData,Arizona State University,2022,Team 14,,
-265,,Australian National University,2022,NA,NA,NA
-266,,Columbia University,2022,NA,IS GAMEPLAY BEHAVIOR ASSOCIATED WITH EFFICACY IN RESISTING DRUGS?,NA
-267,,Ohio State University,2022,NA,NA,NA
-268,,Smith College,2022,NA,NA,NA
-269,,Southern Methodist University,2022,Predictive Model for Teenagers' Skills,ASA Play Forward (Elm City Stories),NA
-270,,University of New Mexico,2022,NA,NA,NA
-271,BestInsight,University of Toronto,2022,Elm City Stories Analysis,,
-272,BestVisualization,University of Toronto,2022,,PLAY2PREVENT Game Data Analysis,
-273,BestUseOfExternalData,University of Toronto,2022,,,A Demonstration on the Methods of Exploring the Play2Event Game Data (Best Statistical Analysis)
+,Awards,host,nickname,year,Title,Team,Students,Slides,Write-ups,Video,Codes
+1,,Arizona State University,AZState,2017,NA,NA,,NA,,,
+2,,Vassar College,,2011,NA,NA,,NA,,,
+3,,Purdue University,,2011,NA,NA,,NA,,,
+4,,Emory University,,2011,NA,NA,,NA,,,
+5,,Davidson College,,2011,NA,NA,,NA,,,
+6,,Middlebury College,,2011,NA,NA,,NA,,,
+7,,Wellesley College,,2011,NA,NA,,NA,,,
+8,,Wesleyan University,,2011,NA,NA,,NA,,,
+9,,Grand Valley State University,,2011,NA,NA,,NA,,,
+10,,Penn State University,,2011,NA,NA,,NA,,,
+11,BestInsight,Arizona State University,AZState,2018,Visualizing Job Growth in Industries Over Time: a “Shiny” and “Leaflet” Application in R,,,,,,
+12,,University of Missouri,,2011,NA,NA,,NA,,,
+13,,Cleveland State University,,2011,NA,NA,,NA,,,
+14,BestVisualization,Arizona State University,AZState,2018,Team Morale by Hour of DataFest,,,,,,
+15,,Chapman University,,2011,NA,NA,,NA,,,
+16,BestUseOfExternalData,Arizona State University,AZState,2018,Clicks for the job,,,,,,
+17,,Miami University (Ohio),,2011,NA,NA,,NA,,,
+18,,University of Massachusets,,2011,NA,NA,,NA,,,
+19,BestInsight,Arizona State University,AZState,2019,Optimizing Rugby Training U nder Fatigue,,,,,,
+20,BestVisualization,Arizona State University,AZState,2019,Data TheraPy,,,,,,
+21,,University of Mannheim,,2011,NA,NA,,NA,,,
+22,,University of Virginia,,2011,NA,NA,,NA,,,
+23,,Virginia Tech,,2011,NA,NA,,NA,,,
+24,,"Summit Consulting, DC",,2011,NA,NA,,NA,,,
+25,,Case Western Reserve University,,2011,NA,NA,,NA,,,
+26,,Macalaster College,,2011,NA,NA,,NA,,,
+27,,Loyola University Chicago,,2011,NA,NA,,NA,,,
+28,,Brown University,,2011,NA,NA,,NA,,,
+29,,University of Toronto,,2011,NA,NA,,NA,,,
+30,BestUseOfExternalData,Arizona State University,AZState,2019,Results of Logistic Regression for Pain,,,,,,
+31,,Vassar College,,2012,NA,NA,,NA,,,
+32,,Purdue University,,2012,NA,NA,,NA,,,
+33,,Emory University,,2012,NA,NA,,NA,,,
+34,,Davidson College,,2012,NA,NA,,NA,,,
+35,,Middlebury College,,2012,NA,NA,,NA,,,
+36,,Wellesley College,,2012,NA,NA,,NA,,,
+37,,Wesleyan University,,2012,NA,NA,,NA,,,
+38,,Grand Valley State University,,2012,NA,NA,,NA,,,
+39,,Penn State University,,2012,NA,NA,,NA,,,
+40,,Arizona State University,AZState,2020,NA,NA,,NA,,,
+41,,University of Missouri,,2012,NA,NA,,NA,,,
+42,,Cleveland State University,,2012,NA,NA,,NA,,,
+43,BestInsight,Arizona State University,AZState,2021,RISK FACTORS ASSOCIATED WITH DRUG MISUSE & FEATURE REDUCTION,,,,,,
+44,,Chapman University,,2012,NA,NA,,NA,,,
+45,BestVisualization,Arizona State University,AZState,2021,Investigating Indicators of High Non-Medical Drug Use Among the United State's Indigenous Populations,,,,,,
+46,,Miami University (Ohio),,2012,NA,NA,,NA,,,
+47,,University of Massachusets,,2012,NA,NA,,NA,,,
+48,BestUseOfExternalData,Arizona State University,AZState,2021,Drug Misuse Exploration,,,,,,
+49,BestInsight,Arizona State University,AZState,2022,"WE’RE SKEWED, MINIGAME 2 IS SKEWED, WE’RE ALL SKEWED!",,,,,,
+50,,University of Mannheim,,2012,NA,NA,,NA,,,
+51,,University of Virginia,,2012,NA,NA,,NA,,,
+52,,Virginia Tech,,2012,NA,NA,,NA,,,
+53,,"Summit Consulting, DC",,2012,NA,NA,,NA,,,
+54,,Case Western Reserve University,,2012,NA,NA,,NA,,,
+55,,Macalaster College,,2012,NA,NA,,NA,,,
+56,,Loyola University Chicago,,2012,NA,NA,,NA,,,
+57,,Brown University,,2012,NA,NA,,NA,,,
+58,,University of Toronto,,2012,NA,NA,,NA,,,
+59,BestVisualization,Arizona State University,AZState,2022,No Pi Charts,,,,,,
+60,,Vassar College,,2013,NA,NA,,NA,,,
+61,,Purdue University,,2013,NA,NA,,NA,,,
+62,,Emory University,,2013,NA,NA,,NA,,,
+63,,Davidson College,,2013,NA,NA,,NA,,,
+64,,Middlebury College,,2013,NA,NA,,NA,,,
+65,,Wellesley College,,2013,NA,NA,,NA,,,
+66,,Wesleyan University,,2013,NA,NA,,NA,,,
+67,,Grand Valley State University,,2013,NA,NA,,NA,,,
+68,,Penn State University,,2013,NA,NA,,NA,,,
+69,BestUseOfExternalData,Arizona State University,AZState,2022,Team 14,,,,,,
+70,,University of Missouri,,2013,NA,NA,,NA,,,
+71,,Cleveland State University,,2013,NA,NA,,NA,,,
+72,,Columbia University,Columbia,2011,NA,NA,,NA,,,
+73,,Chapman University,,2013,NA,NA,,NA,,,
+74,,Columbia University,Columbia,2012,NA,NA,,NA,,,
+75,,Miami University (Ohio),,2013,NA,NA,,NA,,,
+76,,University of Massachusets,,2013,NA,NA,,NA,,,
+77,,Columbia University,Columbia,2013,NA,NA,,NA,,,
+78,,Columbia University,Columbia,2014,NA,NA,,NA,,,
+79,,University of Mannheim,,2013,NA,NA,,NA,,,
+80,,University of Virginia,,2013,NA,NA,,NA,,,
+81,,Virginia Tech,,2013,NA,NA,,NA,,,
+82,,"Summit Consulting, DC",,2013,NA,NA,,NA,,,
+83,,Case Western Reserve University,,2013,NA,NA,,NA,,,
+84,,Macalaster College,,2013,NA,NA,,NA,,,
+85,,Loyola University Chicago,,2013,NA,NA,,NA,,,
+86,,Brown University,,2013,NA,NA,,NA,,,
+87,,University of Toronto,,2013,NA,NA,,NA,,,
+88,,Columbia University,Columbia,2015,NA,NA,,NA,,,
+89,,Vassar College,,2014,NA,NA,,NA,,,
+90,,Purdue University,,2014,NA,NA,,NA,,,
+91,,Emory University,,2014,NA,NA,,NA,,,
+92,,Davidson College,,2014,NA,NA,,NA,,,
+93,,Middlebury College,,2014,NA,NA,,NA,,,
+94,,Wellesley College,,2014,NA,NA,,NA,,,
+95,,Wesleyan University,,2014,NA,NA,,NA,,,
+96,,Grand Valley State University,,2014,NA,NA,,NA,,,
+97,,Penn State University,,2014,NA,NA,,NA,,,
+98,,Columbia University,Columbia,2016,NA,NA,,NA,,,
+99,,University of Missouri,,2014,NA,NA,,NA,,,
+100,,Cleveland State University,,2014,NA,NA,,NA,,,
+101,,Columbia University,Columbia,2017,NA,NA,,NA,,,
+102,,Chapman University,,2014,NA,NA,,NA,,,
+103,,Columbia University,Columbia,2017,NA,NA,,NA,,,
+104,,Miami University (Ohio),,2014,NA,NA,,NA,,,
+105,,University of Massachusets,,2014,NA,NA,,NA,,,
+106,,Columbia University,Columbia,2018,NA,NA,,NA,,,
+107,,Columbia University,Columbia,2019,NA,NA,,NA,,,
+108,,University of Mannheim,,2014,NA,NA,,NA,,,
+109,,University of Virginia,,2014,NA,NA,,NA,,,
+110,,Virginia Tech,,2014,NA,NA,,NA,,,
+111,,"Summit Consulting, DC",,2014,NA,NA,,NA,,,
+112,,Case Western Reserve University,,2014,NA,NA,,NA,,,
+113,,Macalaster College,,2014,NA,NA,,NA,,,
+114,,Loyola University Chicago,,2014,NA,NA,,NA,,,
+115,,Brown University,,2014,NA,NA,,NA,,,
+116,,University of Toronto,,2014,NA,NA,,NA,,,
+117,,Columbia University,Columbia,2020,NA,NA,,NA,,,
+118,,Vassar College,,2015,NA,NA,,NA,,,
+119,,Purdue University,,2015,NA,NA,,NA,,,
+120,,Emory University,,2015,NA,NA,,NA,,,
+121,,Davidson College,,2015,NA,NA,,NA,,,
+122,,Middlebury College,,2015,NA,NA,,NA,,,
+123,,Wellesley College,,2015,NA,NA,,NA,,,
+124,,Wesleyan University,,2015,NA,NA,,NA,,,
+125,,Grand Valley State University,,2015,NA,NA,,NA,,,
+126,,Penn State University,,2015,NA,NA,,NA,,,
+127,,Columbia University,Columbia,2021,NA,NA,,NA,,,
+128,,University of Missouri,,2015,NA,NA,,NA,,,
+129,,Cleveland State University,,2015,NA,NA,,NA,,,
+130,,Columbia University,Columbia,2022,NA,IS GAMEPLAY BEHAVIOR ASSOCIATED WITH EFFICACY IN RESISTING DRUGS?,,NA,,,
+131,,Chapman University,,2015,NA,NA,,NA,,,
+132,,Duke University,Duke,2011,NA,NA,,NA,,,
+133,,Miami University (Ohio),,2015,NA,NA,,NA,,,
+134,,University of Massachusets,,2015,NA,NA,,NA,,,
+135,,Duke University,Duke,2012,NA,NA,,NA,,,
+136,,Duke University,Duke,2013,NA,NA,,NA,,,
+137,,University of Mannheim,,2015,NA,NA,,NA,,,
+138,,University of Virginia,,2015,NA,NA,,NA,,,
+139,,Virginia Tech,,2015,NA,NA,,NA,,,
+140,,"Summit Consulting, DC",,2015,NA,NA,,NA,,,
+141,,Case Western Reserve University,,2015,NA,NA,,NA,,,
+142,,Macalaster College,,2015,NA,NA,,NA,,,
+143,,Loyola University Chicago,,2015,NA,NA,,NA,,,
+144,,Brown University,,2015,NA,NA,,NA,,,
+145,,University of Toronto,,2015,NA,NA,,NA,,,
+146,,Duke University,Duke,2014,NA,NA,,NA,,,
+147,,Vassar College,,2016,NA,NA,,NA,,,
+148,,Purdue University,,2016,NA,NA,,NA,,,
+149,,Emory University,,2016,NA,NA,,NA,,,
+150,,Davidson College,,2016,NA,NA,,NA,,,
+151,,Middlebury College,,2016,NA,NA,,NA,,,
+152,,Wellesley College,,2016,NA,NA,,NA,,,
+153,,Wesleyan University,,2016,NA,NA,,NA,,,
+154,,Grand Valley State University,,2016,NA,NA,,NA,,,
+155,,Penn State University,,2016,NA,NA,,NA,,,
+156,,Duke University,Duke,2015,NA,NA,,NA,,,
+157,,University of Missouri,,2016,NA,NA,,NA,,,
+158,,Cleveland State University,,2016,NA,NA,,NA,,,
+159,,Duke University,Duke,2016,NA,NA,,NA,,,
+160,,Chapman University,,2016,NA,NA,,NA,,,
+161,,Duke University,Duke,2017,NA,NA,,NA,,,
+162,,Miami University (Ohio),,2016,NA,NA,,NA,,,
+163,,University of Massachusets,,2016,NA,NA,,NA,,,
+164,,Ohio State University,OSU,2011,NA,NA,,NA,,,
+165,,Ohio State University,OSU,2012,NA,NA,,NA,,,
+166,,University of Mannheim,,2016,NA,NA,,NA,,,
+167,,University of Virginia,,2016,NA,NA,,NA,,,
+168,,Virginia Tech,,2016,NA,NA,,NA,,,
+169,,"Summit Consulting, DC",,2016,NA,NA,,NA,,,
+170,,Case Western Reserve University,,2016,NA,NA,,NA,,,
+171,,Macalaster College,,2016,NA,NA,,NA,,,
+172,,Loyola University Chicago,,2016,NA,NA,,NA,,,
+173,,Brown University,,2016,NA,NA,,NA,,,
+174,,University of Toronto,,2016,NA,NA,,NA,,,
+175,,Ohio State University,OSU,2013,NA,NA,,NA,,,
+176,,Vassar College,,2017,NA,NA,,NA,,,
+177,,Purdue University,,2017,NA,NA,,NA,,,
+178,,Emory University,,2017,NA,NA,,NA,,,
+179,,Davidson College,,2017,NA,NA,,NA,,,
+180,,Middlebury College,,2017,NA,NA,,NA,,,
+181,,Wellesley College,,2017,NA,NA,,NA,,,
+182,,Wesleyan University,,2017,NA,NA,,NA,,,
+183,,Grand Valley State University,,2017,NA,NA,,NA,,,
+184,,Penn State University,,2017,NA,NA,,NA,,,
+185,,Ohio State University,OSU,2014,NA,NA,,NA,,,
+186,,University of Missouri,,2017,NA,NA,,NA,,,
+187,,Cleveland State University,,2017,NA,NA,,NA,,,
+188,,Ohio State University,OSU,2015,NA,NA,,NA,,,
+189,,Chapman University,,2017,NA,NA,,NA,,,
+190,BestInsight,Ohio State University,OSU,2016,Datafest 2016,The Imagineers,"Grant Savage, Brett Bejcek, Cameron Priest, Alisa Noll, Jack Schroder",NA,,,
+191,,Miami University (Ohio),,2017,NA,NA,,NA,,,
+192,,University of Massachusets,,2017,NA,NA,,NA,,,
+193,BestUseOfExternalData,Ohio State University,OSU,2016,EYE ON THE STORM:SEVERE WEATHER AND IMPLICATIONS FOR PRICE OPTIMIZATION ,Statistical Anomaly ,"Mae Hutchison, James White, Kathleen Fillingim, and Mohamed Meziane-Tani",NA,,,
+194,BestVisualization,Ohio State University,OSU,2016,Genre Popularity and Cost Point ,NA,"Kenji Gerhardt, Morgan Phillips ",NA,,,
+195,,University of Mannheim,,2017,NA,NA,,NA,,,
+196,,University of Virginia,,2017,NA,NA,,NA,,,
+197,,Virginia Tech,,2017,NA,NA,,NA,,,
+198,,"Summit Consulting, DC",,2017,NA,NA,,NA,,,
+199,,Case Western Reserve University,,2017,NA,NA,,NA,,,
+200,,Macalaster College,,2017,NA,NA,,NA,,,
+201,,Loyola University Chicago,,2017,NA,NA,,NA,,,
+202,,Brown University,,2017,NA,NA,,NA,,,
+203,,University of Toronto,,2017,NA,NA,,NA,,,
+204,,Ohio State University,OSU,2018,NA,NA,,NA,,,
+205,,Australian National University,,2017,NA,NA,,NA,,,
+206,,Ohio State University,OSU,2019,NA,NA,,NA,,,
+207,,Ohio State University,OSU,2020,NA,NA,,NA,,,
+208,,Ohio State University,OSU,2021,NA,NA,,NA,,,
+209,,Ohio State University,OSU,2022,NA,NA,,NA,,,
+210,BestBusinessInsight,Smith College,Smith,2017,"The relationship between length of stay, hotel quality and chance of booking",Standard Divination,"Sarah Abowitz, Garcia Sun, Cas Sweeney, Isabella Zhu",,,,
+211,BestInGroupA,Smith College,Smith,2017,How do Expedia�s customers make bookings?,Zest," Cheng-Yin Eng, Erin Mullin, Tam Tran-The, Ngoc Vu",,,,
+212,BestInGroupB,Smith College,Smith,2017,CUSTOMERS WHO ALMOST BOUGHT TRAVEL PACKAGES,DataBest,"Zainab Aqdas Rizvi, Subashini Sridhar, Ji Young Yun, Ji Won Chung, Van Nguyen",,,,
+212,BestInShow,Smith College,Smith,2017,CUSTOMERS WHO ALMOST BOUGHT TRAVEL PACKAGES,DataBest,"Zainab Aqdas Rizvi, Subashini Sridhar, Ji Young Yun, Ji Won Chung, Van Nguyen",,,,
+212,BestInGroupC,Smith College,Smith,2017,"Expedia: Clicks, Trip Length, and Conversions Among Packages",Off The GRID,"Robert Harris, Harley Jean, Elliot DeBruyn, Evan Moore, Vincent Lee",,,,
+,BestUseOfExternalData,Smith College,Smith,2017,Understanding Expedia Usage Across the United States: Where and When Expedia Should Advertise,Team Br3@d,"Laboni Hoque, Lucy Yuan, Fengling Hu, Audrey Cheng, Josh Campbell",,,,
+,BestStatsInterpret,Smith College,Smith,2017,DataFest 2017 ,Normally Distributed,"Zixian Li, Angie Dinh, Abby Doctor, Erina Fukuda, Raeesa Alam",,,,
+213,BestInGroupA,Smith College,Smith,2018,Indeed,Statistically Significant,"Samuel Baltrus, Kristen Bonsall, Diana Hansen, Henry Noke, Aidan Price",,,,
+214,BestInGroupB,Smith College,Smith,2018,Competitiveness: A New Job Search Filter,A-Super-NOVA,"Audrey Bertin, Riley Boeth, Emma Livingston, Clara Rosenberg, Kara VanAllen",,,,
+215,,University of Toronto,,2017,NA,NA,,NA,,,
+216,BestInGroupC,Smith College,Smith,2018,"Indeed: Clicks, Applies, and Job Opportunity",Regression Toward the Team,"Munkh-Erdene Baatarsuren, Ryan Cox, Evan Moore, Ilina Shah, Kristina Yamkovoy ",,,,
+,BestProduct,Smith College,Smith,2018,POPPFest 2018 ,ACOF,"Natalia Khoudian, Bodhi Nguyen, Brendan Seto, Jason Seto, Kelly Yang",,,,
+,BestQDriven,Smith College,Smith,2018,NA,The Cutting Edge,"Oliver Bradley, Shishir Jakati, Sean Kelley, Mukul Kudlugi, Sahil Magan",,,,
+,MostOriginalBusinessQ,Smith College,Smith,2018, How affective is the review system?,Datachamp 2,"Kendra Clemenzi, Priscilla Lu, Timothy Raxworthy, Tony Zhang",,,,
+216,BestInShow,Smith College,Smith,2018,"Indeed: Clicks, Applies, and Job Opportunity",Regression Toward the Team,"Munkh-Erdene Baatarsuren, Ryan Cox, Evan Moore, Ilina Shah, Kristina Yamkovoy ",,,,
+217,BestActionableInsight,Smith College,Smith,2019,Impact of Wellness & Practice on Game Speed,LeGit,"Victoria Zheng, Kelly Pien, Sunni Raleigh, Catherine Kung",,,,
+,BestDataInsight,Smith College,Smith,2019,How to Prepare for a Season ,Unofficial Intelligence,"Yanwan Zhu, Xian (Elaine) Ye, Rachel Yan, Kelly Shen, Yifan Ma, Nichole Yao",,,,
+,BestInGroupA,Smith College,Smith,2019,Effect of External Variables on Workload-Fatigue Relationship,Mount Histogram College,"Emma Grotto, Sara Pradan, Eleanor Harris",,,,
+,BestInGroupB,Smith College,Smith,2019,"Controlling Athlete Fatigue: A tool for coaches to minimize athlete fatigue
+ ",Data Pirates,"Tina Liu, Francesca Giardine, Jessica Keast",,,,
+,BestInGroupC,Smith College,Smith,2019,Quantifying and Predicting Exhaustion, LOAF,"Clara Seo, Esther Song, Fengling Hu, Laboni Hoque, Lesley Zheng",,,,
+,BestInShow,Smith College,Smith,2019,How Can You Measure Fatigue? Trust Your Athletes!,A-Super-NOVA,"Audrey Bertin, Arielle Dror, Clara Rosenberg, Kara Van Allen",,,,
+,BestMultilevelSolution,Smith College,Smith,2019,NA,ggsquad2," Paige Patrick, Elaona Lemoto, Mathena Abramson, Ana Porro, Jordan Moody",,,,
+218,,Smith College,Smith,2020,NA,NA,,NA,,,
+219,,Australian National University,,2018,NA,NA,,NA,,,
+220,,Smith College,Smith,2021,NA,NA,,NA,,,
+221,,Smith College,Smith,2022,NA,NA,,NA,,,
+222,,Southern Methodist University,SMU,2017,NA,NA,,NA,,,
+223,,Southern Methodist University,SMU,2018,NA,NA,,NA,,,
+224,BestInsight,Southern Methodist University,SMU,2019,R You Ready / #Save13 (Tie between two teams),,,,,,
+225,BestVisualization,Southern Methodist University,SMU,2019,Predicting Fatigue,,,,,,
+226,BestUseOfExternalData,Southern Methodist University,SMU,2019,Factors Affecting Fatigue in Canadian Women's 7's Rugby,,,,,,
+227,,University of Toronto,,2018,NA,NA,,NA,,,
+228,,Southern Methodist University,SMU,2020,NA,NA,,NA,,,
+229,BestInsight,Southern Methodist University,SMU,2021,Modeling opioid use using Bayesian methods and understanding drug gateways through network analysis,,,,,,
+230,BestVisualization,Southern Methodist University,SMU,2021,Indicators of substance abuse in individuals diagnosed with mental health disorders,,,,,,
+231,,Australian National University,,2019,NA,NA,,NA,,,
+232,BestUseOfExternalData,Southern Methodist University,SMU,2021,Female/Male Gender versus the Unprescribed Use of THC,,,,,,
+233,,Southern Methodist University,SMU,2022,Predictive Model for Teenagers' Skills,ASA Play Forward (Elm City Stories),,NA,,,
+234,,University of California Berkeley,UCB,2011,NA,NA,,NA,,,
+235,,University of California Berkeley,UCB,2012,NA,NA,,NA,,,
+236,,University of California Berkeley,UCB,2013,NA,NA,,NA,,,
+237,,University of California Berkeley,UCB,2014,NA,NA,,NA,,,
+238,,University of California Berkeley,UCB,2015,NA,NA,,NA,,,
+239,,University of Toronto,,2019,NA,NA,,NA,,,
+240,,University of California Berkeley,UCB,2016,NA,NA,,NA,,,
+241,,Australian National University,,2020,NA,NA,,NA,,,
+242,,University of California Berkeley,UCB,2017,NA,NA,,NA,,,
+243,,University of California Los Angeles,UCLA,2011,NA,NA,,NA,,,
+244,,University of California Los Angeles,UCLA,2012,NA,NA,,NA,,,
+245,,University of California Los Angeles,UCLA,2013,NA,NA,,NA,,,
+246,,University of California Los Angeles,UCLA,2014,NA,NA,,NA,,,
+247,,University of Toronto,,2020,NA,NA,,NA,,,
+248,,University of California Los Angeles,UCLA,2015,NA,NA,,NA,,,
+249,,University of California Los Angeles,UCLA,2016,NA,NA,,NA,,,
+250,,University of California Los Angeles,UCLA,2017,NA,NA,,NA,,,
+251,,Australian National University,,2021,NA,NA,,NA,,,
+252,,University of New Mexico,UNM,2011,NA,NA,,NA,,,
+253,,University of New Mexico,UNM,2012,NA,NA,,NA,,,
+254,,University of New Mexico,UNM,2013,NA,NA,,NA,,,
+255,,University of New Mexico,UNM,2014,NA,NA,,NA,,,
+256,,University of New Mexico,UNM,2015,NA,NA,,NA,,,
+257,,University of New Mexico,UNM,2016,NA,NA,,NA,,,
+258,,University of New Mexico,UNM,2017,NA,NA,,NA,,,
+259,BestInsight,University of Toronto,,2021,Statistical Analysis and Presentation on Drug Misuses,,,,,,
+260,BestVisualization,University of Toronto,,2021,Can Money Buy Happiness?,,,,,,
+261,BestUseOfExternalData,University of Toronto,,2021,An Analysis of Demographic Patterns and Frequent Combinations of Drug Misuse in Canada,,,,,,
+262,BestInsight,University of New Mexico,UNM,2017,Vizards,,,,,,
+263,BestVisualization,University of New Mexico,UNM,2017,The Tchebby Tchasers,,,,,,
+264,BestUseOfExternalData,University of New Mexico,UNM,2017,The Most Squares Problem,,,,,,
+265,,Australian National University,,2022,NA,NA,,NA,,,
+266,,University of New Mexico,UNM,2018,NA,NA,,NA,,,
+267,,University of New Mexico,UNM,2019,NA,NA,,NA,,,
+268,,University of New Mexico,UNM,2020,NA,NA,,NA,,,
+269,,University of New Mexico,UNM,2021,NA,NA,,NA,,,
+270,,University of New Mexico,UNM,2022,NA,NA,,NA,,,
+271,BestInsight,University of Toronto,,2022,Elm City Stories Analysis,,,,,,
+272,BestVisualization,University of Toronto,,2022,,PLAY2PREVENT Game Data Analysis,,,,,
+273,BestUseOfExternalData,University of Toronto,,2022,,,,A Demonstration on the Methods of Exploring the Play2Event Game Data (Best Statistical Analysis),,,
+190,BestOverallAnalysis,Ohio State University,OSU,2017,NA,Team America,"Ryan Cheng, John Robbins, and Michael Wyatt",NA,,,
+190,BestUseOfExternalData,Ohio State University,OSU,2017,FROSTBIT: Take advantage of changing weather,NA,"Kathleen Fillingim, Kathy Guo, Mae Hutchison, Mohamed Meziane-Tani,  James White",NA,,,
+190,BestVisualization,Ohio State University,OSU,2017,Where You Book Matters,NA,"Brett Bejcek, Nicole Casey, Brandon Muschlitz, Cameron Priest",NA,,,
+190,JudgesChoice,Ohio State University,OSU,2017,NA, Bayez II Men,Derek Sasthav Alisa Noll Amy Chiu Nicol Drozdowicz,NA,,,
