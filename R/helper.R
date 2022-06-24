@@ -9,12 +9,11 @@ library(usethis)
 library(wordcloud)
 library(shinyWidgets)
 library(shinydashboard)
-library(scales)
-
 
 # load data ---------------------------------------------------------
 
 datafest <- read.csv("data/datafest.csv")
+past_prompts <- read.csv("past_winners/past_prompts.csv")
 
 updated_datafest <- read.csv("data/updated_datafest.csv")
 datafest_titles <- read.csv("data/titles.csv")
