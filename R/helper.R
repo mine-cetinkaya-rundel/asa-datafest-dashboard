@@ -10,6 +10,8 @@ library(wordcloud)
 library(shinyWidgets)
 library(shinydashboard)
 library(scales)
+library(tm)
+library(slam)
 
 
 # load data ---------------------------------------------------------

@@ -51,7 +51,8 @@ body <- dashboardBody(
                  tags$a(href = "http://www.amstat.org/education/datafest/", "ASA DataFest"),
                  "over the years.",
                  "If your institution does not appear on the list, email",
-                 tags$a(href = "mailto:mine@stat.duke.edu", "mine@stat.duke.edu."))),
+                 tags$a(href = "mailto:mc301@duke.edu", " mc301@duke.edu"),
+                 ".")),
               br(),
       ),
       
@@ -218,15 +219,15 @@ server <- function(input, output, session) {
   # Create tab items in sidebar
   output$home <- renderMenu({
     sidebarMenu(
-      menuItem("Homepage", tabName = "home",icon = icon("home")))})
+      menuItem("Home", tabName = "home",icon = icon("home")))})
   
   output$host <- renderMenu({
     sidebarMenu(
-      menuItem("Host University", tabName = "host",icon = icon("university")))})
+      menuItem("Hosts", tabName = "host",icon = icon("university")))})
   
   output$winner <- renderMenu({
     sidebarMenu(
-      menuItem("Past Winners", tabName = "winner",icon = icon("award")))})
+      menuItem("Winners", tabName = "winner",icon = icon("award")))})
   
   d <- reactive({
     filter(datafest, year == input$year & df == "Yes")
@@ -406,7 +407,8 @@ server <- function(input, output, session) {
                          limits = c(0, max_tot_part)) +
       labs(title = "DataFest participants over time",
            subtitle = "Number of participants for each year") +
-      geom_text(aes(label = num_part, x = year, y = num_part), position = position_dodge(width = 0.8), vjust = 1.5, color = "#ff9700", size = 5) +
+      geom_text(aes(label = num_part, x = year, y = num_part), 
+                position = position_dodge(width = 0.8), vjust = 1.5, color = "#404040", size = 5) +
       theme(panel.grid.major = element_line(color="lightgray"),
             panel.grid.minor = element_line(color="lightgray"),
             panel.background = element_rect(fill="#EBEBEB"),
@@ -415,8 +417,9 @@ server <- function(input, output, session) {
       theme(plot.title = element_text(color = "#005e97", size = 20),
             plot.subtitle = element_text(size = 15),
             #plot.caption = element_text(color = "aquamarine4", size = 20, face = "italic"),
-            axis.text.x = element_text(size = 12),
-            axis.text.y = element_text(size = 12))
+            axis.text.x = element_text(size = 13),
+            axis.text.y = element_text(size = 13)) +
+      theme_minimal()
   }, bg="transparent")
   
   titles_subset <- eventReactive(input$search, {
