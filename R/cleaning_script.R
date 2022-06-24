@@ -24,7 +24,7 @@
 # df_cleaned <- df_cleaned[-c(1,2), ]
 # 
 # #delete unnecessary columns
-# df_cleaned <- subset(df_cleaned, select = -c(start_date,end_date,status,ip_address,progress,duration_in_seconds,finished,recipient_last_name,recipient_first_name,recipient_email,external_reference,user_language,distribution_channel,x1_4_22,x1_1_topics,x1_1_parent_topics,response_id) )
+# df_cleaned <- subset(df_cleaned, select = -c(start_date,end_date,status,ip_address,progress,duration_in_seconds,finished,recipient_last_name,recipient_first_name,recipient_email,external_reference,user_language,distribution_channel,x20,x1_4_22,x1_1_topics,x1_1_parent_topics,response_id) )
 # 
 # #delete pre 2017 info
 # df_cleaned <- subset(df_cleaned, select = -c(q51_id,q51_name,q51_size,q51_type,q51_url,q52,x1_4_29))
