@@ -17,7 +17,7 @@ library(scales)
 datafest <- read.csv("data/datafest.csv")
 past_prompts <- read.csv("data/past_winners/past_prompts.csv")
 updated_datafest <- read.csv("data/updated_datafest.csv")
-datafest_titles <- read.csv("data/titles.csv")
+datafest_titles <- read.csv("data/update_titles.csv")
 major_df <- updated_datafest %>%
   dplyr::select(host,year,major_dist)
 
