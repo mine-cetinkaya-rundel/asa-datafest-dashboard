@@ -12,6 +12,9 @@ library(shinydashboard)
 library(scales)
 library(tm)
 library(slam)
+library(httr)    
+set_config(use_proxy(url="10.3.100.207",port=8080))
+
 
 # load data ---------------------------------------------------------
 
@@ -20,7 +23,7 @@ past_prompts <- read.csv("data/past_winners/past_prompts.csv")
 updated_datafest <- read.csv("data/updated_datafest.csv")
 datafest_titles <- read.csv("data/update_titles.csv")
 datafest_titles <- datafest_titles[-c(1, 2, 3)]
-names(datafest_titles) <- gsub("_", " ", names(datafest_titles)) 
+names(datafest_titles) <- gsub("_", " ", names(datafest_titles), useBytes = TRUE) 
 datafest_titles <- datafest_titles %>%
   mutate(
     Slides = paste0("<a href='", Slides, "'>", as.character(icon("file-powerpoint", lib = "font-awesome")), "</a>"
