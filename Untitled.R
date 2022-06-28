@@ -1,4 +1,7 @@
 update_titles <- read.csv("/Users/yangzhenyu/asa-datafest-dashboard/data/update_titles.csv")
+
+update_titles <- update_titles %>% mutate_all(~gsub('[^ -~]', '', .))
+
 update_titles$Slides <- paste0(update_titles$Slides, ".pdf")
 update_titles$Awards <- gsub("([a-z])([A-Z])","\\1 \\2", update_titles$Awards)
 update_titles$other_awards <- gsub("([a-z])([A-Z])","\\1 \\2", update_titles$other_awards)
