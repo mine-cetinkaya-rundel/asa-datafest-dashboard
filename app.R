@@ -1,16 +1,5 @@
 # load helpers ------------------------------------------------------
 source("R/helper.R", local = TRUE)
-# # -------------------------------------------------------------------
-# 
-# datafest_titles <- datafest_titles %>%
-#   mutate(
-#     Slides = paste0("<a href='", Slides, "'>", as.character(icon("file-powerpoint", lib = "font-awesome")), "</a>"
-#     )
-#   )
-# 
-
-
-
 #--------------------------------------------------------------------
 header <- dashboardHeader(title = "ASA DataFest over the years", titleWidth = "350px")
 
