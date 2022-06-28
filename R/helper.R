@@ -22,8 +22,6 @@ datafest <- read.csv("data/datafest.csv")
 past_prompts <- read.csv("data/past_winners/past_prompts.csv")
 updated_datafest <- read.csv("data/updated_datafest.csv")
 datafest_titles <- read_csv("data/update_titles.csv")
-datafest_titles <- datafest_titles[-c(1, 2, 3)]
-datafest_titles <- datafest_titles %>% mutate_all(~gsub('[^ -~]', '', .))
 names(datafest_titles) <- gsub("_", " ", names(datafest_titles), useBytes = TRUE) 
 datafest_titles <- datafest_titles %>%
   mutate(
