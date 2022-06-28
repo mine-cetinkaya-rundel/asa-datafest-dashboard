@@ -21,8 +21,9 @@ set_config(use_proxy(url="10.3.100.207",port=8080))
 datafest <- read.csv("data/datafest.csv")
 past_prompts <- read.csv("data/past_winners/past_prompts.csv")
 updated_datafest <- read.csv("data/updated_datafest.csv")
-datafest_titles <- read.csv("data/update_titles.csv")
+datafest_titles <- read_csv("data/update_titles.csv")
 datafest_titles <- datafest_titles[-c(1, 2, 3)]
+datafest_titles <- datafest_titles %>% mutate_all(~gsub('[^ -~]', '', .))
 names(datafest_titles) <- gsub("_", " ", names(datafest_titles), useBytes = TRUE) 
 datafest_titles <- datafest_titles %>%
   mutate(
@@ -145,3 +146,4 @@ datasource <- data.frame(year, source_data)
 # country_hosts_df <- subset(datafest,
 #                            df =="Yes",
 #                            select= c("year","host","country","state","city","other_inst"))
+
