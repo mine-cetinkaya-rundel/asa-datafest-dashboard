@@ -10,7 +10,8 @@ library(wordcloud)
 library(shinyWidgets)
 library(shinydashboard)
 library(scales)
-
+library(tm)
+library(slam)
 
 # load data ---------------------------------------------------------
 
@@ -18,6 +19,13 @@ datafest <- read.csv("data/datafest.csv")
 past_prompts <- read.csv("data/past_winners/past_prompts.csv")
 updated_datafest <- read.csv("data/updated_datafest.csv")
 datafest_titles <- read.csv("data/update_titles.csv")
+datafest_titles <- datafest_titles[-c(1, 2, 3)]
+names(datafest_titles) <- gsub("_", " ", names(datafest_titles)) 
+datafest_titles <- datafest_titles %>%
+  mutate(
+    Slides = paste0("<a href='", Slides, "'>", as.character(icon("file-powerpoint", lib = "font-awesome")), "</a>"
+    )
+  )
 major_df <- updated_datafest %>%
   dplyr::select(host,year,major_dist)
 
