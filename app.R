@@ -444,7 +444,7 @@ server <- function(input, output, session) {
     
     ifelse(
       is.null(input$award_choice),
-      award <- c(sort(na.omit(unique(datafest_titles$Awards)))),
+      award <- (na.omit(unique(datafest_titles$Awards))),
       award <- input$award_choice)
 
     ifelse(
