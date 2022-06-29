@@ -36,7 +36,7 @@ body <- dashboardBody(
               fluidRow(box(width = 12,
                            sliderInput("year",
                                        "Year",
-                                       value = 2017,
+                                       value = 2017, # don't hard code this
                                        min = 2011, max = 2017, step = 1,
                                        width = "100%",
                                        animate = animationOptions(interval = 1500),
@@ -115,7 +115,11 @@ body <- dashboardBody(
                 br(),
                 #p("major distribution"),
                 # textOutput("major_distribution")
-              )
+              ),
+              #fluidRow(textOutput("major_distribution")),
+              fluidRow(plotOutput("wordcloud_host", width = "100%", height = "400px")),
+              br(),
+              fluidRow(textOutput("wordcloud_caption")),
       ),
       
       tabItem(tabName = "winner",
@@ -212,7 +216,10 @@ server <- function(input, output, session) {
       filter(host == input$college & df == "Yes" & year == input$uni_year) %>%
       dplyr::select(other_inst)
     coll = inst[[1]][1]
-    paste("Participating Institutions: ", coll)
+    if (is.na(coll)){
+      coll = "No other institutions"
+    }
+    paste("Other Participating Institutions: ", coll)
   })
   
   # Create tab items in sidebar
@@ -485,12 +492,32 @@ server <- function(input, output, session) {
     wordcloud(words = major_df$major_dist, rot.per=0, fixed.asp = FALSE,scale = c(6,0.5))
   })
   
+  output$wordcloud_host <- renderPlot({
+    
+    majors = updated_datafest %>%
+      #filter(host == input$college) 
+      filter(host == "Arizona State University", ) 
+    
+    majors <- majors$major_dist
+    majors <- sub('([;])|[[:punct:] ]+' , '\\1' , majors)
+    majors <- gsub('[[:digit:]]+', '', majors)
+    
+    #na.omit(majors)
+    #dev.new(width = 10000, height = 10000, unit = "px")
+    #DF <- as.data.frame(YourList)
+    #if (majors)
+    wordcloud(words = majors, rot.per=0, fixed.asp = FALSE,scale = c(2,0.5))
+  })
+  
   
   output$major_distribution <- renderText({
-    distr <- filter(major_df, Institution == input$college)
+    distr <- filter(updated_datafest, host == input$college)
     distr
   })
   
+  output$wordcloud_caption <- renderText({
+    paste("This word cloud represents the different majors of participants across all years up to ", input$uni_year, ".")
+  })
 }
 
 ############

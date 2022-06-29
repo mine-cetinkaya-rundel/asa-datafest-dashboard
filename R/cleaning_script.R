@@ -16,7 +16,7 @@
 # 
 # #create new df for cleaned data
 # #df_cleaned <- datafest_information_collection_sorted
-# df_cleaned <- read.csv("data/datafest_information_collection_sorted.csv", na.strings=c("", "NA", "N/A", "None", "(will need to dig up the ranking/% info)" ,"I don't know", "(we haven't requested titles for presentations)", "Not sure - SMU hosted but I was not on faculty then", "Did not gather this information"))
+# df_cleaned <- read.csv("data/DataFest Information Collection_June 28,2022_10.26", na.strings=c("", "NA", "N/A", "None", "(will need to dig up the ranking/% info)" ,"I don't know", "(we haven't requested titles for presentations)", "Not sure - SMU hosted but I was not on faculty then", "Did not gather this information"))
 # #format column names
 # df_cleaned <- clean_names(df_cleaned)
 # #colnames(df_cleaned) <- colnames(datafest_information_cleaned)
@@ -231,3 +231,5 @@
 # updated_datafest <- rbind(updated_datafest, df_new)
 # 
 # updated_datafest
+# 
+# #add df = yes
