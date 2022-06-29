@@ -112,7 +112,7 @@ popups <- paste0(
 )
 
 # calculate total participants for each year ------------------------
-part_count <- datafest %>%
+part_count <- updated_datafest %>%
   group_by(year) %>%
   summarise(tot_part = sum(num_part, na.rm = TRUE))
 
@@ -145,3 +145,11 @@ datasource <- data.frame(year, source_data)
 #                            df =="Yes",
 #                            select= c("year","host","country","state","city","other_inst"))
 
+majors <- updated_datafest$major_dist
+
+majors <- updated_datafest$major_dist
+majors <- unlist(strsplit(majors, "[;]"))
+majors <- gsub('[[:punct:]]+' , '' , majors)
+majors <- gsub('[[:digit:]]+', '', majors)
+majors <- str_trim(majors)
+majors <- str_squish(majors)

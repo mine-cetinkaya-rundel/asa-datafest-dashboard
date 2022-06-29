@@ -106,7 +106,7 @@ body <- dashboardBody(
                 # textOutput("major_distribution")
               ),
               #fluidRow(textOutput("major_distribution")),
-              fluidRow(plotOutput("wordcloud_host", width = "100%", height = "400px")),
+              plotOutput("wordcloud_host", width = "100%", height = "400px"),
               br(),
               fluidRow(textOutput("wordcloud_caption")),
       ),
@@ -495,20 +495,7 @@ server <- function(input, output, session) {
   })
   
   output$wordcloud_host <- renderPlot({
-    
-    majors = updated_datafest %>%
-      #filter(host == input$college) 
-      filter(host == "Arizona State University", ) 
-    
-    majors <- majors$major_dist
-    majors <- sub('([;])|[[:punct:] ]+' , '\\1' , majors)
-    majors <- gsub('[[:digit:]]+', '', majors)
-    
-    #na.omit(majors)
-    #dev.new(width = 10000, height = 10000, unit = "px")
-    #DF <- as.data.frame(YourList)
-    #if (majors)
-    wordcloud(words = majors, rot.per=0, fixed.asp = FALSE,scale = c(2,0.5))
+    wordcloud(words = na.omit(majors), rot.per=0.3,scale = c(6,0.75),colors=brewer.pal(8, "Dark2"))
   })
   
   
