@@ -10,14 +10,24 @@ library(wordcloud)
 library(shinyWidgets)
 library(shinydashboard)
 library(scales)
+library(tm)
+library(slam)
+library(httr)    
+set_config(use_proxy(url="10.3.100.207",port=8080))
 
 
 # load data ---------------------------------------------------------
 
 datafest <- read.csv("data/datafest.csv")
-
+past_prompts <- read.csv("data/past_winners/past_prompts.csv")
 updated_datafest <- read.csv("data/updated_datafest.csv")
-datafest_titles <- read.csv("data/titles.csv")
+datafest_titles <- read_csv("data/update_titles.csv")
+names(datafest_titles) <- gsub("_", " ", names(datafest_titles), useBytes = TRUE) 
+datafest_titles <- datafest_titles %>%
+  mutate(
+    Slides = paste0("<a href='", Slides, "'>", as.character(icon("file-powerpoint", lib = "font-awesome")), "</a>"
+    )
+  )
 major_df <- updated_datafest %>%
   dplyr::select(host,year,major_dist)
 
@@ -134,3 +144,4 @@ datasource <- data.frame(year, source_data)
 # country_hosts_df <- subset(datafest,
 #                            df =="Yes",
 #                            select= c("year","host","country","state","city","other_inst"))
+
