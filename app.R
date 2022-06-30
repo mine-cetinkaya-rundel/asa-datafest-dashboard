@@ -44,72 +44,72 @@ body <- dashboardBody(
               br(),
       ),
       
-      tabItem(tabName = "host",
-              fluidRow(
-                box(width = 3,
-                    selectInput("college", "College",
-                                choices = sort(unique(pull(datafest, "host"))),
-                                selected=sort(unique(pull(datafest, "host")))[19])),
-                box(width = 9,
-                    sliderInput("uni_year", "Year", value = 2017,
-                                min = 2011, max = 2017, step = 1,
-                                animate = animationOptions(interval = 1500),
-                                sep = "")
-                ),
-                textOutput("start_year"),
-                tags$head(tags$style("#start_year{color: #000000;
-                                 font-size: 20px;
-            font-style: bold; text-align: left;
-            }")),
-                br(),
-              ),
-              fluidRow(box(
-                plotOutput("line", height = "400px"),width = 9),
-                box(solidHeader = TRUE,
-                    title = p("Details",
-                              style = "font-size:22px;
-                                margin-bottom: 0.2em;
-                                color: #005e97"),
-                    hr(style = "margin-top: 0.1em; border-top: 1px solid"),
-                    textOutput("country"),
-                    tags$head(tags$style("#country{color: #001833;
-                                 font-size: 18px;
-            font-family:'Trebuchet MS', sans-serif; font-style: bold;
-            }")),
-                    br(),
-                    textOutput("state"),
-                    tags$head(tags$style("#state{color: #001833;
-                                 font-size: 18px;
-            font-family:'Trebuchet MS', sans-serif;font-style: bold;
-            }")),
-                    br(),
-                    textOutput("city"),
-                    tags$head(tags$style("#city{color: #001833;
-                                 font-size: 18px;
-            font-family:'Trebuchet MS', sans-serif;font-style: bold;
-            }")),
-                    br(),
-                    textOutput("other_inst"),
-                    tags$head(tags$style("#other_inst{color: #001833;
-                                 font-size: 18px;
-            font-family:'Trebuchet MS', sans-serif;font-style: bold;
-            }")),
-                    br(),
-                    textOutput("percent"),
-                    tags$head(tags$style("#percent{color: #001833;
-                                 font-size: 18px;
-            font-family:'Trebuchet MS', sans-serif;font-style: bold;
-            }")),
-                    width = 3, height = "420px"),
-                br(),
-                #p("major distribution"),
-                # textOutput("major_distribution")
-              ),
-              #fluidRow(textOutput("major_distribution")),
-              plotOutput("wordcloud_host", width = "100%", height = "400px"),
-              br(),
-              fluidRow(textOutput("wordcloud_caption")),
-      ),
+       tabItem(tabName = "host",
+               fluidRow(
+                 box(width = 3,
+                     selectInput("college", "College",
+                                 choices = sort(unique(pull(updated_datafest, "host"))),
+                                 selected=sort(unique(pull(updated_datafest, "host")))[19])),
+                 box(width = 9,
+                     sliderInput("uni_year", "Year", value = 2017,
+                                 min = min_year, max = max_year, step = 1,
+                                 animate = animationOptions(interval = 1500),
+                                 sep = "")
+                 ),
+                 textOutput("start_year"),
+                 tags$head(tags$style("#start_year{color: #000000;
+                                  font-size: 20px;
+             font-style: bold; text-align: left;
+             }")),
+                 br(),
+               ),
+               fluidRow(box(
+                 plotOutput("line", height = "400px"),width = 9),
+                 box(solidHeader = TRUE,
+                     title = p("Details",
+                               style = "font-size:22px;
+                                 margin-bottom: 0.2em;
+                                 color: #005e97"),
+                     hr(style = "margin-top: 0.1em; border-top: 1px solid"),
+                     textOutput("country"),
+                     tags$head(tags$style("#country{color: #001833;
+                                  font-size: 18px;
+             font-family:'Trebuchet MS', sans-serif; font-style: bold;
+             }")),
+                     br(),
+                     textOutput("state"),
+                     tags$head(tags$style("#state{color: #001833;
+                                  font-size: 18px;
+             font-family:'Trebuchet MS', sans-serif;font-style: bold;
+             }")),
+                     br(),
+                     textOutput("city"),
+                     tags$head(tags$style("#city{color: #001833;
+                                  font-size: 18px;
+             font-family:'Trebuchet MS', sans-serif;font-style: bold;
+             }")),
+                     br(),
+                     textOutput("other_inst"),
+                     tags$head(tags$style("#other_inst{color: #001833;
+                                  font-size: 18px;
+             font-family:'Trebuchet MS', sans-serif;font-style: bold;
+             }")),
+                     br(),
+                     textOutput("uni_proportion"),
+                     tags$head(tags$style("#uni_proportion{color: #001833;
+                                  font-size: 18px;
+             font-family:'Trebuchet MS', sans-serif;font-style: bold;
+             }")),
+                     width = 3, height = "420px"),
+                 br(),
+                 #p("major distribution"),
+                 # textOutput("major_distribution")
+               ),
+               #fluidRow(textOutput("major_distribution")),
+               plotOutput("wordcloud_host", width = "100%", height = "400px"),
+               br(),
+               fluidRow(textOutput("wordcloud_caption")),
+       ),
       
       tabItem(tabName = "winner",
               fluidRow(
@@ -170,7 +170,7 @@ ui <- dashboardPage(
 server <- function(input, output, session) {
   
   output$start_year <- renderText({
-    year_start = datafest %>%
+    year_start = updated_datafest %>%
       filter(host == input$college & df == "Yes") %>%
       dplyr::select(year)
     min_year = min(year_start[[1]])
@@ -178,7 +178,7 @@ server <- function(input, output, session) {
   })
   
   output$country <- renderText({
-    loc_country = datafest %>%
+    loc_country = updated_datafest %>%
       filter(host == input$college) %>%
       dplyr::select(country)
     country = loc_country[[1]][1]
@@ -186,7 +186,7 @@ server <- function(input, output, session) {
   })
   
   output$state <- renderText({
-    loc_state = datafest %>%
+    loc_state = updated_datafest %>%
       filter(host == input$college) %>%
       dplyr::select(state)
     state = loc_state[[1]][1]
@@ -194,30 +194,33 @@ server <- function(input, output, session) {
   })
   
   output$city <- renderText({
-    loc_city = datafest %>%
+    loc_city = updated_datafest %>%
       filter(host == input$college) %>%
       dplyr::select(city)
     city = loc_city[[1]][1]
     paste("City:", city)
   })
   
-  output$percent <- renderText({
-    part = datafest %>%
+  output$uni_proportion <- renderText({
+    part = updated_datafest %>%
       filter(year == input$uni_year) %>%
       dplyr::select(num_part) %>%
       drop_na()
     totpart = sum(part$num_part)
-    host =  datafest %>%
+    host =  updated_datafest %>%
       filter(host == input$college, year == input$uni_year) %>%
       dplyr::select(num_part) %>%
       drop_na()
     uni = host$num_part
-    percent = percent(uni/totpart, accuracy = 0.01)
-    paste("Proportion of total participants in ", input$uni_year, ": ", percent)
+    uni_prop = percent(uni/totpart, accuracy = 0.01)
+    if (is_empty(uni_prop)){
+      uni_prop = percent(0)
+    }
+    paste("Proportion of total participants in ", input$uni_year, ": ", uni_prop)
   })
   
   output$other_inst <- renderText({
-    inst = datafest %>%
+    inst = updated_datafest %>%
       filter(host == input$college & df == "Yes" & year == input$uni_year) %>%
       dplyr::select(other_inst)
     coll = inst[[1]][1]
@@ -412,8 +415,8 @@ server <- function(input, output, session) {
       geom_line(color = "#005e97", size=1.25) +
       geom_point(color = "#005e97",size = 1.5) +
       scale_x_continuous("Year",
-                         limits = c(2011, 2017),
-                         breaks = c(2011:2017)) +
+                         limits = c(min_year, max_year),
+                         breaks = c(min_year:max_year)) +
       scale_y_continuous("",
                          limits = c(0, max_tot_part)) +
       labs(title = "DataFest participants over time",
@@ -482,26 +485,26 @@ server <- function(input, output, session) {
   )
   
   
-  ## Adding Word Cloud
-  
-  
+  #Adding Word Cloud
   output$wordcloud <- renderPlot({
-    Major <- c("Stats", "Computer Science", "Pure Math", "Applied Math","Business")
-    Freq <- c(23, 41, 32, 58,10,3,2)
-    
-    #dev.new(width = 10000, height = 10000, unit = "px")
-    #DF <- as.data.frame(YourList)
     wordcloud(words = major_df$major_dist, rot.per=0, fixed.asp = FALSE,scale = c(6,0.5))
   })
   
   output$wordcloud_host <- renderPlot({
-    wordcloud(words = na.omit(majors), rot.per=0.3,scale = c(6,0.75),colors=brewer.pal(8, "Dark2"))
-  })
-  
-  
-  output$major_distribution <- renderText({
-    distr <- filter(updated_datafest, host == input$college)
-    distr
+    majors <- filter(updated_datafest,host == input$college)
+    majors <- majors$major_dist
+    
+    majors <- unlist(strsplit(majors, "[;]"))
+    majors <- gsub('[[:punct:]]+' , '' , majors)
+    majors <- gsub('[[:digit:]]+', '', majors)
+    majors <- str_trim(majors)
+    majors <- str_squish(majors)
+    
+    if (all(is.na(majors))){
+      majors <- c("No Cloud")
+    }
+    
+    wordcloud(words = na.omit(majors), rot.per=0.3,scale = c(6,0.75),colors=brewer.pal(8, "Dark2"),min.freq = 1)
   })
   
   output$wordcloud_caption <- renderText({

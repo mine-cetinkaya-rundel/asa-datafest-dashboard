@@ -29,12 +29,16 @@ datafest_titles <- datafest_titles %>%
     )
   )
 major_df <- updated_datafest %>%
-  dplyr::select(host,year,major_dist)
+  dplyr::select(host,year,major_dist) %>%
+  na.omit()
 
-major_df <- na.omit(major_df)
+#max and min years
+max_year <- max(updated_datafest$year)
+min_year <- min(updated_datafest$year)
 
+#updated
 # get data for universities page
-universities_df <- datafest %>%
+universities_df <- updated_datafest %>%
   dplyr::select(host, year, num_part)
 
 #Map
@@ -111,6 +115,7 @@ popups <- paste0(
   host_text, other_inst_text, "<br>" , part_text
 )
 
+#updated
 # calculate total participants for each year ------------------------
 part_count <- updated_datafest %>%
   group_by(year) %>%
@@ -120,23 +125,23 @@ part_count <- updated_datafest %>%
 # min_tot_part <- min(part_count$tot_part)
 # max_tot_part <- max(part_count$tot_part)
 
-
+#updated
 # calculate total countries participating for each year ------------------------
-df_yes <- datafest[datafest$df == "Yes", ]
+df_yes <- updated_datafest[updated_datafest$df == "Yes", ]
 country_count <- df_yes %>%
   group_by(year) %>%
   summarise(tot_country = n_distinct(country))
 
+#updated
 # calculate total hosts participating for each year ------------------------
-df_yes <- datafest[datafest$df == "Yes", ]
 host_count <- df_yes %>%
   group_by(year) %>%
   summarise(tot_host = n_distinct(host))
 
 ## calculate DataSource list for each year ----------------------
-year <- c("2011","2012","2013","2014","2015","2016","2017")
+year <- c("2011","2012","2013","2014","2015","2016","2017","2018","2019","2020","2021","2022")
 #"2018","2019","2020","2021","2022")
-source_data <- c("LAPD","Kiva.com","eHarmony","GridPoint","Edmunds.com","Ticketmaster", "Expedia")
+source_data <- c("LAPD","Kiva.com","eHarmony","GridPoint","Edmunds.com","Ticketmaster", "Expedia","Indeed", "Canadian National Women's Rugby Team","COVID-19 Virtual Data Challenge","Rocky Mountain Poison and Drug Safety","Play2Prevent Lab")
 #"Indeed","Candadian National Women's Rugby Team","Covid-19 (Virtual Data Challenge)","Rocky Mountain Posion and Drug Safety","Play2Prevent Lab")
 datasource <- data.frame(year, source_data)
 
@@ -145,11 +150,3 @@ datasource <- data.frame(year, source_data)
 #                            df =="Yes",
 #                            select= c("year","host","country","state","city","other_inst"))
 
-majors <- updated_datafest$major_dist
-
-majors <- updated_datafest$major_dist
-majors <- unlist(strsplit(majors, "[;]"))
-majors <- gsub('[[:punct:]]+' , '' , majors)
-majors <- gsub('[[:digit:]]+', '', majors)
-majors <- str_trim(majors)
-majors <- str_squish(majors)
