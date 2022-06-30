@@ -487,7 +487,13 @@ server <- function(input, output, session) {
   
   #Adding Word Cloud
   output$wordcloud <- renderPlot({
-    wordcloud(words = major_df$major_dist, rot.per=0, fixed.asp = FALSE,scale = c(6,0.5))
+    all_majors <- major_df$major_dist
+    all_majors <- unlist(strsplit(all_majors, "[;]"))
+    all_majors <- gsub('[[:punct:]]+' , '' , all_majors)
+    all_majors <- gsub('[[:digit:]]+', '', all_majors)
+    all_majors <- str_trim(all_majors)
+    all_majors <- str_squish(all_majors)
+    wordcloud(words = all_majors, rot.per=0.3,scale = c(6,0.75), colors = brewer.pal(8, "Dark2"), min.freq = 1)
   })
   
   output$wordcloud_host <- renderPlot({
@@ -501,7 +507,7 @@ server <- function(input, output, session) {
     majors <- str_squish(majors)
     
     if (all(is.na(majors))){
-      majors <- c("No Cloud")
+      majors <- c("None")
     }
     
     wordcloud(words = na.omit(majors), rot.per=0.3,scale = c(6,0.75),colors=brewer.pal(8, "Dark2"),min.freq = 1)
