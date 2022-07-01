@@ -18,10 +18,10 @@ set_config(use_proxy(url="10.3.100.207",port=8080))
 
 # load data ---------------------------------------------------------
 
-datafest <- read_csv("data/datafest.csv")
-past_prompts <- read_csv("data/past_winners/past_prompts.csv")
-updated_datafest <- read_csv("data/updated_datafest.csv")
-datafest_titles <- read_csv("data/update_titles.csv")
+datafest <- read.csv("data/datafest.csv")
+past_prompts <- read.csv("data/past_winners/past_prompts.csv")
+updated_datafest <- read.csv("data/updated_datafest.csv")
+datafest_titles <- read.csv("data/update_titles.csv")
 names(datafest_titles) <- gsub("_", " ", names(datafest_titles), useBytes = TRUE) 
 datafest_titles <- datafest_titles %>%
   mutate(
@@ -44,10 +44,10 @@ universities_df <- updated_datafest %>%
 #Map
 
 # set map bounds ----------------------------------------------------
-left <- floor(min(datafest$lon))
-right <- ceiling(max(datafest$lon))
-bottom <- floor(min(datafest$lat))
-top <- ceiling(max(datafest$lat))
+left <- floor(min(updated_datafest$lon))
+right <- ceiling(max(updated_datafest$lon))
+bottom <- floor(min(updated_datafest$lat))
+top <- ceiling(max(updated_datafest$lat))
 
 
 # set colors --------------------------------------------------------
@@ -57,11 +57,11 @@ part_color <- "#CC9966"
 
 states <- geojsonio::geojson_read("https://rstudio.github.io/leaflet/json/us-states.geojson", what = "sp")
 countries <- geojsonio::geojson_read("https://raw.githubusercontent.com/johan/world.geo.json/master/countries.geo.json", what = "sp")
-country <- countries[countries$name %in% datafest$country,]
-recent <- datafest %>% 
+country <- countries[countries$name %in% updated_datafest$country,]
+recent <- updated_datafest %>% 
   filter(year == max(year))
 write.csv(recent, "data/recent.csv")
-num_part <- datafest %>% 
+num_part <- updated_datafest %>% 
   filter(!is.na(num_part)) %>% 
   group_by(year, state) %>% 
   summarise(num = sum(num_part))
@@ -71,8 +71,10 @@ country$density = NA
 states <- rbind(states,country)
 
 participants <- recent %>%
-  mutate(state = case_when(country == "Germany"~ "Germany",
-                           country == "Canada"~ "Canada",
+  filter(!is.na(state)) %>% 
+  mutate(state = case_when(country == "Germany" ~ "Germany",
+                           country == "Canada" ~ "Canada",
+                           country == "Australia" ~ "Australia",
                            state == "Minnessota"~ "Minnesota",
                            TRUE ~ state)) %>%
   dplyr::select(state, num_part) %>%
@@ -89,7 +91,45 @@ for (i in 1:nrow(states)) {
   }
 }
 
-bins <- c(0, 10, 20, 40, 60, 80, 100, 200, 300, 400, max_part)
+
+
+leaflet() %>%
+  addProviderTiles("CartoDB.Voyager") %>% 
+  fitBounds(left, bottom, right, top) %>% 
+  #addControl(h1(input$year), position = "topright") %>% 
+  addPolygons(
+    data = states,
+    fillColor = ~pal(num_par),
+    weight = 1,
+    opacity = 1,
+    color = "lightgray",
+    dashArray = "",
+    fillOpacity = 1,
+    highlightOptions = highlightOptions(
+      weight = 3,
+      color = "lightgray",
+      dashArray = "2",
+      fillOpacity = 0.9,
+      bringToFront = FALSE),
+    label = labels,
+    labelOptions = labelOptions(
+      style = list("font-weight" = "normal",
+                   padding = "3px 8px",
+                   "color" = "#999999"),
+      textsize = "10px",
+      direction = "auto")) %>% 
+  addLegend(pal = pal, values = bins, opacity = 0.7, title = "Number of Participants",
+            position = "bottomright") %>% 
+  addCircleMarkers(lng = recent$lon, lat = recent$lat,
+                   radius = log(recent$num_part)/2,
+                   fillColor = marker_color,
+                   color = marker_color,
+                   weight = 3,
+                   fillOpacity = 0.5,
+                   popup = popups)
+
+
+bins <- c(0, 10, 20, 40, 70, 100, 200, 400, max_part)
 pal <- colorBin("Blues", domain = states$num_par, bins = bins)
 
 labels <- sprintf(

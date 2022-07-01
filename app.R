@@ -24,10 +24,10 @@ body <- dashboardBody(
               fluidRow(box(width = 12,
                            sliderInput("year",
                                        "Year",
-                                       value = 2017, # don't hard code this
-                                       min = 2011, max = 2017, step = 1,
+                                       value = recent$year[1], # don't hard code this
+                                       min = 2011, max = 2022,
                                        width = "100%",
-                                       animate = animationOptions(interval = 1500),
+                                       animate = animationOptions(interval = 1000),
                                        sep = ""))),
               br(),
               fluidRow(h4("This map represents the geographic distribution of DataFest participants over the years. Click on the points to find out more about each event.")),
@@ -244,7 +244,7 @@ server <- function(input, output, session) {
       menuItem("Winners", tabName = "winner",icon = icon("award")))})
   
   d <- reactive({
-    filter(datafest, year == input$year & df == "Yes")
+    filter(updated_datafest, year == input$year & df == "Yes")
   })
   
   
@@ -318,6 +318,7 @@ server <- function(input, output, session) {
     participants <- d() %>%
       mutate(state = case_when(country == "Germany"~ "Germany",
                                country == "Canada"~ "Canada",
+                               country == "Australia" ~ "Australia",
                                state == "Minnessota"~ "Minnesota",
                                TRUE ~ state)) %>%
       dplyr::select(state, num_part) %>%
