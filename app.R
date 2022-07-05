@@ -141,6 +141,8 @@ body <- dashboardBody(
                 box(
                   solidHeader = TRUE,
                   title = p(paste0("Data Description")),
+                  textOutput("provider"),
+                  br(),
                   textOutput("prompt"),
                   tags$head(tags$style("#state{color: #001833;
                                  font-size: 18px;
@@ -442,6 +444,16 @@ server <- function(input, output, session) {
   
   
     #print the competition goal for the selected year on winners tab
+  source_text <- eventReactive(input$search, {
+    text <- datasource %>% 
+    filter(year == input$year_choice)
+    datasource <- paste0("Data Provider: ", text$source_data[1])
+    paste(datasource)})
+  
+  output$provider <- renderText({
+    source_text()
+  })
+  
     prompts <- eventReactive(input$search,{
       text <- past_prompts %>% 
         filter(year == input$year_choice)
