@@ -218,7 +218,6 @@ server <- function(input, output, session) {
     }
     paste("Proportion of total participants in ", input$uni_year, ": ", uni_prop)
   })
-  
   output$other_inst <- renderText({
     inst = updated_datafest %>%
       filter(host == input$college & df == "Yes" & year == input$uni_year) %>%
