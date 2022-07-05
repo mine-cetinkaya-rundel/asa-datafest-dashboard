@@ -24,11 +24,12 @@ body <- dashboardBody(
               fluidRow(box(width = 12,
                            sliderInput("year",
                                        "Year",
-                                       value = recent$year[1], # don't hard code this
-                                       min = 2011, max = 2022,
+                                       value = max_year, # don't hard code this
+                                       min = min_year, max = max_year, step = 1,
                                        width = "100%",
-                                       animate = animationOptions(interval = 1000),
-                                       sep = ""))),
+                                       animate = animationOptions(interval = 1500),
+                                       sep = "",
+                                       ticks = FALSE))),
               br(),
               fluidRow(h4("This map represents the geographic distribution of DataFest participants over the years. Click on the points to find out more about each event.")),
               fluidRow(leafletOutput("map")),
@@ -250,6 +251,9 @@ server <- function(input, output, session) {
   
   
   output$map <- renderLeaflet({
+    popups <- paste0(
+      host_text, other_inst_text, "<br>" , part_text
+    )
     leaflet() %>%
       addProviderTiles("CartoDB.Voyager") %>% 
       fitBounds(left, bottom, right, top) %>% 
@@ -277,8 +281,8 @@ server <- function(input, output, session) {
           direction = "auto")) %>% 
       addLegend(pal = pal, values = bins, opacity = 0.7, title = "Number of Participants",
                 position = "bottomright") %>% 
-      addCircleMarkers(lng = recent$lon, lat = recent$lat,
-                       radius = log(recent$num_part)/2,
+      addCircleMarkers(lng = d()$lon, lat = d()$lat,
+                       radius = log(d()$num_part)/2,
                        fillColor = marker_color,
                        color = marker_color,
                        weight = 3,
@@ -485,39 +489,40 @@ server <- function(input, output, session) {
     digits = 0
   )
   
-  
+library(tm)
+library(slam) 
   #Adding Word Cloud
-  output$wordcloud <- renderPlot({
-    all_majors <- major_df$major_dist
-    all_majors <- unlist(strsplit(all_majors, "[;]"))
-    all_majors <- gsub('[[:punct:]]+' , '' , all_majors)
-    all_majors <- gsub('[[:digit:]]+', '', all_majors)
-    all_majors <- str_trim(all_majors)
-    all_majors <- str_squish(all_majors)
-    wordcloud(words = all_majors, rot.per=0.3,scale = c(6,0.75), colors = brewer.pal(8, "Dark2"), min.freq = 1)
-  })
-  
+output$wordcloud <- renderPlot({
+  all_majors <- major_df$major_dist
+  all_majors <- unlist(strsplit(all_majors, "[;]"))
+  all_majors <- gsub('[[:punct:]]+' , '' , all_majors)
+  all_majors <- gsub('[[:digit:]]+', '', all_majors)
+  all_majors <- str_trim(all_majors)
+  all_majors <- str_squish(all_majors)
+  wordcloud::wordcloud(words = all_majors, rot.per=0.3,scale = c(6,0.75), colors = brewer.pal(8, "Dark2"), min.freq = 1)
+})
+
   output$wordcloud_host <- renderPlot({
     majors <- filter(updated_datafest,host == input$college)
     majors <- majors$major_dist
-    
+
     majors <- unlist(strsplit(majors, "[;]"))
     majors <- gsub('[[:punct:]]+' , '' , majors)
     majors <- gsub('[[:digit:]]+', '', majors)
     majors <- str_trim(majors)
     majors <- str_squish(majors)
-    
+
     if (all(is.na(majors))){
       majors <- c("None")
     }
-    
-    wordcloud(words = na.omit(majors), rot.per=0.3,scale = c(6,0.75),colors=brewer.pal(8, "Dark2"),min.freq = 1)
+
+    wordcloud::wordcloud(words = na.omit(majors), rot.per=0.3,scale = c(6,0.75),colors=brewer.pal(8, "Dark2"),min.freq = 1)
   })
-  
+
   output$wordcloud_caption <- renderText({
     paste("This word cloud represents the different majors of participants across all years up to ", input$uni_year, ".")
   })
-}
+ }
 
 ############
 shinyApp(ui = ui, server = server)
