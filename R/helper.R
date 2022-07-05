@@ -59,7 +59,7 @@ states <- geojsonio::geojson_read("https://rstudio.github.io/leaflet/json/us-sta
 countries <- geojsonio::geojson_read("https://raw.githubusercontent.com/johan/world.geo.json/master/countries.geo.json", what = "sp")
 country <- countries[countries$name %in% updated_datafest$country,]
 recent <- updated_datafest %>% 
-  filter(year == max(year))
+  filter(year == max_year)
 write.csv(recent, "data/recent.csv")
 num_part <- updated_datafest %>% 
   filter(!is.na(num_part)) %>% 
@@ -71,9 +71,8 @@ country$density = NA
 states <- rbind(states,country)
 
 participants <- recent %>%
-  filter(!is.na(state)) %>% 
-  mutate(state = case_when(country == "Germany" ~ "Germany",
-                           country == "Canada" ~ "Canada",
+  mutate(state = case_when(country == "Germany"~ "Germany",
+                           country == "Canada"~ "Canada",
                            country == "Australia" ~ "Australia",
                            state == "Minnessota"~ "Minnesota",
                            TRUE ~ state)) %>%
@@ -91,45 +90,7 @@ for (i in 1:nrow(states)) {
   }
 }
 
-
-
-leaflet() %>%
-  addProviderTiles("CartoDB.Voyager") %>% 
-  fitBounds(left, bottom, right, top) %>% 
-  #addControl(h1(input$year), position = "topright") %>% 
-  addPolygons(
-    data = states,
-    fillColor = ~pal(num_par),
-    weight = 1,
-    opacity = 1,
-    color = "lightgray",
-    dashArray = "",
-    fillOpacity = 1,
-    highlightOptions = highlightOptions(
-      weight = 3,
-      color = "lightgray",
-      dashArray = "2",
-      fillOpacity = 0.9,
-      bringToFront = FALSE),
-    label = labels,
-    labelOptions = labelOptions(
-      style = list("font-weight" = "normal",
-                   padding = "3px 8px",
-                   "color" = "#999999"),
-      textsize = "10px",
-      direction = "auto")) %>% 
-  addLegend(pal = pal, values = bins, opacity = 0.7, title = "Number of Participants",
-            position = "bottomright") %>% 
-  addCircleMarkers(lng = recent$lon, lat = recent$lat,
-                   radius = log(recent$num_part)/2,
-                   fillColor = marker_color,
-                   color = marker_color,
-                   weight = 3,
-                   fillOpacity = 0.5,
-                   popup = popups)
-
-
-bins <- c(0, 10, 20, 40, 70, 100, 200, 400, max_part)
+bins <- c(0, 10, 20, 40, 80, 100, 200, 300, 400, max_part)
 pal <- colorBin("Blues", domain = states$num_par, bins = bins)
 
 labels <- sprintf(
@@ -138,17 +99,17 @@ labels <- sprintf(
 ) %>% lapply(htmltools::HTML)
 
 host_text <- paste0(
-  "<b><a href='", datafest$url, "' style='color:", href_color, "'>", datafest$host, "</a></b>"
+  "<b><a href='", recent$url, "' style='color:", href_color, "'>", recent$host, "</a></b>"
 )
 
 other_inst_text <- paste0(
-  ifelse(is.na(datafest$other_inst),
+  ifelse(is.na(recent$other_inst),
          "",
-         paste0("<br>", "with participation from ", datafest$other_inst))
+         paste0("<br>", "with participation from ", recent$other_inst))
 )
 
 part_text <- paste0(
-  "<font color=", part_color,">", datafest$num_part, " participants</font>"
+  "<font color=", part_color,">", recent$num_part, " participants</font>"
 )
 
 popups <- paste0(
@@ -157,7 +118,7 @@ popups <- paste0(
 
 #updated
 # calculate total participants for each year ------------------------
-part_count <- updated_datafest %>%
+part_count <- recent %>%
   group_by(year) %>%
   summarise(tot_part = sum(num_part, na.rm = TRUE))
 
@@ -179,8 +140,7 @@ host_count <- df_yes %>%
   summarise(tot_host = n_distinct(host))
 
 ## calculate DataSource list for each year ----------------------
-year <- c("2011","2012","2013","2014","2015","2016","2017","2018","2019","2020","2021","2022")
-#"2018","2019","2020","2021","2022")
+year <- unique(updated_datafest$year)
 source_data <- c("LAPD","Kiva.com","eHarmony","GridPoint","Edmunds.com","Ticketmaster", "Expedia","Indeed", "Canadian National Women's Rugby Team","COVID-19 Virtual Data Challenge","Rocky Mountain Poison and Drug Safety","Play2Prevent Lab")
 #"Indeed","Candadian National Women's Rugby Team","Covid-19 (Virtual Data Challenge)","Rocky Mountain Posion and Drug Safety","Play2Prevent Lab")
 datasource <- data.frame(year, source_data)
