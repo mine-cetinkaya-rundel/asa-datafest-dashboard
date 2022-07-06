@@ -291,20 +291,25 @@ server <- function(input, output, session) {
                                state == "Minnessota"~ "Minnesota",
                                TRUE ~ state)) %>%
       dplyr::select(state, num_part) %>%
-      dplyr::rename(name = state) %>% 
-      filter(!is.na(num_part))
+      dplyr::rename(name = state)
     
     # calculate total participants in each state
     states$num_par=0
-    for (i in 1:nrow(states)) {
-      for (j in 1:nrow(participants)) {
-        if (states$name[i] == participants$name[j]) {
-          if (!is.na(participants$num_part[j])) {
-            states$num_par[i] = states$num_par[i] + participants$num_part[j]
-          }
+    if (nrow(participants!=0)) {
+      for (i in 1:nrow(states)) {
+        for (j in 1:nrow(participants)) {
+          #if(!is.na(states$name[i]) & !is.na(participants$name[j])){
+            if (states$name[i] == participants$name[j]) {
+              if (!is.na(participants$num_part[j])) {
+                states$num_par[i] = states$num_par[i] + participants$num_part[j]
+              }
+            }
+          #}
         }
       }
     }
+    
+    pal <- colorBin("Blues", domain = states$num_par, bins = bins)
     
     leaflet() %>%
       clearControls() %>% 

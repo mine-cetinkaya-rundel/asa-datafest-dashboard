@@ -71,11 +71,13 @@ num_part <- updated_datafest %>%
   summarise(num = sum(num_part))
 max_part <- as.numeric(max(num_part$num))
 
+states <- states[,!names(states)=="density"]
 canada$id <- canada$cartodb_id
 canada <- canada[,!(names(canada) %in% c("cartodb_id", "created_at", "updated_at"))]
-canada$density = NA
-country$density = NA
 states <- rbind(states, canada, country)
+
+bins <- c(0, 10, 20, 40, 80, 100, 200, 300, 400, max_part)
+
 
 #updated
 # calculate total countries participating for each year ------------------------
@@ -99,4 +101,7 @@ datasource <- data.frame(year, source_data)
 # country_hosts_df <- subset(datafest,
 #                            df =="Yes",
 #                            select= c("year","host","country","state","city","other_inst"))
+
+
+
 
