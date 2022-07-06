@@ -28,8 +28,7 @@ body <- dashboardBody(
                                        min = min_year, max = max_year, step = 1,
                                        width = "100%",
                                        animate = animationOptions(interval = 1500),
-                                       sep = "",
-                                       ticks = FALSE))),
+                                       sep = ""))),
               br(),
               fluidRow(h4("This map represents the geographic distribution of DataFest participants over the years. Click on the points to find out more about each event.")),
               fluidRow(leafletOutput("map")),
@@ -102,11 +101,16 @@ body <- dashboardBody(
              font-family:'Trebuchet MS', sans-serif;font-style: bold;
              }")),
                      width = 3, height = "420px"),
-                 br(),
                  #p("major distribution"),
                  # textOutput("major_distribution")
                ),
                #fluidRow(textOutput("major_distribution")),
+               textOutput("missing_year"),
+               tags$head(tags$style("#missing_year{color: #000000;
+                                  font-size: 15px;
+             font-style: oblique; text-align: left;
+             }")),
+               br(),
                plotOutput("wordcloud_host", width = "100%", height = "400px"),
                br(),
                fluidRow(textOutput("wordcloud_caption")),
@@ -179,6 +183,17 @@ server <- function(input, output, session) {
     min_year = min(year_start[[1]])
     paste(input$college, "first participated in Datafest in the year ",min_year)
   })
+  
+  output$missing_year <- renderText({
+    # year_start = updated_datafest %>%
+    #   filter(host == input$college & df == "Yes") %>%
+    #   dplyr::select(year)
+    # min_year = min(year_start[[1]])
+    # 
+    # year_miss = updated_datafest %>%
+    #   filter(host == "Duke University" & is.na(num_part)) %>%
+    #   dplyr::select(year_miss)
+    paste("Note: Participation data for", input$college,"is only available for the visualized years")})
   
   output$country <- renderText({
     loc_country = updated_datafest %>%
