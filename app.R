@@ -22,13 +22,14 @@ body <- dashboardBody(
                 infoBoxOutput("DataTile", width = 3)
               ),
               fluidRow(box(width = 12,
-                           sliderInput("year",
+                           sliderTextInput("year",
                                        "Year",
-                                       value = max_year, # don't hard code this
-                                       min = min_year, max = max_year, step = 1,
+                                       choices = year,
+                                       selected = max_year, 
                                        width = "100%",
                                        animate = animationOptions(interval = 1500),
-                                       sep = ""))),
+
+                                       grid = T))),
               br(),
               fluidRow(h4("This map represents the geographic distribution of DataFest participants over the years. Click on the points to find out more about each event.")),
               fluidRow(leafletOutput("map")),
@@ -263,60 +264,9 @@ server <- function(input, output, session) {
   d <- reactive({
     filter(updated_datafest, year == input$year & df == "Yes")
   })
-  
-  
-  
+
   output$map <- renderLeaflet({
-    popups <- paste0(
-      host_text, other_inst_text, "<br>" , part_text
-    )
-    leaflet() %>%
-      addProviderTiles("CartoDB.Voyager") %>% 
-      fitBounds(left, bottom, right, top) %>% 
-      #addControl(h1(input$year), position = "topright") %>% 
-      addPolygons(
-        data = states,
-        fillColor = ~pal(num_par),
-        weight = 1,
-        opacity = 1,
-        color = "lightgray",
-        dashArray = "",
-        fillOpacity = 1,
-        highlightOptions = highlightOptions(
-          weight = 3,
-          color = "lightgray",
-          dashArray = "2",
-          fillOpacity = 0.9,
-          bringToFront = FALSE),
-        label = labels,
-        labelOptions = labelOptions(
-          style = list("font-weight" = "normal",
-                       padding = "3px 8px",
-                       "color" = "#999999"),
-          textsize = "10px",
-          direction = "auto")) %>% 
-      addLegend(pal = pal, values = bins, opacity = 0.7, title = "Number of Participants",
-                position = "bottomright") %>% 
-      addCircleMarkers(lng = d()$lon, lat = d()$lat,
-                       radius = log(d()$num_part)/2,
-                       fillColor = marker_color,
-                       color = marker_color,
-                       weight = 3,
-                       fillOpacity = 0.5,
-                       popup = popups)
     
-  })
-  
-  observeEvent(d(), {
-    
-    mapProxy <- leafletProxy("map", session)
-    
-    # clear previous controls and markers each time input$year changes
-    clearControls(mapProxy)
-    
-    clearMarkers(mapProxy)
-    
-    # define popups
     host_text <- paste0(
       "<b><a href='", d()$url, "' style='color:", href_color, "'>", d()$host, "</a></b>"
     )
@@ -337,12 +287,12 @@ server <- function(input, output, session) {
     
     participants <- d() %>%
       mutate(state = case_when(country == "Germany"~ "Germany",
-                               country == "Canada"~ "Canada",
                                country == "Australia" ~ "Australia",
                                state == "Minnessota"~ "Minnesota",
                                TRUE ~ state)) %>%
       dplyr::select(state, num_part) %>%
-      dplyr::rename(name = state)
+      dplyr::rename(name = state) %>% 
+      filter(!is.na(num_part))
     
     # calculate total participants in each state
     states$num_par=0
@@ -356,10 +306,12 @@ server <- function(input, output, session) {
       }
     }
     
-    mapProxy %>%
-      addControl(h1(input$year), position = "topright") %>% 
-      #addTiles() %>%
-      #fitBounds(lng1 = left, lat1 = bottom, lng2 = right, lat2 = top) %>%
+    leaflet() %>%
+      clearControls() %>% 
+      clearMarkers() %>% 
+      addProviderTiles("CartoDB.Voyager") %>% 
+      fitBounds(left, bottom, right, top) %>% 
+      #addControl(h1(input$year), position = "topright") %>%
       addPolygons(
         data = states,
         fillColor = ~pal(num_par),
@@ -388,8 +340,9 @@ server <- function(input, output, session) {
                        fillColor = marker_color,
                        color = marker_color,
                        weight = 3,
-                       fillOpacity = 1,
-                       popup = popups) 
+                       fillOpacity = 0.5,
+                       popup = popups)
+    
   })
   
   ## Add Tile graphics
