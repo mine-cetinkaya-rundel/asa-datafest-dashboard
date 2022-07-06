@@ -50,9 +50,9 @@ body <- dashboardBody(
                  box(width = 3,
                      selectInput("college", "College",
                                  choices = sort(unique(pull(updated_datafest, "host"))),
-                                 selected=sort(unique(pull(updated_datafest, "host")))[19])),
+                                 selected=sort(unique(pull(updated_datafest, "host")))[10])),
                  box(width = 9,
-                     sliderInput("uni_year", "Year", value = 2017,
+                     sliderInput("uni_year", "Year", value = 2022,
                                  min = min_year, max = max_year, step = 1,
                                  animate = animationOptions(interval = 1500),
                                  sep = "")
@@ -437,8 +437,8 @@ server <- function(input, output, session) {
       theme(plot.title = element_text(color = "#005e97", size = 20),
             plot.subtitle = element_text(size = 15),
             #plot.caption = element_text(color = "aquamarine4", size = 20, face = "italic"),
-            axis.text.x = element_text(size = 13),
-            axis.text.y = element_text(size = 13)) +
+            axis.text.x = element_text(size = 15),
+            axis.text.y = element_text(size = 15)) +
       theme_minimal()
   }, bg="transparent")
   
