@@ -28,6 +28,7 @@ body <- dashboardBody(
                                        selected = max_year, 
                                        width = "100%",
                                        animate = animationOptions(interval = 1500),
+
                                        grid = T))),
               br(),
               fluidRow(h4("This map represents the geographic distribution of DataFest participants over the years. Click on the points to find out more about each event.")),
@@ -49,9 +50,9 @@ body <- dashboardBody(
                  box(width = 3,
                      selectInput("college", "College",
                                  choices = sort(unique(pull(updated_datafest, "host"))),
-                                 selected=sort(unique(pull(updated_datafest, "host")))[19])),
+                                 selected=sort(unique(pull(updated_datafest, "host")))[10])),
                  box(width = 9,
-                     sliderInput("uni_year", "Year", value = 2017,
+                     sliderInput("uni_year", "Year", value = 2022,
                                  min = min_year, max = max_year, step = 1,
                                  animate = animationOptions(interval = 1500),
                                  sep = "")
@@ -101,11 +102,16 @@ body <- dashboardBody(
              font-family:'Trebuchet MS', sans-serif;font-style: bold;
              }")),
                      width = 3, height = "420px"),
-                 br(),
                  #p("major distribution"),
                  # textOutput("major_distribution")
                ),
                #fluidRow(textOutput("major_distribution")),
+               textOutput("missing_year"),
+               tags$head(tags$style("#missing_year{color: #000000;
+                                  font-size: 15px;
+             font-style: oblique; text-align: left;
+             }")),
+               br(),
                plotOutput("wordcloud_host", width = "100%", height = "400px"),
                br(),
                fluidRow(textOutput("wordcloud_caption")),
@@ -140,6 +146,8 @@ body <- dashboardBody(
                 box(
                   solidHeader = TRUE,
                   title = p(paste0("Data Description")),
+                  textOutput("provider"),
+                  br(),
                   textOutput("prompt"),
                   tags$head(tags$style("#state{color: #001833;
                                  font-size: 18px;
@@ -176,6 +184,17 @@ server <- function(input, output, session) {
     min_year = min(year_start[[1]])
     paste(input$college, "first participated in Datafest in the year ",min_year)
   })
+  
+  output$missing_year <- renderText({
+    # year_start = updated_datafest %>%
+    #   filter(host == input$college & df == "Yes") %>%
+    #   dplyr::select(year)
+    # min_year = min(year_start[[1]])
+    # 
+    # year_miss = updated_datafest %>%
+    #   filter(host == "Duke University" & is.na(num_part)) %>%
+    #   dplyr::select(year_miss)
+    paste("Note: Participation data for", input$college,"is only available for the visualized years")})
   
   output$country <- renderText({
     loc_country = updated_datafest %>%
@@ -218,7 +237,6 @@ server <- function(input, output, session) {
     }
     paste("Proportion of total participants in ", input$uni_year, ": ", uni_prop)
   })
-  
   output$other_inst <- renderText({
     inst = updated_datafest %>%
       filter(host == input$college & df == "Yes" & year == input$uni_year) %>%
@@ -387,13 +405,23 @@ server <- function(input, output, session) {
       theme(plot.title = element_text(color = "#005e97", size = 20),
             plot.subtitle = element_text(size = 15),
             #plot.caption = element_text(color = "aquamarine4", size = 20, face = "italic"),
-            axis.text.x = element_text(size = 13),
-            axis.text.y = element_text(size = 13)) +
+            axis.text.x = element_text(size = 15),
+            axis.text.y = element_text(size = 15)) +
       theme_minimal()
   }, bg="transparent")
   
   
     #print the competition goal for the selected year on winners tab
+  source_text <- eventReactive(input$search, {
+    text <- datasource %>% 
+    filter(year == input$year_choice)
+    datasource <- paste0("Data Provider: ", text$source_data[1])
+    paste(datasource)})
+  
+  output$provider <- renderText({
+    source_text()
+  })
+  
     prompts <- eventReactive(input$search,{
       text <- past_prompts %>% 
         filter(year == input$year_choice)
