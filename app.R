@@ -52,10 +52,14 @@ body <- dashboardBody(
                                  choices = sort(unique(pull(updated_datafest, "host"))),
                                  selected=sort(unique(pull(updated_datafest, "host")))[10])),
                  box(width = 9,
-                     sliderInput("uni_year", "Year", value = 2022,
-                                 min = min_year, max = max_year, step = 1,
-                                 animate = animationOptions(interval = 1500),
-                                 sep = "")
+                     sliderTextInput("uni_year",
+                                     "Year",
+                                     choices = year,
+                                     selected = max_year, 
+                                     width = "100%",
+                                     animate = animationOptions(interval = 1500),
+                                     
+                                     grid = T)
                  ),
                  textOutput("start_year"),
                  tags$head(tags$style("#start_year{color: #000000;
@@ -295,7 +299,7 @@ server <- function(input, output, session) {
     
     # calculate total participants in each state
     states$num_par=0
-    if (nrow(participants!=0)) {
+    #if (nrow(participants!=0)) {
       for (i in 1:nrow(states)) {
         for (j in 1:nrow(participants)) {
           #if(!is.na(states$name[i]) & !is.na(participants$name[j])){
@@ -307,7 +311,7 @@ server <- function(input, output, session) {
           #}
         }
       }
-    }
+    #}
     
     pal <- colorBin("Blues", domain = states$num_par, bins = bins)
     
