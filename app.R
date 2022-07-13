@@ -22,14 +22,14 @@ body <- dashboardBody(
                 infoBoxOutput("DataTile", width = 3)
               ),
               fluidRow(box(width = 12,
-                           sliderInput("year",
+                           sliderTextInput("year",
                                        "Year",
-                                       value = max_year, # don't hard code this
-                                       min = min_year, max = max_year, step = 1,
+                                       choices = year,
+                                       selected = max_year, 
                                        width = "100%",
                                        animate = animationOptions(interval = 1500),
-                                       sep = "",
-                                       ticks = FALSE))),
+
+                                       grid = T))),
               br(),
               fluidRow(h4("This map represents the geographic distribution of DataFest participants over the years. Click on the points to find out more about each event.")),
               fluidRow(leafletOutput("map")),
@@ -50,12 +50,16 @@ body <- dashboardBody(
                  box(width = 3,
                      selectInput("college", "College",
                                  choices = sort(unique(pull(updated_datafest, "host"))),
-                                 selected=sort(unique(pull(updated_datafest, "host")))[19])),
+                                 selected=sort(unique(pull(updated_datafest, "host")))[10])),
                  box(width = 9,
-                     sliderInput("uni_year", "Year", value = 2017,
-                                 min = min_year, max = max_year, step = 1,
-                                 animate = animationOptions(interval = 1500),
-                                 sep = "")
+                     sliderTextInput("uni_year",
+                                     "Year",
+                                     choices = year,
+                                     selected = max_year, 
+                                     width = "100%",
+                                     animate = animationOptions(interval = 1500),
+                                     
+                                     grid = T)
                  ),
                  textOutput("start_year"),
                  tags$head(tags$style("#start_year{color: #000000;
@@ -102,11 +106,16 @@ body <- dashboardBody(
              font-family:'Trebuchet MS', sans-serif;font-style: bold;
              }")),
                      width = 3, height = "420px"),
-                 br(),
                  #p("major distribution"),
                  # textOutput("major_distribution")
                ),
                #fluidRow(textOutput("major_distribution")),
+               textOutput("missing_year"),
+               tags$head(tags$style("#missing_year{color: #000000;
+                                  font-size: 15px;
+             font-style: oblique; text-align: left;
+             }")),
+               br(),
                plotOutput("wordcloud_host", width = "100%", height = "400px"),
                br(),
                fluidRow(textOutput("wordcloud_caption")),
@@ -180,6 +189,17 @@ server <- function(input, output, session) {
     paste(input$college, "first participated in Datafest in the year ",min_year)
   })
   
+  output$missing_year <- renderText({
+    # year_start = updated_datafest %>%
+    #   filter(host == input$college & df == "Yes") %>%
+    #   dplyr::select(year)
+    # min_year = min(year_start[[1]])
+    # 
+    # year_miss = updated_datafest %>%
+    #   filter(host == "Duke University" & is.na(num_part)) %>%
+    #   dplyr::select(year_miss)
+    paste("Note: Participation data for", input$college,"is only available for the visualized years")})
+  
   output$country <- renderText({
     loc_country = updated_datafest %>%
       filter(host == input$college) %>%
@@ -248,60 +268,9 @@ server <- function(input, output, session) {
   d <- reactive({
     filter(updated_datafest, year == input$year & df == "Yes")
   })
-  
-  
-  
+
   output$map <- renderLeaflet({
-    popups <- paste0(
-      host_text, other_inst_text, "<br>" , part_text
-    )
-    leaflet() %>%
-      addProviderTiles("CartoDB.Voyager") %>% 
-      fitBounds(left, bottom, right, top) %>% 
-      #addControl(h1(input$year), position = "topright") %>% 
-      addPolygons(
-        data = states,
-        fillColor = ~pal(num_par),
-        weight = 1,
-        opacity = 1,
-        color = "lightgray",
-        dashArray = "",
-        fillOpacity = 1,
-        highlightOptions = highlightOptions(
-          weight = 3,
-          color = "lightgray",
-          dashArray = "2",
-          fillOpacity = 0.9,
-          bringToFront = FALSE),
-        label = labels,
-        labelOptions = labelOptions(
-          style = list("font-weight" = "normal",
-                       padding = "3px 8px",
-                       "color" = "#999999"),
-          textsize = "10px",
-          direction = "auto")) %>% 
-      addLegend(pal = pal, values = bins, opacity = 0.7, title = "Number of Participants",
-                position = "bottomright") %>% 
-      addCircleMarkers(lng = d()$lon, lat = d()$lat,
-                       radius = log(d()$num_part)/2,
-                       fillColor = marker_color,
-                       color = marker_color,
-                       weight = 3,
-                       fillOpacity = 0.5,
-                       popup = popups)
     
-  })
-  
-  observeEvent(d(), {
-    
-    mapProxy <- leafletProxy("map", session)
-    
-    # clear previous controls and markers each time input$year changes
-    clearControls(mapProxy)
-    
-    clearMarkers(mapProxy)
-    
-    # define popups
     host_text <- paste0(
       "<b><a href='", d()$url, "' style='color:", href_color, "'>", d()$host, "</a></b>"
     )
@@ -322,7 +291,6 @@ server <- function(input, output, session) {
     
     participants <- d() %>%
       mutate(state = case_when(country == "Germany"~ "Germany",
-                               country == "Canada"~ "Canada",
                                country == "Australia" ~ "Australia",
                                state == "Minnessota"~ "Minnesota",
                                TRUE ~ state)) %>%
@@ -331,20 +299,28 @@ server <- function(input, output, session) {
     
     # calculate total participants in each state
     states$num_par=0
-    for (i in 1:nrow(states)) {
-      for (j in 1:nrow(participants)) {
-        if (states$name[i] == participants$name[j]) {
-          if (!is.na(participants$num_part[j])) {
-            states$num_par[i] = states$num_par[i] + participants$num_part[j]
-          }
+    #if (nrow(participants!=0)) {
+      for (i in 1:nrow(states)) {
+        for (j in 1:nrow(participants)) {
+          #if(!is.na(states$name[i]) & !is.na(participants$name[j])){
+            if (states$name[i] == participants$name[j]) {
+              if (!is.na(participants$num_part[j])) {
+                states$num_par[i] = states$num_par[i] + participants$num_part[j]
+              }
+            }
+          #}
         }
       }
-    }
+    #}
     
-    mapProxy %>%
-      addControl(h1(input$year), position = "topright") %>% 
-      #addTiles() %>%
-      #fitBounds(lng1 = left, lat1 = bottom, lng2 = right, lat2 = top) %>%
+    pal <- colorBin("Blues", domain = states$num_par, bins = bins)
+    
+    leaflet() %>%
+      clearControls() %>% 
+      clearMarkers() %>% 
+      addProviderTiles("CartoDB.Voyager") %>% 
+      fitBounds(left, bottom, right, top) %>% 
+      #addControl(h1(input$year), position = "topright") %>%
       addPolygons(
         data = states,
         fillColor = ~pal(num_par),
@@ -373,8 +349,9 @@ server <- function(input, output, session) {
                        fillColor = marker_color,
                        color = marker_color,
                        weight = 3,
-                       fillOpacity = 1,
-                       popup = popups) 
+                       fillOpacity = 0.5,
+                       popup = popups)
+    
   })
   
   ## Add Tile graphics
@@ -437,8 +414,8 @@ server <- function(input, output, session) {
       theme(plot.title = element_text(color = "#005e97", size = 20),
             plot.subtitle = element_text(size = 15),
             #plot.caption = element_text(color = "aquamarine4", size = 20, face = "italic"),
-            axis.text.x = element_text(size = 13),
-            axis.text.y = element_text(size = 13)) +
+            axis.text.x = element_text(size = 15),
+            axis.text.y = element_text(size = 15)) +
       theme_minimal()
   }, bg="transparent")
   

@@ -17,7 +17,6 @@ set_config(use_proxy(url="10.3.100.207",port=8080))
 
 
 # load data ---------------------------------------------------------
-
 datafest <- read.csv("data/datafest.csv")
 past_prompts <- read.csv("data/past_winners/past_prompts.csv")
 updated_datafest <- read.csv("data/updated_datafest.csv")
@@ -33,6 +32,9 @@ major_df <- updated_datafest %>%
   na.omit()
 
 #max and min years
+year <- unique(updated_datafest$year)
+year <- as.POSIXct(as.character(year), format = "%Y")
+year <- format(year, "%Y")
 max_year <- max(updated_datafest$year)
 min_year <- min(updated_datafest$year)
 
@@ -55,9 +57,11 @@ href_color <- "#9966CC"
 marker_color <- "darkseagreen"
 part_color <- "#CC9966"
 
+canada <-  geojsonio::geojson_read("https://raw.githubusercontent.com/codeforgermany/click_that_hood/main/public/data/canada.geojson", what = "sp")
 states <- geojsonio::geojson_read("https://rstudio.github.io/leaflet/json/us-states.geojson", what = "sp")
 countries <- geojsonio::geojson_read("https://raw.githubusercontent.com/johan/world.geo.json/master/countries.geo.json", what = "sp")
 country <- countries[countries$name %in% updated_datafest$country,]
+country <- country[country$name!="Canada",]
 recent <- updated_datafest %>% 
   filter(year == max_year)
 write.csv(recent, "data/recent.csv")
@@ -67,64 +71,13 @@ num_part <- updated_datafest %>%
   summarise(num = sum(num_part))
 max_part <- as.numeric(max(num_part$num))
 
-country$density = NA
-states <- rbind(states,country)
-
-participants <- recent %>%
-  mutate(state = case_when(country == "Germany"~ "Germany",
-                           country == "Canada"~ "Canada",
-                           country == "Australia" ~ "Australia",
-                           state == "Minnessota"~ "Minnesota",
-                           TRUE ~ state)) %>%
-  dplyr::select(state, num_part) %>%
-  dplyr::rename(name = state) 
-
-states$num_par=0
-for (i in 1:nrow(states)) {
-  for (j in 1:nrow(participants)) {
-    if (states$name[i] == participants$name[j]) {
-      if (!is.na(participants$num_part[j])) {
-        states$num_par[i] = states$num_par[i] + participants$num_part[j]
-      }
-    }
-  }
-}
+states <- states[,!names(states)=="density"]
+canada$id <- canada$cartodb_id
+canada <- canada[,!(names(canada) %in% c("cartodb_id", "created_at", "updated_at"))]
+states <- rbind(states, canada, country)
 
 bins <- c(0, 10, 20, 40, 80, 100, 200, 300, 400, max_part)
-pal <- colorBin("Blues", domain = states$num_par, bins = bins)
 
-labels <- sprintf(
-  "<strong>%s</strong>",
-  states$name
-) %>% lapply(htmltools::HTML)
-
-host_text <- paste0(
-  "<b><a href='", recent$url, "' style='color:", href_color, "'>", recent$host, "</a></b>"
-)
-
-other_inst_text <- paste0(
-  ifelse(is.na(recent$other_inst),
-         "",
-         paste0("<br>", "with participation from ", recent$other_inst))
-)
-
-part_text <- paste0(
-  "<font color=", part_color,">", recent$num_part, " participants</font>"
-)
-
-popups <- paste0(
-  host_text, other_inst_text, "<br>" , part_text
-)
-
-#updated
-# calculate total participants for each year ------------------------
-part_count <- recent %>%
-  group_by(year) %>%
-  summarise(tot_part = sum(num_part, na.rm = TRUE))
-
-#make main and max according to min and max of inputted college, change year scale?
-# min_tot_part <- min(part_count$tot_part)
-# max_tot_part <- max(part_count$tot_part)
 
 #updated
 # calculate total countries participating for each year ------------------------
@@ -140,7 +93,6 @@ host_count <- df_yes %>%
   summarise(tot_host = n_distinct(host))
 
 ## calculate DataSource list for each year ----------------------
-year <- unique(updated_datafest$year)
 source_data <- c("LAPD","Kiva.com","eHarmony","GridPoint","Edmunds.com","Ticketmaster", "Expedia","Indeed", "Canadian National Women's Rugby Team","COVID-19 Virtual Data Challenge","Rocky Mountain Poison and Drug Safety","Play2Prevent Lab")
 #"Indeed","Candadian National Women's Rugby Team","Covid-19 (Virtual Data Challenge)","Rocky Mountain Posion and Drug Safety","Play2Prevent Lab")
 datasource <- data.frame(year, source_data)
@@ -149,4 +101,7 @@ datasource <- data.frame(year, source_data)
 # country_hosts_df <- subset(datafest,
 #                            df =="Yes",
 #                            select= c("year","host","country","state","city","other_inst"))
+
+
+
 
