@@ -24,24 +24,24 @@ body <- dashboardBody(
               fluidRow(box(width = 12,
                            sliderInput("year",
                                        "Year",
-                                       value = 2017, # don't hard code this
-                                       min = 2011, max = 2017, step = 1,
+                                       value = 2017, #change to max_year
+                                       min = min_year, max = 2017, step = 1,
                                        width = "100%",
                                        animate = animationOptions(interval = 1500),
                                        sep = ""))),
               br(),
               fluidRow(h4("This map represents the geographic distribution of DataFest participants over the years. Click on the points to find out more about each event.")),
+              
               fluidRow(leafletOutput("map")),
               br(),
               fluidRow(h4("This word cloud represents the different majors of participants at DataFest since its inception.")),
-              fluidRow(plotOutput("wordcloud", width = "100%", height = "400px")),
+              fluidRow(box(width = 12, plotOutput("wordcloud", width = "100%", height = "400px"))),
               fluidRow(h4("This app is designed to compile and visualize metadata from ",
                  tags$a(href = "http://www.amstat.org/education/datafest/", "ASA DataFest"),
                  "over the years.",
                  "If your institution does not appear on the list, email",
                  tags$a(href = "mailto:mc301@duke.edu", " mc301@duke.edu"),
-                 ".")),
-              br(),
+                 "."))
       ),
       
        tabItem(tabName = "host",
@@ -102,10 +102,7 @@ body <- dashboardBody(
              }")),
                      width = 3, height = "420px"),
                  br(),
-                 #p("major distribution"),
-                 # textOutput("major_distribution")
                ),
-               #fluidRow(textOutput("major_distribution")),
                plotOutput("wordcloud_host", width = "100%", height = "400px"),
                br(),
                fluidRow(textOutput("wordcloud_caption")),
@@ -484,10 +481,8 @@ server <- function(input, output, session) {
     digits = 0
   )
   
-  
-  #Adding Word Cloud
   output$wordcloud <- renderPlot({
-    all_majors <- major_df$major_dist
+    all_majors <- major_df$major_dist 
     all_majors <- unlist(strsplit(all_majors, "[;]"))
     all_majors <- gsub('[[:punct:]]+' , '' , all_majors)
     all_majors <- gsub('[[:digit:]]+', '', all_majors)
