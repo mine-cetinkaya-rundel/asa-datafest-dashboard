@@ -489,7 +489,7 @@ server <- function(input, output, session) {
       Year %in% year_title,
       Host %in% host_title)
     
-    return(table %>% dplyr::select("Awards", "Other awards", "Host", "Year", "Title", "Team", "Slides"))
+    return(table %>% dplyr::select("Awards", "Host", "Year", "Title", "Team", "Slides"))
   })
   
   output$titles <- renderTable(
