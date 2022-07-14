@@ -110,10 +110,3 @@ datasource <- data.frame(year, source_data)
 # country_hosts_df <- subset(datafest,
 #                            df =="Yes",
 #                            select= c("year","host","country","state","city","other_inst"))
-
-
-
-# calculate total participants for each year ------------------------
-part_count <- recent %>%
-  group_by(year) %>%
-  summarise(tot_part = sum(num_part, na.rm = TRUE))
