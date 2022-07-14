@@ -28,8 +28,7 @@ body <- dashboardBody(
                                        selected = max_year, 
                                        width = "100%",
                                        animate = animationOptions(interval = 1500),
-
-                                       grid = T))),
+                                       grid = year))),
               br(),
               fluidRow(h4("This map represents the geographic distribution of DataFest participants over the years. Click on the points to find out more about each event.")),
               fluidRow(leafletOutput("map")),

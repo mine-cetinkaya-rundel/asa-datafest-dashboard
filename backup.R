@@ -85,9 +85,9 @@ leaflet() %>%
 
 #updated
 # calculate total participants for each year ------------------------
-part_count <- recent %>%
-  group_by(year) %>%
-  summarise(tot_part = sum(num_part, na.rm = TRUE))
+# part_count <- recent %>%
+#   group_by(year) %>%
+#   summarise(tot_part = sum(num_part, na.rm = TRUE))
 
 #make main and max according to min and max of inputted college, change year scale?
 # min_tot_part <- min(part_count$tot_part)
