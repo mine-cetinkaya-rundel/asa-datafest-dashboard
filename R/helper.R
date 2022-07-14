@@ -79,6 +79,14 @@ states <- rbind(states, canada, country)
 bins <- c(0, 10, 20, 40, 80, 100, 200, 300, 400, max_part)
 
 
+
+#Tile Calculations
+# calculate total participants for each year ------------------------
+part_count <- recent %>%
+  group_by(year) %>%
+  summarise(tot_part = sum(num_part, na.rm = TRUE))
+
+
 #updated
 # calculate total countries participating for each year ------------------------
 df_yes <- updated_datafest[updated_datafest$df == "Yes", ]
@@ -94,7 +102,6 @@ host_count <- df_yes %>%
 
 ## calculate DataSource list for each year ----------------------
 source_data <- c("LAPD","Kiva.com","eHarmony","GridPoint","Edmunds.com","Ticketmaster", "Expedia","Indeed", "Canadian National Women's Rugby Team","COVID-19 Virtual Data Challenge","Rocky Mountain Poison and Drug Safety","Play2Prevent Lab")
-#"Indeed","Candadian National Women's Rugby Team","Covid-19 (Virtual Data Challenge)","Rocky Mountain Posion and Drug Safety","Play2Prevent Lab")
 datasource <- data.frame(year, source_data)
 
 # ## Subset dataframe to Year Country, State, City, Majors, Participating institutions
