@@ -31,6 +31,8 @@ major_df <- updated_datafest %>%
   dplyr::select(host,year,major_dist) %>%
   na.omit()
 
+ticks  <- unique(updated_datafest$year)
+
 #max and min years
 year <- unique(updated_datafest$year)
 year <- as.POSIXct(as.character(year), format = "%Y")
@@ -111,4 +113,7 @@ datasource <- data.frame(year, source_data)
 
 
 
-
+# calculate total participants for each year ------------------------
+part_count <- recent %>%
+  group_by(year) %>%
+  summarise(tot_part = sum(num_part, na.rm = TRUE))
