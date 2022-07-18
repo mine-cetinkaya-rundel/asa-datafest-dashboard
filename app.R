@@ -48,6 +48,10 @@ body <- dashboardBody(
       ),
       #Create second tab page
        tabItem(tabName = "host",
+               tags$style(type="text/css",
+                          ".shiny-output-error { visibility: hidden; }",
+                          ".shiny-output-error:before { visibility: hidden; }"
+               ),
                fluidRow(
                  #Create uni dropdown
                  box(width = 3,
@@ -123,9 +127,10 @@ body <- dashboardBody(
              }")),
                br(),
                #Create majors wordcloud
-               plotOutput("wordcloud_host", width = "100%", height = "400px"),
-               br(),
-               fluidRow(textOutput("wordcloud_caption")),
+               fluidRow(
+                 plotOutput("wordcloud_host")
+               )  
+                 
        ),
       
       tabItem(tabName = "winner",
@@ -168,6 +173,7 @@ body <- dashboardBody(
                   ),
                 
                 box(
+                p("Select inputs and click on the \"search\" button to see the table."),
                 tableOutput("titles"),
                 width = 9)
               )
@@ -428,29 +434,29 @@ server <- function(input, output, session) {
   
   
     #print the competition goal for the selected year on winners tab
-  source_text <- eventReactive(input$search, {
-    text <- datasource %>% 
-    filter(year == input$year_choice)
-    datasource <- paste0("Data Provider: ", text$source_data[1])
-    paste(datasource)})
+ 
+    
   
   output$provider <- renderText({
-    source_text()
+    text <- datasource %>% 
+      filter(year == input$year_choice)
+    datasource <- paste0("Data Provider: ", text$source_data[1])
+    paste(datasource)
+ 
   })
-  
-    prompts <- eventReactive(input$search,{
-      text <- past_prompts %>% 
-        filter(year == input$year_choice)
-      word <- text$goal[1]
-      paste(word)})
+
     
     
     output$prompt <- renderText({
-      prompts()
+      text <- past_prompts %>% 
+        filter(year == input$year_choice)
+      word <- text$goal[1]
+      paste(word)
+   
     })
     
     #reactive past winners table
-    titles_subset <- eventReactive(input$search, {
+  titles_subset <- eventReactive(input$search, {
     
     ifelse(
       is.null(input$award_choice),
@@ -497,6 +503,7 @@ output$wordcloud <- renderPlot({
   wordcloud::wordcloud(words = all_majors, rot.per=0.3,scale = c(6,0.75), colors = brewer.pal(8, "Dark2"), min.freq = 1)
 })
 
+
   output$wordcloud_host <- renderPlot({
     majors <- filter(updated_datafest,host == input$college)
     majors <- majors$major_dist
@@ -507,11 +514,14 @@ output$wordcloud <- renderPlot({
     majors <- str_trim(majors)
     majors <- str_squish(majors)
 
-    if (all(is.na(majors))){
-      majors <- c("None")
-    }
-
-    wordcloud::wordcloud(words = na.omit(majors), rot.per=0.3,scale = c(6,0.75),colors=brewer.pal(8, "Dark2"),min.freq = 1)
+    # if (all(is.na(majors))){
+    #  return (" ")
+    # }
+    layout(matrix(c(1, 2), nrow=2), heights=c(1, 4))
+    par(mar=rep(0, 4))
+    plot.new()
+    text(x=0.5, y=0.5, paste("This word cloud represents the different majors of participants across all years up to", input$uni_year))
+    wordcloud::wordcloud(words = na.omit(majors), main = "Title", rot.per=0.3,scale = c(6,0.75),colors=brewer.pal(8, "Dark2"),min.freq = 1)
   })
 
   output$wordcloud_caption <- renderText({
