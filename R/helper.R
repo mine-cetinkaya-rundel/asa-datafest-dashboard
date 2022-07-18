@@ -40,7 +40,6 @@ year <- format(year, "%Y")
 max_year <- max(updated_datafest$year)
 min_year <- min(updated_datafest$year)
 
-#updated
 # get data for universities page
 universities_df <- updated_datafest %>%
   dplyr::select(host, year, num_part)
@@ -82,7 +81,8 @@ bins <- c(0, 10, 20, 40, 80, 100, 200, 300, 400, max_part)
 
 
 
-#Tile Calculations
+#Tiles
+
 # calculate total participants for each year ------------------------
 part_count <- updated_datafest %>%
   group_by(year) %>%

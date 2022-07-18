@@ -23,6 +23,7 @@ body <- dashboardBody(
                 infoBoxOutput("CountryTile", width = 3),
                 infoBoxOutput("DataTile", width = 3)
               ),
+              fluidRow(h6("Move the slider to see how DataFest has grown over the years.")),
               #Create row for slider
               fluidRow(box(width = 12,
                            sliderTextInput("year",
@@ -71,7 +72,7 @@ body <- dashboardBody(
                  ),
                  textOutput("start_year"),
                  tags$head(tags$style("#start_year{color: #000000;
-                                  font-size: 20px;
+                                  font-size: 16px;
              font-style: bold; text-align: left;
              }")),
                  br(),
@@ -129,7 +130,13 @@ body <- dashboardBody(
                #Create majors wordcloud
                fluidRow(
                  plotOutput("wordcloud_host")
-               )  
+               )  ,
+               fluidRow(h4("This app is designed to compile and visualize metadata from ",
+                           tags$a(href = "http://www.amstat.org/education/datafest/", "ASA DataFest"),
+                           "over the years.",
+                           "If your institution does not appear on the list, email",
+                           tags$a(href = "mailto:mc301@duke.edu", " mc301@duke.edu"),
+                           "."))
                  
        ),
       
@@ -137,7 +144,7 @@ body <- dashboardBody(
               fluidRow(
                 box(
                   selectInput("year_choice",
-                                     "year",
+                                     "Year",
                                      choices = sort(c(unique(datafest_titles$Year))),
                                      selected = "2022",
                   ),
@@ -161,19 +168,23 @@ body <- dashboardBody(
                 
                 box(
                   solidHeader = TRUE,
-                  title = p(paste0("Data Description")),
-                  textOutput("provider"),
-                  br(),
+                  title = p("Goal for the year",style = "font-size:20px;"),
                   textOutput("prompt"),
-                  tags$head(tags$style("#state{color: #001833;
-                                 font-size: 18px;
+                  tags$head(tags$style("#prompt{color: #001833;
+                                 font-size: 14px;
+            font-family:'Trebuchet MS', sans-serif;font-style: bold;
+            }")),
+                  br(),
+                  textOutput("provider"),
+                  tags$head(tags$style("#provider{color: #001833;
+                                 font-size: 15px;
             font-family:'Trebuchet MS', sans-serif;font-style: bold;
             }")),
                   width = 9
                   ),
                 
                 box(
-                p("Select inputs and click on the \"search\" button to see the table."),
+                p("Select the inputs from the left panel and click on the \"search\" button to see the winners"),
                 tableOutput("titles"),
                 width = 9)
               )
