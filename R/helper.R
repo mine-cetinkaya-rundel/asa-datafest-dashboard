@@ -88,21 +88,18 @@ part_count <- recent %>%
   group_by(year) %>%
   summarise(tot_part = sum(num_part, na.rm = TRUE))
 
-
-#updated
 # calculate total countries participating for each year ------------------------
 df_yes <- updated_datafest[updated_datafest$df == "Yes", ]
 country_count <- df_yes %>%
   group_by(year) %>%
   summarise(tot_country = n_distinct(country))
 
-#updated
 # calculate total hosts participating for each year ------------------------
 host_count <- df_yes %>%
   group_by(year) %>%
   summarise(tot_host = n_distinct(host))
 
-## calculate DataSource list for each year ----------------------
+# calculate DataSource list for each year ----------------------
 source_data <- c("LAPD","Kiva.com","eHarmony","GridPoint","Edmunds.com","Ticketmaster", "Expedia","Indeed", "Canadian National Women's Rugby Team","COVID-19 Virtual Data Challenge","Rocky Mountain Poison and Drug Safety","Play2Prevent Lab")
 datasource <- data.frame(year, source_data)
 
