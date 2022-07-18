@@ -353,7 +353,7 @@ server <- function(input, output, session) {
     
   })
   
-  ## Add Tile graphics
+  ## Add Tiles
   output$ParticipantsTile <- renderInfoBox({
     participant_tile <- part_count[part_count$year == input$year, ]$tot_part
     infoBox(

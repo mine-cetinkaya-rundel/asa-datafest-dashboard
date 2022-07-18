@@ -84,7 +84,7 @@ bins <- c(0, 10, 20, 40, 80, 100, 200, 300, 400, max_part)
 
 #Tile Calculations
 # calculate total participants for each year ------------------------
-part_count <- recent %>%
+part_count <- updated_datafest %>%
   group_by(year) %>%
   summarise(tot_part = sum(num_part, na.rm = TRUE))
 
