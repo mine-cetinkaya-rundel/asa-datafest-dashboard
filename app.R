@@ -9,18 +9,21 @@ sidebar <- dashboardSidebar(width = 140,collapsed = FALSE,
                             sidebarMenuOutput("winner"))
 
 body <- dashboardBody(
-  
   fluidPage(
     title = NULL, width = 12,
     id = "tabset1",height = "250px",
+    #Create tabs for navigation
     tabItems(
+      #Create first tab page
       tabItem(tabName = "home",
+              #Create row for tiles
               fluidRow(
                 infoBoxOutput("ParticipantsTile", width = 3),
                 infoBoxOutput("HostsTile", width = 3),
                 infoBoxOutput("CountryTile", width = 3),
                 infoBoxOutput("DataTile", width = 3)
               ),
+              #Create row for slider
               fluidRow(box(width = 12,
                            sliderTextInput("year",
                                        "Year",
@@ -43,13 +46,15 @@ body <- dashboardBody(
                  ".")),
               br(),
       ),
-      
+      #Create second tab page
        tabItem(tabName = "host",
                fluidRow(
+                 #Create uni dropdown
                  box(width = 3,
                      selectInput("college", "College",
                                  choices = sort(unique(pull(updated_datafest, "host"))),
                                  selected=sort(unique(pull(updated_datafest, "host")))[10])),
+                 #Create slider
                  box(width = 9,
                      sliderTextInput("uni_year",
                                      "Year",
@@ -68,7 +73,9 @@ body <- dashboardBody(
                  br(),
                ),
                fluidRow(box(
+                 #Create Line Chart
                  plotOutput("line", height = "400px"),width = 9),
+                 #Create Uni specific details box
                  box(solidHeader = TRUE,
                      title = p("Details",
                                style = "font-size:22px;
@@ -115,6 +122,7 @@ body <- dashboardBody(
              font-style: oblique; text-align: left;
              }")),
                br(),
+               #Create majors wordcloud
                plotOutput("wordcloud_host", width = "100%", height = "400px"),
                br(),
                fluidRow(textOutput("wordcloud_caption")),
