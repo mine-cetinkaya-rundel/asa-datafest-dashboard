@@ -1,6 +1,7 @@
 # load packages -----------------------------------------------------
 library(tidyverse)
 library(leaflet)
+library(geojsonio)
 library(shiny)
 library(shinythemes)
 library(here)
