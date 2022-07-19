@@ -9,18 +9,22 @@ sidebar <- dashboardSidebar(width = 140,collapsed = FALSE,
                             sidebarMenuOutput("winner"))
 
 body <- dashboardBody(
-  
   fluidPage(
     title = NULL, width = 12,
     id = "tabset1",height = "250px",
+    #Create tabs for navigation
     tabItems(
+      #Create first tab page
       tabItem(tabName = "home",
+              #Create row for tiles
               fluidRow(
                 infoBoxOutput("ParticipantsTile", width = 3),
                 infoBoxOutput("HostsTile", width = 3),
                 infoBoxOutput("CountryTile", width = 3),
                 infoBoxOutput("DataTile", width = 3)
               ),
+              fluidRow(h6("Move the slider to see how DataFest has grown over the years.")),
+              #Create row for slider
               fluidRow(box(width = 12,
                            sliderTextInput("year",
                                        "Year",
@@ -43,13 +47,19 @@ body <- dashboardBody(
                  tags$a(href = "mailto:mc301@duke.edu", " mc301@duke.edu"),
                  "."))
       ),
-      
+      #Create second tab page
        tabItem(tabName = "host",
+               tags$style(type="text/css",
+                          ".shiny-output-error { visibility: hidden; }",
+                          ".shiny-output-error:before { visibility: hidden; }"
+               ),
                fluidRow(
+                 #Create uni dropdown
                  box(width = 3,
                      selectInput("college", "College",
                                  choices = sort(unique(pull(updated_datafest, "host"))),
                                  selected=sort(unique(pull(updated_datafest, "host")))[10])),
+                 #Create slider
                  box(width = 9,
                      sliderTextInput("uni_year",
                                      "Year",
@@ -62,13 +72,15 @@ body <- dashboardBody(
                  ),
                  textOutput("start_year"),
                  tags$head(tags$style("#start_year{color: #000000;
-                                  font-size: 20px;
+                                  font-size: 16px;
              font-style: bold; text-align: left;
              }")),
                  br(),
                ),
                fluidRow(box(
+                 #Create Line Chart
                  plotOutput("line", height = "400px"),width = 9),
+                 #Create Uni specific details box
                  box(solidHeader = TRUE,
                      title = p("Details",
                                style = "font-size:22px;
@@ -115,16 +127,24 @@ body <- dashboardBody(
              font-style: oblique; text-align: left;
              }")),
                br(),
-               plotOutput("wordcloud_host", width = "100%", height = "400px"),
-               br(),
-               fluidRow(textOutput("wordcloud_caption")),
+               #Create majors wordcloud
+               fluidRow(
+                 plotOutput("wordcloud_host")
+               )  ,
+               fluidRow(h4("This app is designed to compile and visualize metadata from ",
+                           tags$a(href = "http://www.amstat.org/education/datafest/", "ASA DataFest"),
+                           "over the years.",
+                           "If your institution does not appear on the list, email",
+                           tags$a(href = "mailto:mc301@duke.edu", " mc301@duke.edu"),
+                           "."))
+                 
        ),
       
       tabItem(tabName = "winner",
               fluidRow(
                 box(
                   selectInput("year_choice",
-                                     "year",
+                                     "Year",
                                      choices = sort(c(unique(datafest_titles$Year))),
                                      selected = "2022",
                   ),
@@ -148,18 +168,23 @@ body <- dashboardBody(
                 
                 box(
                   solidHeader = TRUE,
-                  title = p(paste0("Data Description")),
-                  textOutput("provider"),
-                  br(),
+                  title = p("Goal for the year",style = "font-size:20px;"),
                   textOutput("prompt"),
-                  tags$head(tags$style("#state{color: #001833;
-                                 font-size: 18px;
+                  tags$head(tags$style("#prompt{color: #001833;
+                                 font-size: 14px;
+            font-family:'Trebuchet MS', sans-serif;font-style: bold;
+            }")),
+                  br(),
+                  textOutput("provider"),
+                  tags$head(tags$style("#provider{color: #001833;
+                                 font-size: 15px;
             font-family:'Trebuchet MS', sans-serif;font-style: bold;
             }")),
                   width = 9
                   ),
                 
                 box(
+                p("Select the inputs from the left panel and click on the \"search\" button to see the winners"),
                 tableOutput("titles"),
                 width = 9)
               )
@@ -353,7 +378,7 @@ server <- function(input, output, session) {
     
   })
   
-  ## Add Tile graphics
+  ## Add Tiles
   output$ParticipantsTile <- renderInfoBox({
     participant_tile <- part_count[part_count$year == input$year, ]$tot_part
     infoBox(
@@ -420,29 +445,29 @@ server <- function(input, output, session) {
   
   
     #print the competition goal for the selected year on winners tab
-  source_text <- eventReactive(input$search, {
-    text <- datasource %>% 
-    filter(year == input$year_choice)
-    datasource <- paste0("Data Provider: ", text$source_data[1])
-    paste(datasource)})
+ 
+    
   
   output$provider <- renderText({
-    source_text()
+    text <- datasource %>% 
+      filter(year == input$year_choice)
+    datasource <- paste0("Data Provider: ", text$source_data[1])
+    paste(datasource)
+ 
   })
-  
-    prompts <- eventReactive(input$search,{
-      text <- past_prompts %>% 
-        filter(year == input$year_choice)
-      word <- text$goal[1]
-      paste(word)})
+
     
     
     output$prompt <- renderText({
-      prompts()
+      text <- past_prompts %>% 
+        filter(year == input$year_choice)
+      word <- text$goal[1]
+      paste(word)
+   
     })
     
     #reactive past winners table
-    titles_subset <- eventReactive(input$search, {
+  titles_subset <- eventReactive(input$search, {
     
     ifelse(
       is.null(input$award_choice),
@@ -489,6 +514,7 @@ output$wordcloud <- renderPlot({
   wordcloud::wordcloud(words = all_majors, rot.per=0.3,scale = c(6,0.75), colors = brewer.pal(8, "Dark2"), min.freq = 1)
 })
 
+
   output$wordcloud_host <- renderPlot({
     majors <- filter(updated_datafest,host == input$college)
     majors <- majors$major_dist
@@ -499,11 +525,14 @@ output$wordcloud <- renderPlot({
     majors <- str_trim(majors)
     majors <- str_squish(majors)
 
-    if (all(is.na(majors))){
-      majors <- c("None")
-    }
-
-    wordcloud::wordcloud(words = na.omit(majors), rot.per=0.3,scale = c(6,0.75),colors=brewer.pal(8, "Dark2"),min.freq = 1)
+    # if (all(is.na(majors))){
+    #  return (" ")
+    # }
+    layout(matrix(c(1, 2), nrow=2), heights=c(1, 4))
+    par(mar=rep(0, 4))
+    plot.new()
+    text(x=0.5, y=0.5, paste("This word cloud represents the different majors of participants across all years up to", input$uni_year))
+    wordcloud::wordcloud(words = na.omit(majors), main = "Title", rot.per=0.3,scale = c(6,0.75),colors=brewer.pal(8, "Dark2"),min.freq = 1)
   })
 
   output$wordcloud_caption <- renderText({

@@ -40,7 +40,6 @@ year <- format(year, "%Y")
 max_year <- max(updated_datafest$year)
 min_year <- min(updated_datafest$year)
 
-#updated
 # get data for universities page
 universities_df <- updated_datafest %>%
   dplyr::select(host, year, num_part)
@@ -82,27 +81,25 @@ bins <- c(0, 10, 20, 40, 80, 100, 200, 300, 400, max_part)
 
 
 
-#Tile Calculations
+#Tiles
+
 # calculate total participants for each year ------------------------
-part_count <- recent %>%
+part_count <- updated_datafest %>%
   group_by(year) %>%
   summarise(tot_part = sum(num_part, na.rm = TRUE))
 
-
-#updated
 # calculate total countries participating for each year ------------------------
 df_yes <- updated_datafest[updated_datafest$df == "Yes", ]
 country_count <- df_yes %>%
   group_by(year) %>%
   summarise(tot_country = n_distinct(country))
 
-#updated
 # calculate total hosts participating for each year ------------------------
 host_count <- df_yes %>%
   group_by(year) %>%
   summarise(tot_host = n_distinct(host))
 
-## calculate DataSource list for each year ----------------------
+# calculate DataSource list for each year ----------------------
 source_data <- c("LAPD","Kiva.com","eHarmony","GridPoint","Edmunds.com","Ticketmaster", "Expedia","Indeed", "Canadian National Women's Rugby Team","COVID-19 Virtual Data Challenge","Rocky Mountain Poison and Drug Safety","Play2Prevent Lab")
 datasource <- data.frame(year, source_data)
 
