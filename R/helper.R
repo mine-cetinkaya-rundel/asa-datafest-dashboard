@@ -35,13 +35,10 @@ major_df <- updated_datafest %>%
 ticks  <- unique(updated_datafest$year)
 
 #max and min years
-year <- unique(updated_datafest$year)
-year <- as.POSIXct(as.character(year), format = "%Y")
-year <- format(year, "%Y")
 max_year <- max(updated_datafest$year)
 min_year <- min(updated_datafest$year)
 
-# get data for universities page
+# get data for hosts page
 universities_df <- updated_datafest %>%
   dplyr::select(host, year, num_part)
 
@@ -59,6 +56,7 @@ href_color <- "#9966CC"
 marker_color <- "darkseagreen"
 part_color <- "#CC9966"
 
+#import shape files for Canada and US - States and Countries across the world
 canada <-  geojsonio::geojson_read("https://raw.githubusercontent.com/codeforgermany/click_that_hood/main/public/data/canada.geojson", what = "sp")
 states <- geojsonio::geojson_read("https://rstudio.github.io/leaflet/json/us-states.geojson", what = "sp")
 countries <- geojsonio::geojson_read("https://raw.githubusercontent.com/johan/world.geo.json/master/countries.geo.json", what = "sp")
@@ -100,11 +98,7 @@ host_count <- df_yes %>%
   group_by(year) %>%
   summarise(tot_host = n_distinct(host))
 
-# calculate DataSource list for each year ----------------------
+# DataSource list for each year ----------------------
 source_data <- c("LAPD","Kiva.com","eHarmony","GridPoint","Edmunds.com","Ticketmaster", "Expedia","Indeed", "Canadian National Women's Rugby Team","COVID-19 Virtual Data Challenge","Rocky Mountain Poison and Drug Safety","Play2Prevent Lab")
 datasource <- data.frame(year, source_data)
 
-# ## Subset dataframe to Year Country, State, City, Majors, Participating institutions
-# country_hosts_df <- subset(datafest,
-#                            df =="Yes",
-#                            select= c("year","host","country","state","city","other_inst"))

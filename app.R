@@ -1,13 +1,17 @@
 # load helpers ------------------------------------------------------
 source("R/helper.R", local = TRUE)
 #--------------------------------------------------------------------
+
+#Create header for Dashboard
 header <- dashboardHeader(title = "ASA DataFest over the years", titleWidth = "350px")
 
+#Create sidebar to host all the tabs
 sidebar <- dashboardSidebar(width = 140,collapsed = FALSE,
                             sidebarMenuOutput("home"),
                             sidebarMenuOutput("host"),
                             sidebarMenuOutput("winner"))
 
+#Create body of the dashboard 
 body <- dashboardBody(
   fluidPage(
     title = NULL, width = 12,
@@ -58,8 +62,8 @@ body <- dashboardBody(
                  box(width = 3,
                      selectInput("college", "College",
                                  choices = sort(unique(pull(updated_datafest, "host"))),
-                                 selected=sort(unique(pull(updated_datafest, "host")))[10])),
-                 #Create slider
+                                 selected="Duke University")),
+                 #Create slider on host page
                  box(width = 9,
                      sliderTextInput("uni_year",
                                      "Year",
@@ -70,6 +74,7 @@ body <- dashboardBody(
                                      
                                      grid = T)
                  ),
+                 #create text for university start year above line graph
                  textOutput("start_year"),
                  tags$head(tags$style("#start_year{color: #000000;
                                   font-size: 16px;
@@ -117,10 +122,7 @@ body <- dashboardBody(
              font-family:'Trebuchet MS', sans-serif;font-style: bold;
              }")),
                      width = 3, height = "420px"),
-                 #p("major distribution"),
-                 # textOutput("major_distribution")
                ),
-               #fluidRow(textOutput("major_distribution")),
                textOutput("missing_year"),
                tags$head(tags$style("#missing_year{color: #000000;
                                   font-size: 15px;
@@ -139,9 +141,10 @@ body <- dashboardBody(
                            "."))
                  
        ),
-      
+      #Create third tab page
       tabItem(tabName = "winner",
               fluidRow(
+                #Create drop downs for Uni, Year and Award choice 
                 box(
                   selectInput("year_choice",
                                      "Year",
@@ -162,10 +165,11 @@ body <- dashboardBody(
                               selected = c(sort(na.omit(unique(datafest_titles$Awards)))),
                               options = list(`actions-box` = TRUE),
                               multiple = TRUE),
+                  #Create action button for table 
                   actionButton(inputId = "search", label = "Search"),
                   width = 3
             ),
-                
+                #Create box for year wise Data Provider and Goals
                 box(
                   solidHeader = TRUE,
                   title = p("Goal for the year",style = "font-size:20px;"),
@@ -175,6 +179,7 @@ body <- dashboardBody(
             font-family:'Trebuchet MS', sans-serif;font-style: bold;
             }")),
                   br(),
+                  #Add year wise dataprovider
                   textOutput("provider"),
                   tags$head(tags$style("#provider{color: #001833;
                                  font-size: 15px;
@@ -184,6 +189,7 @@ body <- dashboardBody(
                   ),
                 
                 box(
+                  #Add instructions on how to use table
                 p("Select the inputs from the left panel and click on the \"search\" button to see the winners"),
                 tableOutput("titles"),
                 width = 9)
@@ -195,16 +201,173 @@ body <- dashboardBody(
 )
 
 
-
+#Create the ui for the dashboard by combining the header, sidebar and body code above
 ui <- dashboardPage(
   header,
   sidebar,
   body
 )
 
-# Preview the UI in the console
+#Add server code to incorporate the functionality in the dashboard
 server <- function(input, output, session) {
   
+# Create tab items in sidebar
+  output$home <- renderMenu({
+    sidebarMenu(
+      menuItem("Home", tabName = "home",icon = icon("home")))})
+  
+  output$host <- renderMenu({
+    sidebarMenu(
+      menuItem("Hosts", tabName = "host",icon = icon("university")))})
+  
+  output$winner <- renderMenu({
+    sidebarMenu(
+      menuItem("Winners", tabName = "winner",icon = icon("award")))})
+  
+#Home Tab
+  
+  ## Add Tiles
+  output$ParticipantsTile <- renderInfoBox({
+    participant_tile <- part_count[part_count$year == input$year, ]$tot_part
+    infoBox(
+      "Participants", paste0(participant_tile), icon = icon("users"),
+      color = "red", fill = TRUE, width = 2.5
+    )
+  })
+  
+  output$HostsTile <- renderInfoBox({
+    hosts <- host_count[host_count$year == input$year, ]$tot_host
+    infoBox(
+      "Instituitions", paste0(hosts), icon = icon("university"),
+      color = "yellow", fill = TRUE, width = 2.5
+    )
+  })
+  
+  output$CountryTile <- renderInfoBox({
+    countries <- country_count[host_count$year == input$year, ]$tot_country
+    infoBox(
+      "Countries", paste0(countries), icon = icon("globe"),
+      color = "blue", fill = TRUE, width = 2.5
+    )
+  })
+  
+  output$DataTile <- renderInfoBox({
+    company <-datasource[datasource$year == input$year, ]$source_data
+    infoBox(
+      "Source Data", paste0(company), icon = icon("file-upload", library = "font-awesome"),
+      color = "green", fill = TRUE, width = 2.5
+    )
+  })
+  
+  
+  #Map
+  
+  d <- reactive({
+    filter(updated_datafest, year == input$year & df == "Yes")
+  })
+  
+  output$map <- renderLeaflet({
+    
+    host_text <- paste0(
+      "<b><a href='", d()$url, "' style='color:", href_color, "'>", d()$host, "</a></b>"
+    )
+    
+    other_inst_text <- paste0(
+      ifelse(is.na(d()$other_inst),
+             "",
+             paste0("<br>", "with participation from ", d()$other_inst))
+    )
+    
+    part_text <- paste0(
+      "<font color=", part_color,">", d()$num_part, " participants</font>"
+    )
+    
+    popups <- paste0(
+      host_text, other_inst_text, "<br>" , part_text
+    )
+    
+    participants <- d() %>%
+      mutate(state = case_when(country == "Germany"~ "Germany",
+                               country == "Australia" ~ "Australia",
+                               state == "Minnessota"~ "Minnesota",
+                               TRUE ~ state)) %>%
+      dplyr::select(state, num_part) %>%
+      dplyr::rename(name = state)
+    
+    # calculate total participants in each state
+    states$num_par=0
+    #if (nrow(participants!=0)) {
+    for (i in 1:nrow(states)) {
+      for (j in 1:nrow(participants)) {
+        #if(!is.na(states$name[i]) & !is.na(participants$name[j])){
+        if (states$name[i] == participants$name[j]) {
+          if (!is.na(participants$num_part[j])) {
+            states$num_par[i] = states$num_par[i] + participants$num_part[j]
+          }
+        }
+        #}
+      }
+    }
+    #}
+    
+    pal <- colorBin("Blues", domain = states$num_par, bins = bins)
+    
+    leaflet() %>%
+      clearControls() %>% 
+      clearMarkers() %>% 
+      addProviderTiles("CartoDB.Voyager") %>% 
+      fitBounds(left, bottom, right, top) %>% 
+      #addControl(h1(input$year), position = "topright") %>%
+      addPolygons(
+        data = states,
+        fillColor = ~pal(num_par),
+        weight = 1,
+        opacity = 1,
+        color = "lightgray",
+        dashArray = "",
+        fillOpacity = 1,
+        highlightOptions = highlightOptions(
+          weight = 3,
+          color = "lightgray",
+          dashArray = "2",
+          fillOpacity = 0.9,
+          bringToFront = FALSE),
+        label = labels,
+        labelOptions = labelOptions(
+          style = list("font-weight" = "normal",
+                       padding = "3px 8px",
+                       "color" = "#999999"),
+          textsize = "10px",
+          direction = "auto")) %>%
+      addLegend(pal = pal, values = bins, opacity = 0.7, title = "Number of Participants",
+                position = "bottomright") %>%
+      addCircleMarkers(lng = d()$lon, lat = d()$lat,
+                       radius = log(d()$num_part)/2,
+                       fillColor = marker_color,
+                       color = marker_color,
+                       weight = 3,
+                       fillOpacity = 0.5,
+                       popup = popups)
+    
+  })
+  
+  #Add wordcloud
+  library(tm)
+  library(slam) 
+  #Adding Word Cloud
+  output$wordcloud <- renderPlot({
+    all_majors <- major_df$major_dist
+    all_majors <- unlist(strsplit(all_majors, "[;]"))
+    all_majors <- gsub('[[:punct:]]+' , '' , all_majors)
+    all_majors <- gsub('[[:digit:]]+', '', all_majors)
+    all_majors <- str_trim(all_majors)
+    all_majors <- str_squish(all_majors)
+    wordcloud::wordcloud(words = all_majors, rot.per=0.3,scale = c(6,0.75), colors = brewer.pal(8, "Dark2"), min.freq = 1)
+  })
+  
+#Hosts tab
+  
+  #Year for each uni first participate in datafest
   output$start_year <- renderText({
     year_start = updated_datafest %>%
       filter(host == input$college & df == "Yes") %>%
@@ -212,18 +375,11 @@ server <- function(input, output, session) {
     min_year = min(year_start[[1]])
     paste(input$college, "first participated in Datafest in the year ",min_year)
   })
-  
+  #Text for data not available
   output$missing_year <- renderText({
-    # year_start = updated_datafest %>%
-    #   filter(host == input$college & df == "Yes") %>%
-    #   dplyr::select(year)
-    # min_year = min(year_start[[1]])
-    # 
-    # year_miss = updated_datafest %>%
-    #   filter(host == "Duke University" & is.na(num_part)) %>%
-    #   dplyr::select(year_miss)
     paste("Note: Participation data for", input$college,"is only available for the visualized years")})
   
+  #Details tab calculation
   output$country <- renderText({
     loc_country = updated_datafest %>%
       filter(host == input$college) %>%
@@ -276,142 +432,7 @@ server <- function(input, output, session) {
     paste("Other Participating Institutions: ", coll)
   })
   
-  # Create tab items in sidebar
-  output$home <- renderMenu({
-    sidebarMenu(
-      menuItem("Home", tabName = "home",icon = icon("home")))})
-  
-  output$host <- renderMenu({
-    sidebarMenu(
-      menuItem("Hosts", tabName = "host",icon = icon("university")))})
-  
-  output$winner <- renderMenu({
-    sidebarMenu(
-      menuItem("Winners", tabName = "winner",icon = icon("award")))})
-  
-  d <- reactive({
-    filter(updated_datafest, year == input$year & df == "Yes")
-  })
-
-  output$map <- renderLeaflet({
-    
-    host_text <- paste0(
-      "<b><a href='", d()$url, "' style='color:", href_color, "'>", d()$host, "</a></b>"
-    )
-    
-    other_inst_text <- paste0(
-      ifelse(is.na(d()$other_inst),
-             "",
-             paste0("<br>", "with participation from ", d()$other_inst))
-    )
-    
-    part_text <- paste0(
-      "<font color=", part_color,">", d()$num_part, " participants</font>"
-    )
-    
-    popups <- paste0(
-      host_text, other_inst_text, "<br>" , part_text
-    )
-    
-    participants <- d() %>%
-      mutate(state = case_when(country == "Germany"~ "Germany",
-                               country == "Australia" ~ "Australia",
-                               state == "Minnessota"~ "Minnesota",
-                               TRUE ~ state)) %>%
-      dplyr::select(state, num_part) %>%
-      dplyr::rename(name = state)
-    
-    # calculate total participants in each state
-    states$num_par=0
-    #if (nrow(participants!=0)) {
-      for (i in 1:nrow(states)) {
-        for (j in 1:nrow(participants)) {
-          #if(!is.na(states$name[i]) & !is.na(participants$name[j])){
-            if (states$name[i] == participants$name[j]) {
-              if (!is.na(participants$num_part[j])) {
-                states$num_par[i] = states$num_par[i] + participants$num_part[j]
-              }
-            }
-          #}
-        }
-      }
-    #}
-    
-    pal <- colorBin("Blues", domain = states$num_par, bins = bins)
-    
-    leaflet() %>%
-      clearControls() %>% 
-      clearMarkers() %>% 
-      addProviderTiles("CartoDB.Voyager") %>% 
-      fitBounds(left, bottom, right, top) %>% 
-      #addControl(h1(input$year), position = "topright") %>%
-      addPolygons(
-        data = states,
-        fillColor = ~pal(num_par),
-        weight = 1,
-        opacity = 1,
-        color = "lightgray",
-        dashArray = "",
-        fillOpacity = 1,
-        highlightOptions = highlightOptions(
-          weight = 3,
-          color = "lightgray",
-          dashArray = "2",
-          fillOpacity = 0.9,
-          bringToFront = FALSE),
-        label = labels,
-        labelOptions = labelOptions(
-          style = list("font-weight" = "normal",
-                       padding = "3px 8px",
-                       "color" = "#999999"),
-          textsize = "10px",
-          direction = "auto")) %>%
-      addLegend(pal = pal, values = bins, opacity = 0.7, title = "Number of Participants",
-                position = "bottomright") %>%
-      addCircleMarkers(lng = d()$lon, lat = d()$lat,
-                       radius = log(d()$num_part)/2,
-                       fillColor = marker_color,
-                       color = marker_color,
-                       weight = 3,
-                       fillOpacity = 0.5,
-                       popup = popups)
-    
-  })
-  
-  ## Add Tiles
-  output$ParticipantsTile <- renderInfoBox({
-    participant_tile <- part_count[part_count$year == input$year, ]$tot_part
-    infoBox(
-      "Participants", paste0(participant_tile), icon = icon("users"),
-      color = "red", fill = TRUE, width = 2.5
-    )
-  })
-  
-  output$HostsTile <- renderInfoBox({
-    hosts <- host_count[host_count$year == input$year, ]$tot_host
-    infoBox(
-      "Instituitions", paste0(hosts), icon = icon("university"),
-      color = "yellow", fill = TRUE, width = 2.5
-    )
-  })
-  
-  output$CountryTile <- renderInfoBox({
-    countries <- country_count[host_count$year == input$year, ]$tot_country
-    infoBox(
-      "Countries", paste0(countries), icon = icon("globe"),
-      color = "blue", fill = TRUE, width = 2.5
-    )
-  })
-  
-  output$DataTile <- renderInfoBox({
-    company <-datasource[datasource$year == input$year, ]$source_data
-    infoBox(
-      "Source Data", paste0(company), icon = icon("file-upload", library = "font-awesome"),
-      color = "green", fill = TRUE, width = 2.5
-    )
-  })
-  
-  #use df of individual university
+  #Line chart
   output$line <- renderPlot({
     sel_part_count <- filter(universities_df, year <= input$uni_year, host == input$college)
     min_tot_part <- min(sel_part_count$num_part)
@@ -443,11 +464,39 @@ server <- function(input, output, session) {
       theme_minimal()
   }, bg="transparent")
   
+  library(tm)
+  library(slam) 
+  #Adding Word Cloud
   
-    #print the competition goal for the selected year on winners tab
- 
+  
+  
+  output$wordcloud_host <- renderPlot({
+    majors <- filter(updated_datafest,host == input$college)
+    majors <- majors$major_dist
     
+    majors <- unlist(strsplit(majors, "[;]"))
+    majors <- gsub('[[:punct:]]+' , '' , majors)
+    majors <- gsub('[[:digit:]]+', '', majors)
+    majors <- str_trim(majors)
+    majors <- str_squish(majors)
+    
+    # if (all(is.na(majors))){
+    #  return (" ")
+    # }
+    layout(matrix(c(1, 2), nrow=2), heights=c(1, 4))
+    par(mar=rep(0, 4))
+    plot.new()
+    text(x=0.5, y=0.5, paste("This word cloud represents the different majors of participants across all years up to", input$uni_year))
+    wordcloud::wordcloud(words = na.omit(majors), main = "Title", rot.per=0.3,scale = c(6,0.75),colors=brewer.pal(8, "Dark2"),min.freq = 1)
+  })
   
+  output$wordcloud_caption <- renderText({
+    paste("This word cloud represents the different majors of participants across all years up to ", input$uni_year, ".")
+  })
+  
+#Winners Tab
+  
+    #print the competition data provider for the selected year on winners tab
   output$provider <- renderText({
     text <- datasource %>% 
       filter(year == input$year_choice)
@@ -456,8 +505,7 @@ server <- function(input, output, session) {
  
   })
 
-    
-    
+  #print the competition goal for the selected year on winners tab
     output$prompt <- renderText({
       text <- past_prompts %>% 
         filter(year == input$year_choice)
@@ -501,44 +549,8 @@ server <- function(input, output, session) {
     digits = 0
   )
   
-library(tm)
-library(slam) 
-  #Adding Word Cloud
-output$wordcloud <- renderPlot({
-  all_majors <- major_df$major_dist
-  all_majors <- unlist(strsplit(all_majors, "[;]"))
-  all_majors <- gsub('[[:punct:]]+' , '' , all_majors)
-  all_majors <- gsub('[[:digit:]]+', '', all_majors)
-  all_majors <- str_trim(all_majors)
-  all_majors <- str_squish(all_majors)
-  wordcloud::wordcloud(words = all_majors, rot.per=0.3,scale = c(6,0.75), colors = brewer.pal(8, "Dark2"), min.freq = 1)
-})
-
-
-  output$wordcloud_host <- renderPlot({
-    majors <- filter(updated_datafest,host == input$college)
-    majors <- majors$major_dist
-
-    majors <- unlist(strsplit(majors, "[;]"))
-    majors <- gsub('[[:punct:]]+' , '' , majors)
-    majors <- gsub('[[:digit:]]+', '', majors)
-    majors <- str_trim(majors)
-    majors <- str_squish(majors)
-
-    # if (all(is.na(majors))){
-    #  return (" ")
-    # }
-    layout(matrix(c(1, 2), nrow=2), heights=c(1, 4))
-    par(mar=rep(0, 4))
-    plot.new()
-    text(x=0.5, y=0.5, paste("This word cloud represents the different majors of participants across all years up to", input$uni_year))
-    wordcloud::wordcloud(words = na.omit(majors), main = "Title", rot.per=0.3,scale = c(6,0.75),colors=brewer.pal(8, "Dark2"),min.freq = 1)
-  })
-
-  output$wordcloud_caption <- renderText({
-    paste("This word cloud represents the different majors of participants across all years up to ", input$uni_year, ".")
-  })
- }
+}
+  
 
 ############
 shinyApp(ui = ui, server = server)
