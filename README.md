@@ -23,4 +23,8 @@ The data folder contains multiple csv files that are used in the dashboard. Thes
 - `update_titles.csv` : **TO BE UPDATED**
 - `past_winners` : **TO BE UPDATED**
 
-3. app.R : This is code for the Shiny App / the Dashboard
+3. `app.R` : This is code for the Shiny App / the Dashboard
+
+
+The deployed version of the app can be found here: **TO BE UPDATED**
+It is also hosted on the datafest website here: **TO BE UPDATED**
