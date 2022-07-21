@@ -2,10 +2,10 @@
 
 This repository contains the code for the Interactive Dashboard created to visualize the growth of DataFest over the years. 
 
-The folder in this repository are as follow:  
+The folders in this repository are as follow:  
 
 1. 'R' :
-The 'R' folder 2 files  
+The 'R' folder has 2 files  
 
 - 'cleaning_script.R' : This file contains the code for cleaning up the data recieved by Universities in the Qualtrics Survey. 
 - 'helper.R' : This file contains the code for helper functions and libraries used to run the app
