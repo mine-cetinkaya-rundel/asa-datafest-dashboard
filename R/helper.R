@@ -19,7 +19,7 @@ set_config(use_proxy(url="10.3.100.207",port=8080))
 
 # load data ---------------------------------------------------------
 datafest <- read.csv("data/datafest.csv")
-past_prompts <- read.csv("data/past_winners/past_prompts.csv")
+past_prompts <- read.csv("data/past_prompts.csv")
 updated_datafest <- read.csv("data/updated_datafest.csv")
 datafest_titles <- read.csv("data/update_titles.csv")
 names(datafest_titles) <- gsub("_", " ", names(datafest_titles), useBytes = TRUE) 
