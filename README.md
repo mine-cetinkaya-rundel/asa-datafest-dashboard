@@ -17,7 +17,6 @@ The data folder contains multiple csv files that are used in the dashboard. Thes
 - `datafest-raw.csv`: This is the raw version of datafest data collected for the earlier version of the dashboard
 - `datafest.csv ` : This is the processed datafest file used to build the earlier version of the dashboard
 - `past_prompts.csv` - This is a dataset manually created to capture the year wise prompts for each datafest. This will have to be updated annually.
-- `recent.csv` : **TO BE UPDATED**
 - `titles.csv` : **TO BE UPDATED**
 - `updated_datafest.csv` : This is the new datafest data or the master file used to build the current dashboard.
 - `update_titles.csv` : **TO BE UPDATED**
