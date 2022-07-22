@@ -27,4 +27,4 @@ The data folder contains multiple csv files that are used in the dashboard. Thes
 
 The deployed version of the app can be found [here](https://allis.shinyapps.io/datafest/) 
 
-It is also hosted on the datafest website [here](**TO BE UPDATED**)
+It is also hosted on the datafest website [here](https://asa-datafest.netlify.app/))=
