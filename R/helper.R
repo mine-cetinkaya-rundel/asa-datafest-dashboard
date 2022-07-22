@@ -32,11 +32,11 @@ major_df <- updated_datafest %>%
   dplyr::select(host,year,major_dist) %>%
   na.omit()
 
-ticks  <- unique(updated_datafest$year)
 
 #max and min years
-max_year <- max(updated_datafest$year)
-min_year <- min(updated_datafest$year)
+year  <- unique(updated_datafest$year)
+max_year <- max(year)
+min_year <- min(year)
 
 # get data for hosts page
 universities_df <- updated_datafest %>%
@@ -62,9 +62,7 @@ states <- geojsonio::geojson_read("https://rstudio.github.io/leaflet/json/us-sta
 countries <- geojsonio::geojson_read("https://raw.githubusercontent.com/johan/world.geo.json/master/countries.geo.json", what = "sp")
 country <- countries[countries$name %in% updated_datafest$country,]
 country <- country[country$name!="Canada",]
-# recent <- updated_datafest %>% 
-#   filter(year == max_year)
-# write.csv(recent, "data/recent.csv")
+
 num_part <- updated_datafest %>% 
   filter(!is.na(num_part)) %>% 
   group_by(year, state) %>% 
@@ -77,7 +75,6 @@ canada <- canada[,!(names(canada) %in% c("cartodb_id", "created_at", "updated_at
 states <- rbind(states, canada, country)
 
 bins <- c(0, 10, 20, 40, 80, 100, 200, 300, 400, max_part)
-
 
 
 #Tiles

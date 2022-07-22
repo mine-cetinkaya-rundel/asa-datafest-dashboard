@@ -31,12 +31,12 @@ body <- dashboardBody(
               #Create row for slider
               fluidRow(box(width = 12,
                            sliderTextInput("year",
-                                       "Year",
-                                       choices = year,
-                                       selected = max_year, 
-                                       width = "100%",
-                                       animate = animationOptions(interval = 1500),
-                                       grid = year))),
+                                           "Year",
+                                           choices = year,
+                                           selected = max_year, 
+                                           width = "100%",
+                                           animate = animationOptions(interval = 1500),
+                                           grid = year))),
               br(),
               fluidRow(h4("This map represents the geographic distribution of DataFest participants over the years. Click on the points to find out more about each event.")),
               
@@ -45,111 +45,111 @@ body <- dashboardBody(
               fluidRow(h4("This word cloud represents the different majors of participants at DataFest since its inception.")),
               fluidRow(box(width = 12, plotOutput("wordcloud", width = "100%", height = "400px"))),
               fluidRow(h4("This app is designed to compile and visualize metadata from ",
-                 tags$a(href = "http://www.amstat.org/education/datafest/", "ASA DataFest"),
-                 "over the years.",
-                 "If your institution does not appear on the list, email",
-                 tags$a(href = "mailto:mc301@duke.edu", " mc301@duke.edu"),
-                 "."))
+                          tags$a(href = "http://www.amstat.org/education/datafest/", "ASA DataFest"),
+                          "over the years.",
+                          "If your institution does not appear on the list, email",
+                          tags$a(href = "mailto:mc301@duke.edu", " mc301@duke.edu"),
+                          "."))
       ),
       #Create second tab page
-       tabItem(tabName = "host",
-               tags$style(type="text/css",
-                          ".shiny-output-error { visibility: hidden; }",
-                          ".shiny-output-error:before { visibility: hidden; }"
-               ),
-               fluidRow(
-                 #Create uni dropdown
-                 box(width = 3,
-                     selectInput("college", "College",
-                                 choices = sort(unique(pull(updated_datafest, "host"))),
-                                 selected="Duke University")),
-                 #Create slider on host page
-                 box(width = 9,
-                     sliderTextInput("uni_year",
-                                     "Year",
-                                     choices = year,
-                                     selected = max_year, 
-                                     width = "100%",
-                                     animate = animationOptions(interval = 1500),
-                                     
-                                     grid = T)
-                 ),
-                 #create text for university start year above line graph
-                 textOutput("start_year"),
-                 tags$head(tags$style("#start_year{color: #000000;
+      tabItem(tabName = "host",
+              tags$style(type="text/css",
+                         ".shiny-output-error { visibility: hidden; }",
+                         ".shiny-output-error:before { visibility: hidden; }"
+              ),
+              fluidRow(
+                #Create uni dropdown
+                box(width = 3,
+                    selectInput("college", "College",
+                                choices = sort(unique(pull(updated_datafest, "host"))),
+                                selected="Duke University")),
+                #Create slider on host page
+                box(width = 9,
+                    sliderTextInput("uni_year",
+                                    "Year",
+                                    choices = year,
+                                    selected = max_year, 
+                                    width = "100%",
+                                    animate = animationOptions(interval = 1500),
+                                    
+                                    grid = T)
+                ),
+                #create text for university start year above line graph
+                textOutput("start_year"),
+                tags$head(tags$style("#start_year{color: #000000;
                                   font-size: 16px;
              font-style: bold; text-align: left;
              }")),
-                 br(),
-               ),
-               fluidRow(box(
-                 #Create Line Chart
-                 plotOutput("line", height = "400px"),width = 9),
-                 #Create Uni specific details box
-                 box(solidHeader = TRUE,
-                     title = p("Details",
-                               style = "font-size:22px;
+                br(),
+              ),
+              fluidRow(box(
+                #Create Line Chart
+                plotOutput("line", height = "400px"),width = 9),
+                #Create Uni specific details box
+                box(solidHeader = TRUE,
+                    title = p("Details",
+                              style = "font-size:22px;
                                  margin-bottom: 0.2em;
                                  color: #005e97"),
-                     hr(style = "margin-top: 0.1em; border-top: 1px solid"),
-                     textOutput("country"),
-                     tags$head(tags$style("#country{color: #001833;
+                    hr(style = "margin-top: 0.1em; border-top: 1px solid"),
+                    textOutput("country"),
+                    tags$head(tags$style("#country{color: #001833;
                                   font-size: 18px;
              font-family:'Trebuchet MS', sans-serif; font-style: bold;
              }")),
-                     br(),
-                     textOutput("state"),
-                     tags$head(tags$style("#state{color: #001833;
+                    br(),
+                    textOutput("state"),
+                    tags$head(tags$style("#state{color: #001833;
                                   font-size: 18px;
              font-family:'Trebuchet MS', sans-serif;font-style: bold;
              }")),
-                     br(),
-                     textOutput("city"),
-                     tags$head(tags$style("#city{color: #001833;
+                    br(),
+                    textOutput("city"),
+                    tags$head(tags$style("#city{color: #001833;
                                   font-size: 18px;
              font-family:'Trebuchet MS', sans-serif;font-style: bold;
              }")),
-                     br(),
-                     textOutput("other_inst"),
-                     tags$head(tags$style("#other_inst{color: #001833;
+                    br(),
+                    textOutput("other_inst"),
+                    tags$head(tags$style("#other_inst{color: #001833;
                                   font-size: 18px;
              font-family:'Trebuchet MS', sans-serif;font-style: bold;
              }")),
-                     br(),
-                     textOutput("uni_proportion"),
-                     tags$head(tags$style("#uni_proportion{color: #001833;
+                    br(),
+                    textOutput("uni_proportion"),
+                    tags$head(tags$style("#uni_proportion{color: #001833;
                                   font-size: 18px;
              font-family:'Trebuchet MS', sans-serif;font-style: bold;
              }")),
-                     width = 3, height = "420px"),
-               ),
-               textOutput("missing_year"),
-               tags$head(tags$style("#missing_year{color: #000000;
+                    width = 3, height = "420px"),
+              ),
+              textOutput("missing_year"),
+              tags$head(tags$style("#missing_year{color: #000000;
                                   font-size: 15px;
              font-style: oblique; text-align: left;
              }")),
-               br(),
-               #Create majors wordcloud
-               fluidRow(
-                 plotOutput("wordcloud_host")
-               )  ,
-               fluidRow(h4("This app is designed to compile and visualize metadata from ",
-                           tags$a(href = "http://www.amstat.org/education/datafest/", "ASA DataFest"),
-                           "over the years.",
-                           "If your institution does not appear on the list, email",
-                           tags$a(href = "mailto:mc301@duke.edu", " mc301@duke.edu"),
-                           "."))
-                 
-       ),
+              br(),
+              #Create majors wordcloud
+              fluidRow(
+                plotOutput("wordcloud_host")
+              )  ,
+              fluidRow(h4("This app is designed to compile and visualize metadata from ",
+                          tags$a(href = "http://www.amstat.org/education/datafest/", "ASA DataFest"),
+                          "over the years.",
+                          "If your institution does not appear on the list, email",
+                          tags$a(href = "mailto:mc301@duke.edu", " mc301@duke.edu"),
+                          "."))
+              
+      ),
       #Create third tab page
       tabItem(tabName = "winner",
               fluidRow(
                 #Create drop downs for Uni, Year and Award choice 
                 box(
                   selectInput("year_choice",
-                                     "Year",
-                                     choices = sort(c(unique(datafest_titles$Year))),
-                                     selected = "2022",
+                              "Year",
+                              choices = sort(c(unique(datafest_titles$Year))),
+                              selected = "2022",
                   ),
                   
                   pickerInput("host_choice",
@@ -168,7 +168,7 @@ body <- dashboardBody(
                   #Create action button for table 
                   actionButton(inputId = "search", label = "Search"),
                   width = 3
-            ),
+                ),
                 #Create box for year wise Data Provider and Goals
                 box(
                   solidHeader = TRUE,
@@ -186,13 +186,13 @@ body <- dashboardBody(
             font-family:'Trebuchet MS', sans-serif;font-style: bold;
             }")),
                   width = 9
-                  ),
+                ),
                 
                 box(
                   #Add instructions on how to use table
-                p("Select the inputs from the left panel and click on the \"search\" button to see the winners"),
-                tableOutput("titles"),
-                width = 9)
+                  p("Select the inputs from the left panel and click on the \"search\" button to see the winners"),
+                  tableOutput("titles"),
+                  width = 9)
               )
               
       )
@@ -211,7 +211,7 @@ ui <- dashboardPage(
 #Add server code to incorporate the functionality in the dashboard
 server <- function(input, output, session) {
   
-# Create tab items in sidebar
+  # Create tab items in sidebar
   output$home <- renderMenu({
     sidebarMenu(
       menuItem("Home", tabName = "home",icon = icon("home")))})
@@ -224,7 +224,7 @@ server <- function(input, output, session) {
     sidebarMenu(
       menuItem("Winners", tabName = "winner",icon = icon("award")))})
   
-#Home Tab
+  #Home Tab
   
   ## Add Tiles
   output$ParticipantsTile <- renderInfoBox({
@@ -365,7 +365,7 @@ server <- function(input, output, session) {
     wordcloud::wordcloud(words = all_majors, rot.per=0.3,scale = c(6,0.75), colors = brewer.pal(8, "Dark2"), min.freq = 1)
   })
   
-#Hosts tab
+  #Hosts tab
   
   #Year for each uni first participate in datafest
   output$start_year <- renderText({
@@ -494,39 +494,39 @@ server <- function(input, output, session) {
     paste("This word cloud represents the different majors of participants across all years up to ", input$uni_year, ".")
   })
   
-#Winners Tab
+  #Winners Tab
   
-    #print the competition data provider for the selected year on winners tab
+  #print the competition data provider for the selected year on winners tab
   output$provider <- renderText({
     text <- datasource %>% 
       filter(year == input$year_choice)
     datasource <- paste0("Data Provider: ", text$source_data[1])
     paste(datasource)
- 
-  })
-
-  #print the competition goal for the selected year on winners tab
-    output$prompt <- renderText({
-      text <- past_prompts %>% 
-        filter(year == input$year_choice)
-      word <- text$goal[1]
-      paste(word)
-   
-    })
     
-    #reactive past winners table
+  })
+  
+  #print the competition goal for the selected year on winners tab
+  output$prompt <- renderText({
+    text <- past_prompts %>% 
+      filter(year == input$year_choice)
+    word <- text$goal[1]
+    paste(word)
+    
+  })
+  
+  #reactive past winners table
   titles_subset <- eventReactive(input$search, {
     
     ifelse(
       is.null(input$award_choice),
       award <- (na.omit(unique(datafest_titles$Awards))),
       award <- input$award_choice)
-
+    
     ifelse(
       is.null(input$year_choice),
       year_title <- unique(datafest$year),
       year_title <- input$year_choice)
-
+    
     ifelse(
       is.null(input$host_choice),
       host_title <- unique(datafest$host),
@@ -550,7 +550,7 @@ server <- function(input, output, session) {
   )
   
 }
-  
+
 
 ############
 shinyApp(ui = ui, server = server)
