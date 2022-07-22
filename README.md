@@ -17,14 +17,12 @@ The data folder contains multiple csv files that are used in the dashboard. Thes
 - `datafest-raw.csv`: This is the raw version of datafest data collected for the earlier version of the dashboard
 - `datafest.csv ` : This is the processed datafest file used to build the earlier version of the dashboard
 - `past_prompts.csv` - This is a dataset manually created to capture the year wise prompts for each datafest. This will have to be updated annually.
-- `titles.csv` : **TO BE UPDATED**
 - `updated_datafest.csv` : This is the new datafest data or the master file used to build the current dashboard.
-- `update_titles.csv` : **TO BE UPDATED**
-- `past_winners` : **TO BE UPDATED**
+- `update_titles.csv` : This is a dataset manually created to capture the year wise university wise Awards given to students during datafest. It also included the team names, and a link to their slides/write ups/ video submissions
 
 3. `app.R` : This is the code for the Shiny App /  Dashboard
 
 
 The deployed version of the app can be found [here](https://allis.shinyapps.io/datafest/) 
 
-It is also hosted on the datafest website [here](https://asa-datafest.netlify.app/))=
+It is also hosted on the datafest website [here](https://asa-datafest.netlify.app/))
