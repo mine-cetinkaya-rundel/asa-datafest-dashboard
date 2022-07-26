@@ -267,48 +267,6 @@ server <- function(input, output, session) {
   })
   
   output$map <- renderLeaflet({
-    popups <- paste0(
-      host_text, other_inst_text, "<br>" , part_text
-    )
-    leaflet() %>%
-      addProviderTiles("CartoDB.Voyager") %>% 
-      fitBounds(left, bottom, right, top) %>% 
-      #addControl(h1(input$year), position = "topright") %>% 
-      addPolygons(
-        data = states,
-        fillColor = ~pal(num_par),
-        weight = 1,
-        opacity = 1,
-        color = "lightgray",
-        dashArray = "",
-        fillOpacity = 1,
-        highlightOptions = highlightOptions(
-          weight = 3,
-          color = "lightgray",
-          dashArray = "2",
-          fillOpacity = 0.9,
-          bringToFront = FALSE),
-        label = labels,
-        labelOptions = labelOptions(
-          style = list("font-weight" = "normal",
-                       padding = "3px 8px",
-                       "color" = "#999999"),
-          textsize = "10px",
-          direction = "auto")) %>% 
-      addLegend(pal = pal, values = bins, opacity = 0.7, title = "Number of Participants",
-                position = "bottomright") %>% 
-      addCircleMarkers(lng = d()$lon, lat = d()$lat,
-                       radius = log(d()$num_part)/2,
-                       fillColor = marker_color,
-                       color = marker_color,
-                       weight = 3,
-                       fillOpacity = 0.5,
-                       popup = popups)
-  })
-  
-  observeEvent(d(), {
-    
-    mapProxy <- leafletProxy("map", session)
     
     host_text <- paste0(
       "<b><a href='", d()$url, "' style='color:", href_color, "'>", d()$host, "</a></b>"
@@ -328,15 +286,17 @@ server <- function(input, output, session) {
       host_text, other_inst_text, "<br>" , part_text
     )
     
-    participants <- d() %>% 
-      filter(year == input$year & df == "Yes") %>%
-        mutate(state = case_when(country == "Germany"~ "Germany",
-                                 country == "Australia" ~ "Australia",
-                                 state == "Minnessota"~ "Minnesota",
-                                 TRUE ~ state)) %>%
-        dplyr::select(state, num_part) %>%
-        dplyr::rename(name = state)
+    participants <- d() %>%
+      mutate(state = case_when(country == "Germany"~ "Germany",
+                               country == "Australia" ~ "Australia",
+                               state == "Minnessota"~ "Minnesota",
+                               TRUE ~ state)) %>%
+      dplyr::select(state, num_part) %>%
+      dplyr::rename(name = state)
     
+    # calculate total participants in each state
+    states$num_par=0
+  
     for (i in 1:nrow(states)) {
       for (j in 1:nrow(participants)) {
         #if(!is.na(states$name[i]) & !is.na(participants$name[j])){
@@ -348,11 +308,20 @@ server <- function(input, output, session) {
         #}
       }
     }
+    
     pal <- colorBin("Blues", domain = states$num_par, bins = bins)
     
-    mapProxy %>%
-      clearControls() %>%
-      clearMarkers() %>%
+    labels <- sprintf(
+      "<strong>%s</strong>",
+      states$name
+    ) %>% lapply(htmltools::HTML)
+    
+    leaflet() %>%
+      clearControls() %>% 
+      clearMarkers() %>% 
+      addProviderTiles("CartoDB.Voyager") %>% 
+      fitBounds(left, bottom, right, top) %>% 
+      #addControl(h1(input$year), position = "topright") %>%
       addPolygons(
         data = states,
         fillColor = ~pal(num_par),
@@ -373,7 +342,7 @@ server <- function(input, output, session) {
                        padding = "3px 8px",
                        "color" = "#999999"),
           textsize = "10px",
-          direction = "auto")) %>% 
+          direction = "auto")) %>%
       addLegend(pal = pal, values = bins, opacity = 0.7, title = "Number of Participants",
                 position = "bottomright") %>%
       addCircleMarkers(lng = d()$lon, lat = d()$lat,
@@ -384,16 +353,17 @@ server <- function(input, output, session) {
                        fillOpacity = 0.5,
                        popup = popups)
   })
-
+  
   #Add wordcloud
   library(tm)
   library(slam) 
-  #Adding Word Cloud
+  # Word Cloud
   output$wordcloud <- renderPlot({
     set.seed(1)
     ggplot(words, aes(label = word, color = word, size = size)) +
-      geom_text_wordcloud(max_steps = 1,grid_margin = 1,eccentricity = 0.6) +
-      scale_size_area(max_size = 13) +
+      geom_text_wordcloud(max_steps = 1, grid_margin = 1,eccentricity = 0.6) +
+      #scale_size_area(max_size = 11) +
+      scale_size(range = c(4,10)) +
       theme_void()
   })
   

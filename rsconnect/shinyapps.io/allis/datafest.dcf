@@ -5,9 +5,9 @@ account: allis
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 6533128
-bundleId: 6132617
+bundleId: 6134742
 url: https://allis.shinyapps.io/datafest/
-when: 1658799949.80192
-lastSyncTime: 1658799949.80195
+when: 1658847335.32388
+lastSyncTime: 1658847335.32392
 asMultiple: FALSE
 asStatic: FALSE

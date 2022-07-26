@@ -69,9 +69,6 @@ num_part <- updated_datafest %>%
   summarise(num = sum(num_part))
 max_part <- as.numeric(max(num_part$num))
 
-recent <- updated_datafest %>% 
-  filter(year == max(year))
-
 states <- states[,!names(states)=="density"]
 canada$id <- canada$cartodb_id
 canada <- canada[,!(names(canada) %in% c("cartodb_id", "created_at", "updated_at"))]
@@ -79,27 +76,6 @@ states <- rbind(states, canada, country)
 states$num_par=0
 
 bins <- c(0, 10, 20, 40, 80, 100, 200, 300, 400, max_part)
-
-participants <- recent %>%
-  filter(!is.na(state)) %>% 
-  mutate(state = case_when(country == "Germany" ~ "Germany",
-                           country == "Australia" ~ "Australia",
-                           state == "Minnessota"~ "Minnesota",
-                           TRUE ~ state)) %>%
-  dplyr::select(state, num_part) %>%
-  dplyr::rename(name = state) 
-
-for (i in 1:nrow(states)) {
-  for (j in 1:nrow(participants)) {
-    if (states$name[i] == participants$name[j]) {
-      if (!is.na(participants$num_part[j])) {
-        states$num_par[i] = states$num_par[i] + participants$num_part[j]
-      }
-    }
-  }
-}
-
-pal <- colorBin("Blues", domain = states$num_par, bins = bins)
 
 #Tiles
 
