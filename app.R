@@ -355,15 +355,11 @@ server <- function(input, output, session) {
   library(slam) 
   #Adding Word Cloud
   output$wordcloud <- renderPlot({
-    #par(mar = rep(0, 4))
     set.seed(1)
-    
     ggplot(words, aes(label = word, color = word, size = size)) +
       geom_text_wordcloud(max_steps = 1,grid_margin = 1,eccentricity = 0.6) +
       scale_size_area(max_size = 13) +
-
       theme_void()
-    
     })
   
   #Hosts tab
@@ -485,11 +481,15 @@ server <- function(input, output, session) {
     par(mar=rep(0, 4))
     plot.new()
     text(x=0.5, y=0.5, paste("This word cloud represents the different majors of participants across all years up to", input$uni_year))
-    word<-table(na.omit(majors))
-    set.seed(1)
-    wordcloud(names(word), as.numeric(word), scale=c(1.5,1.5), min.freq=1, 
-              random.order=T, random.color = T, rot.per=0.25, colors = brewer.pal(8, "Dark2"))
-  })
+    word<-data.frame(unique(na.omit(majors)))
+    names(word) = "word"
+    word$angle <- sample(c(0, 90), nrow(word), replace = TRUE)
+    set.seed(3)
+    ggplot(word, aes(label = word, color = word, size = 100, angle = angle)) +
+      geom_text_wordcloud(max_steps = 1,grid_margin = 1) +
+      scale_size(range = c(2,12)) +
+      theme_void()
+    })
   
   
   
