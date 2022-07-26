@@ -466,8 +466,6 @@ server <- function(input, output, session) {
       theme_minimal()
   }, bg="transparent")
   
-  library(tm)
-  library(slam) 
   #Adding Word Cloud
   
   output$wordcloud_host <- renderPlot({
@@ -483,7 +481,6 @@ server <- function(input, output, session) {
     #  return (" ")
     # }
     layout(matrix(c(1, 2), nrow=2), heights=c(1, 4))
-    text(x=0.5, y=0.5, paste("This word cloud represents the different majors of participants across all years up to", input$uni_year))
     word<-data.frame(unique(na.omit(majors)))
     names(word) = "word"
     word$angle <- sample(c(0, 90), nrow(word), replace = TRUE)
@@ -491,13 +488,9 @@ server <- function(input, output, session) {
     ggplot(word, aes(label = word, color = word, size = 80, angle = angle)) +
       geom_text_wordcloud(max_steps = 1, grid_margin = 1) +
       scale_size(range = c(3,9)) +
-      theme_void()
-  })
-  
-  
-  
-  output$wordcloud_caption <- renderText({
-    paste("This word cloud represents the different majors of participants across all years up to ", input$uni_year, ".")
+      labs(caption = paste0("This word cloud represents the different majors of participants across all years up to ", input$uni_year, ".")) +
+      theme_minimal() +
+      theme(plot.caption = element_text(face = "italic", size = 15, hjust = 0, color = "#001833"))
   })
   
   #Winners Tab
