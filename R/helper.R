@@ -99,3 +99,30 @@ host_count <- df_yes %>%
 # DataSource list for each year ----------------------
 source_data <- c("LAPD","Kiva.com","eHarmony","GridPoint","Edmunds.com","Ticketmaster", "Expedia","Indeed", "Canadian National Women's Rugby Team","COVID-19 Virtual Data Challenge","Rocky Mountain Poison and Drug Safety","Play2Prevent Lab")
 datasource <- data.frame(year, source_data)
+
+# wordcloud
+all_majors <- major_df$major_dist
+all_majors <- unlist(strsplit(all_majors, "[;]|[,]"))
+all_majors <- gsub('[[:punct:]]+' , '' , all_majors)
+all_majors <- gsub('[[:digit:]]+', '', all_majors)
+all_majors <- str_trim(all_majors)
+all_majors <- str_squish(all_majors)
+
+library(ggwordcloud)
+words<-data.frame(na.omit(all_majors))
+par(mar = rep(0, 4))
+set.seed(1)
+names(words) = "word"
+sizes <- words %>% 
+  group_by(word) %>% 
+  summarise(n())
+names(sizes) = c("word","num")
+words$size = NA
+words <- unique(words)
+for (i in 1:nrow(words)) {
+  for (j in 1:nrow(sizes)) {
+    if (words$word[i]==sizes$word[j]) {
+      words$size[i] = sizes$num[j]
+    }
+  }
+}

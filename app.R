@@ -355,17 +355,16 @@ server <- function(input, output, session) {
   library(slam) 
   #Adding Word Cloud
   output$wordcloud <- renderPlot({
-    all_majors <- major_df$major_dist
-    all_majors <- unlist(strsplit(all_majors, "[;]"))
-    all_majors <- gsub('[[:punct:]]+' , '' , all_majors)
-    all_majors <- gsub('[[:digit:]]+', '', all_majors)
-    all_majors <- str_trim(all_majors)
-    all_majors <- str_squish(all_majors)
-    words<-table(na.omit(all_majors))
-    par(mar = rep(0, 4))
-    wordcloud(names(words), as.numeric(words), scale=c(2,0.75), min.freq=1, 
-              random.order=T, rot.per=0, colors = brewer.pal(8, "Dark2"))
-  })
+    #par(mar = rep(0, 4))
+    set.seed(1)
+    
+    ggplot(words, aes(label = word, color = word, size = size)) +
+      geom_text_wordcloud(max_steps = 1,grid_margin = 1,eccentricity = 0.6) +
+      scale_size_area(max_size = 13) +
+
+      theme_void()
+    
+    })
   
   #Hosts tab
   
@@ -473,8 +472,7 @@ server <- function(input, output, session) {
   output$wordcloud_host <- renderPlot({
     majors <- filter(updated_datafest,host == input$college)
     majors <- majors$major_dist
-    
-    majors <- unlist(strsplit(majors, "[;]"))
+    majors <- unlist(strsplit(majors, "[;]|[,]"))
     majors <- gsub('[[:punct:]]+' , '' , majors)
     majors <- gsub('[[:digit:]]+', '', majors)
     majors <- str_trim(majors)
@@ -488,9 +486,12 @@ server <- function(input, output, session) {
     plot.new()
     text(x=0.5, y=0.5, paste("This word cloud represents the different majors of participants across all years up to", input$uni_year))
     word<-table(na.omit(majors))
-    wordcloud(names(word), as.numeric(words), scale=c(3,0.5), min.freq=1, 
-              random.order=T, rot.per=0.3, colors = brewer.pal(8, "Dark2"))
+    set.seed(1)
+    wordcloud(names(word), as.numeric(word), scale=c(1.5,1.5), min.freq=1, 
+              random.order=T, random.color = T, rot.per=0.25, colors = brewer.pal(8, "Dark2"))
   })
+  
+  
   
   output$wordcloud_caption <- renderText({
     paste("This word cloud represents the different majors of participants across all years up to ", input$uni_year, ".")
