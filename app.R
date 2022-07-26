@@ -266,57 +266,56 @@ server <- function(input, output, session) {
     filter(updated_datafest, year == input$year & df == "Yes")
   })
   
-  output$map <- renderLeaflet({
-    
-    host_text <- paste0(
-      "<b><a href='", d()$url, "' style='color:", href_color, "'>", d()$host, "</a></b>"
-    )
-    
-    other_inst_text <- paste0(
-      ifelse(is.na(d()$other_inst),
-             "",
-             paste0("<br>", "with participation from ", d()$other_inst))
-    )
-    
-    part_text <- paste0(
-      "<font color=", part_color,">", d()$num_part, " participants</font>"
-    )
-    
-    popups <- paste0(
-      host_text, other_inst_text, "<br>" , part_text
-    )
-    
-    participants <- d() %>%
+  participants <- reactive({
+    updated_datafest %>%
+      filter(year == input$year & df == "Yes") %>%
       mutate(state = case_when(country == "Germany"~ "Germany",
                                country == "Australia" ~ "Australia",
                                state == "Minnessota"~ "Minnesota",
                                TRUE ~ state)) %>%
       dplyr::select(state, num_part) %>%
       dplyr::rename(name = state)
+  })
     
-    # calculate total participants in each state
-    states$num_par=0
-    #if (nrow(participants!=0)) {
+  output$map <- renderLeaflet({
+
+    host_text <- paste0(
+      "<b><a href='", d()$url, "' style='color:", href_color, "'>", d()$host, "</a></b>"
+    )
+
+    other_inst_text <- paste0(
+      ifelse(is.na(d()$other_inst),
+             "",
+             paste0("<br>", "with participation from ", d()$other_inst))
+    )
+
+    part_text <- paste0(
+      "<font color=", part_color,">", d()$num_part, " participants</font>"
+    )
+
+    popups <- paste0(
+      host_text, other_inst_text, "<br>" , part_text
+    )
+
     for (i in 1:nrow(states)) {
-      for (j in 1:nrow(participants)) {
+      for (j in 1:nrow(participants())) {
         #if(!is.na(states$name[i]) & !is.na(participants$name[j])){
-        if (states$name[i] == participants$name[j]) {
-          if (!is.na(participants$num_part[j])) {
-            states$num_par[i] = states$num_par[i] + participants$num_part[j]
+        if (states$name[i] == participants()$name[j]) {
+          if (!is.na(participants()$num_part[j])) {
+            states$num_par[i] = states$num_par[i] + participants()$num_part[j]
           }
         }
         #}
       }
     }
-    #}
-    
+
     pal <- colorBin("Blues", domain = states$num_par, bins = bins)
-    
+
     leaflet() %>%
-      clearControls() %>% 
-      clearMarkers() %>% 
-      addProviderTiles("CartoDB.Voyager") %>% 
-      fitBounds(left, bottom, right, top) %>% 
+      clearControls() %>%
+      clearMarkers() %>%
+      addProviderTiles("CartoDB.Voyager") %>%
+      fitBounds(left, bottom, right, top) %>%
       #addControl(h1(input$year), position = "topright") %>%
       addPolygons(
         data = states,
@@ -348,7 +347,7 @@ server <- function(input, output, session) {
                        weight = 3,
                        fillOpacity = 0.5,
                        popup = popups)
-    
+
   })
   
   #Add wordcloud

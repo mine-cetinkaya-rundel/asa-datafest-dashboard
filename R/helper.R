@@ -73,6 +73,7 @@ states <- states[,!names(states)=="density"]
 canada$id <- canada$cartodb_id
 canada <- canada[,!(names(canada) %in% c("cartodb_id", "created_at", "updated_at"))]
 states <- rbind(states, canada, country)
+states$num_par=0
 
 bins <- c(0, 10, 20, 40, 80, 100, 200, 300, 400, max_part)
 
