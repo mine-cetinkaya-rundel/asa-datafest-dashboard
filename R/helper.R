@@ -99,4 +99,3 @@ host_count <- df_yes %>%
 # DataSource list for each year ----------------------
 source_data <- c("LAPD","Kiva.com","eHarmony","GridPoint","Edmunds.com","Ticketmaster", "Expedia","Indeed", "Canadian National Women's Rugby Team","COVID-19 Virtual Data Challenge","Rocky Mountain Poison and Drug Safety","Play2Prevent Lab")
 datasource <- data.frame(year, source_data)
-
