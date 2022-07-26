@@ -266,57 +266,14 @@ server <- function(input, output, session) {
     filter(updated_datafest, year == input$year & df == "Yes")
   })
   
-  participants <- reactive({
-    updated_datafest %>%
-      filter(year == input$year & df == "Yes") %>%
-      mutate(state = case_when(country == "Germany"~ "Germany",
-                               country == "Australia" ~ "Australia",
-                               state == "Minnessota"~ "Minnesota",
-                               TRUE ~ state)) %>%
-      dplyr::select(state, num_part) %>%
-      dplyr::rename(name = state)
-  })
-  
   output$map <- renderLeaflet({
-    
-    host_text <- paste0(
-      "<b><a href='", d()$url, "' style='color:", href_color, "'>", d()$host, "</a></b>"
-    )
-    
-    other_inst_text <- paste0(
-      ifelse(is.na(d()$other_inst),
-             "",
-             paste0("<br>", "with participation from ", d()$other_inst))
-    )
-    
-    part_text <- paste0(
-      "<font color=", part_color,">", d()$num_part, " participants</font>"
-    )
-    
     popups <- paste0(
       host_text, other_inst_text, "<br>" , part_text
     )
-    
-    for (i in 1:nrow(states)) {
-      for (j in 1:nrow(participants())) {
-        #if(!is.na(states$name[i]) & !is.na(participants$name[j])){
-        if (states$name[i] == participants()$name[j]) {
-          if (!is.na(participants()$num_part[j])) {
-            states$num_par[i] = states$num_par[i] + participants()$num_part[j]
-          }
-        }
-        #}
-      }
-    }
-    
-    pal <- colorBin("Blues", domain = states$num_par, bins = bins)
-    
     leaflet() %>%
-      clearControls() %>%
-      clearMarkers() %>%
-      addProviderTiles("CartoDB.Voyager") %>%
-      fitBounds(left, bottom, right, top) %>%
-      #addControl(h1(input$year), position = "topright") %>%
+      addProviderTiles("CartoDB.Voyager") %>% 
+      fitBounds(left, bottom, right, top) %>% 
+      #addControl(h1(input$year), position = "topright") %>% 
       addPolygons(
         data = states,
         fillColor = ~pal(num_par),
@@ -337,7 +294,86 @@ server <- function(input, output, session) {
                        padding = "3px 8px",
                        "color" = "#999999"),
           textsize = "10px",
-          direction = "auto")) %>%
+          direction = "auto")) %>% 
+      addLegend(pal = pal, values = bins, opacity = 0.7, title = "Number of Participants",
+                position = "bottomright") %>% 
+      addCircleMarkers(lng = d()$lon, lat = d()$lat,
+                       radius = log(d()$num_part)/2,
+                       fillColor = marker_color,
+                       color = marker_color,
+                       weight = 3,
+                       fillOpacity = 0.5,
+                       popup = popups)
+  })
+  
+  observeEvent(d(), {
+    
+    mapProxy <- leafletProxy("map", session)
+    
+    host_text <- paste0(
+      "<b><a href='", d()$url, "' style='color:", href_color, "'>", d()$host, "</a></b>"
+    )
+    
+    other_inst_text <- paste0(
+      ifelse(is.na(d()$other_inst),
+             "",
+             paste0("<br>", "with participation from ", d()$other_inst))
+    )
+    
+    part_text <- paste0(
+      "<font color=", part_color,">", d()$num_part, " participants</font>"
+    )
+    
+    popups <- paste0(
+      host_text, other_inst_text, "<br>" , part_text
+    )
+    
+    participants <- d() %>% 
+      filter(year == input$year & df == "Yes") %>%
+        mutate(state = case_when(country == "Germany"~ "Germany",
+                                 country == "Australia" ~ "Australia",
+                                 state == "Minnessota"~ "Minnesota",
+                                 TRUE ~ state)) %>%
+        dplyr::select(state, num_part) %>%
+        dplyr::rename(name = state)
+    
+    for (i in 1:nrow(states)) {
+      for (j in 1:nrow(participants)) {
+        #if(!is.na(states$name[i]) & !is.na(participants$name[j])){
+        if (states$name[i] == participants$name[j]) {
+          if (!is.na(participants$num_part[j])) {
+            states$num_par[i] = states$num_par[i] + participants$num_part[j]
+          }
+        }
+        #}
+      }
+    }
+    pal <- colorBin("Blues", domain = states$num_par, bins = bins)
+    
+    mapProxy %>%
+      clearControls() %>%
+      clearMarkers() %>%
+      addPolygons(
+        data = states,
+        fillColor = ~pal(num_par),
+        weight = 1,
+        opacity = 1,
+        color = "lightgray",
+        dashArray = "",
+        fillOpacity = 1,
+        highlightOptions = highlightOptions(
+          weight = 3,
+          color = "lightgray",
+          dashArray = "2",
+          fillOpacity = 0.9,
+          bringToFront = FALSE),
+        label = labels,
+        labelOptions = labelOptions(
+          style = list("font-weight" = "normal",
+                       padding = "3px 8px",
+                       "color" = "#999999"),
+          textsize = "10px",
+          direction = "auto")) %>% 
       addLegend(pal = pal, values = bins, opacity = 0.7, title = "Number of Participants",
                 position = "bottomright") %>%
       addCircleMarkers(lng = d()$lon, lat = d()$lat,
@@ -347,9 +383,8 @@ server <- function(input, output, session) {
                        weight = 3,
                        fillOpacity = 0.5,
                        popup = popups)
-    
   })
-  
+
   #Add wordcloud
   library(tm)
   library(slam) 
@@ -360,7 +395,7 @@ server <- function(input, output, session) {
       geom_text_wordcloud(max_steps = 1,grid_margin = 1,eccentricity = 0.6) +
       scale_size_area(max_size = 13) +
       theme_void()
-    })
+  })
   
   #Hosts tab
   
@@ -478,18 +513,16 @@ server <- function(input, output, session) {
     #  return (" ")
     # }
     layout(matrix(c(1, 2), nrow=2), heights=c(1, 4))
-    par(mar=rep(0, 4))
-    plot.new()
     text(x=0.5, y=0.5, paste("This word cloud represents the different majors of participants across all years up to", input$uni_year))
     word<-data.frame(unique(na.omit(majors)))
     names(word) = "word"
     word$angle <- sample(c(0, 90), nrow(word), replace = TRUE)
-    set.seed(3)
-    ggplot(word, aes(label = word, color = word, size = 100, angle = angle)) +
-      geom_text_wordcloud(max_steps = 1,grid_margin = 1) +
-      scale_size(range = c(2,12)) +
+    set.seed(9)
+    ggplot(word, aes(label = word, color = word, size = 80, angle = angle)) +
+      geom_text_wordcloud(max_steps = 1, grid_margin = 1) +
+      scale_size(range = c(3,9)) +
       theme_void()
-    })
+  })
   
   
   
