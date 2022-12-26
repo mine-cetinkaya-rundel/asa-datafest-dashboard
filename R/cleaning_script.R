@@ -233,3 +233,17 @@
 # updated_datafest
 # 
 # #add df = yes
+
+# other inst
+# for (i in 1:nrow(updated_datafest)) {
+#   if (grepl(updated_datafest[i,]$host, updated_datafest[i,]$other_inst)) {
+#     updated_datafest[i,]$other_inst = gsub(updated_datafest[i,]$host, "", updated_datafest[i,]$other_inst)
+#   }
+# }
+# updated_datafest <- updated_datafest %>% 
+#   mutate(other_inst = gsub("^, ", "", other_inst)) %>% 
+#   mutate(other_inst = gsub("(|)| and ", "", other_inst)) %>%
+#   mutate(other_inst = if_else(grepl('only', other_inst), '', other_inst)) %>% 
+#   mutate_at(c('other_inst'), ~na_if(., ''))  
+# 
+# write_csv(updated_datafest, "data/newest.csv")
