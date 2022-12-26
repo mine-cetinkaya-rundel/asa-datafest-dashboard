@@ -537,7 +537,7 @@ server <- function(input, output, session) {
       Year %in% year_title,
       Host %in% host_title)
     
-    return(table %>% dplyr::select("Awards", "Host", "Year", "Title", "Team", "Slides"))
+    return(table %>% dplyr::select("Awards", "Host", "Year", "Title", "Team", "Students", "Presentation"))
   })
   
   output$titles <- renderTable(
@@ -545,7 +545,8 @@ server <- function(input, output, session) {
     sanitize.text.function = function(x) x,
     hover = TRUE,
     striped = TRUE,
-    digits = 0
+    digits = 0,
+    na = ""
   )
   
 }

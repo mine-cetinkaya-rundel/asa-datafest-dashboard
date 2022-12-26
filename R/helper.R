@@ -17,14 +17,11 @@ set_config(use_proxy(url="10.3.100.207",port=8080))
 # load data ---------------------------------------------------------
 datafest <- read.csv("data/datafest.csv")
 past_prompts <- read.csv("data/past_prompts.csv")
-updated_datafest <- read.csv("data/updated_datafest.csv")
-datafest_titles <- read.csv("data/update_titles.csv")
+#updated_datafest <- read.csv("data/updated_datafest.csv")
+updated_datafest <- read.csv("data/newest.csv")
+#datafest_titles <- read.csv("data/update_titles.csv")
+datafest_titles <- read.csv("data/newest_titles.csv")
 names(datafest_titles) <- gsub("_", " ", names(datafest_titles), useBytes = TRUE) 
-datafest_titles <- datafest_titles %>%
-  mutate(
-    Slides = paste0("<a href='", Slides, "'>", as.character(icon("file-powerpoint", lib = "font-awesome")), "</a>"
-    )
-  )
 major_df <- updated_datafest %>%
   dplyr::select(host,year,major_dist) %>%
   na.omit()
@@ -122,3 +119,10 @@ for (i in 1:nrow(words)) {
     }
   }
 }
+
+# slides and videos
+datafest_titles <- datafest_titles %>%
+  mutate(
+    Presentation = if_else(!is.na(Video), Video, Slides),
+    Presentation = paste0("<a href='", Presentation, "'>", as.character(icon("file-powerpoint", lib = "font-awesome")), "</a>"),
+    )
